@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-connecthub-dev-dd53a-authRole",
+      "UnauthRoleArn": "arn:aws:iam::831270914189:role/amplify-connecthub-dev-dd53a-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::831270914189:role/amplify-connecthub-dev-dd53a-authRole",
+      "Region": "us-east-2",
+      "DeploymentBucketName": "amplify-connecthub-dev-dd53a-deployment",
+      "UnauthRoleName": "amplify-connecthub-dev-dd53a-unauthRole",
+      "StackName": "amplify-connecthub-dev-dd53a",
+      "StackId": "arn:aws:cloudformation:us-east-2:831270914189:stack/amplify-connecthub-dev-dd53a/5d288b20-37d3-11ef-a887-0a9c601d061b",
+      "AmplifyAppId": "dpc5pmaj1nnq1"
+    },
+    "categories": {
+      "auth": {
+        "connecthub6169be6b": {}
+      }
+    }
+  }
+}
