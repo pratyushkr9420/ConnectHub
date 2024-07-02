@@ -3,7 +3,14 @@ export type SignUpParameters = {
   password: string;
 };
 
-export type AuthStates = "signIn" | "signUp" | "signedIn" | "confirmSignUp";
+export type AuthStates =
+  | "default"
+  | "signIn"
+  | "signUp"
+  | "signedIn"
+  | "confirmSignUp"
+  | "forgotPassword"
+  | "confirmForgotPassword";
 
 export type AppNavigatorParams = {
   Home: undefined;

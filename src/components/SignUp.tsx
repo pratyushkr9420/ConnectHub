@@ -6,6 +6,8 @@ import CustomButton from "./CustomButton";
 import { useAuthenticationContext } from "../context/AuthContext";
 
 const SignUp = () => {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { handleSignUp, setAuthState } = useAuthenticationContext();
@@ -22,14 +24,12 @@ const SignUp = () => {
   return (
     <Fragment>
       <CustomText type="title">Sign Up</CustomText>
+      <CustomInput value={firstName} label="First Name" onChangeText={setFirstName} />
+      <CustomInput value={lastName} label="Last Name" onChangeText={setLastName} />
       <CustomInput value={email} label="Email" onChangeText={setEmail} />
-      <CustomInput
-        value={password}
-        label="Password"
-        onChangeText={setPassword}
-      />
-      <CustomButton title="Sign Up" onPress={handleSignUpPress} />
-      <Button title="Sign In" onPress={() => setAuthState("signIn")} />
+      <CustomInput value={password} label="Password" onChangeText={setPassword} />
+      <CustomButton type="primary" title="Sign Up" onPress={handleSignUpPress} />
+      <CustomButton type="secondary" title="Go Back" onPress={() => setAuthState("default")} />
     </Fragment>
   );
 };

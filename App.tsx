@@ -1,13 +1,11 @@
-import { StatusBar } from "expo-status-bar";
 import { Amplify } from "aws-amplify";
 import amplifyconfig from "./src/amplifyconfiguration.json";
 import { useEffect, useState } from "react";
 import { Hub } from "aws-amplify/utils";
-import SplashScreen from "./src/screens/SplashScreen";
-import { AuthUser } from "aws-amplify/auth";
-import AppNavigator from "./src/navigation/AppNavigator";
-import AuthScreen from "./src/screens/AuthScreen";
-import { AuthenticationProvider } from "./src/context/AuthContext";
+import { AuthUser, getCurrentUser } from "aws-amplify/auth";
+import WrappedNavigator from "./src/navigation/AppNavigator";
+import WrappedAuthScreen from "./src/screens/AuthScreen";
+import WrappedSplashScreen from "./src/screens/SplashScreen";
 Amplify.configure(amplifyconfig);
 
 export default function App() {
@@ -30,15 +28,14 @@ export default function App() {
     return () => hubListenerCancelToken();
   }, []);
 
+  useEffect(() => {
+    (async () => {
+      const user = await getCurrentUser();
+      setUser(user);
+    })();
+  }, []);
+
   if (isLoadingAuthUser)
-    return <SplashScreen setisLoadingAuthUser={setisLoadingAuthUser} />;
-  return user ? (
-    <AuthenticationProvider>
-      <AppNavigator />
-    </AuthenticationProvider>
-  ) : (
-    <AuthenticationProvider>
-      <AuthScreen />
-    </AuthenticationProvider>
-  );
+    return <WrappedSplashScreen setUser={setUser} setisLoadingAuthUser={setisLoadingAuthUser} />;
+  return user ? <WrappedNavigator /> : <WrappedAuthScreen />;
 }

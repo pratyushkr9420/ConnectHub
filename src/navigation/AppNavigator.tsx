@@ -1,14 +1,12 @@
 import React, { useEffect } from "react";
-import { NavigationContainer } from "@react-navigation/native";
+import { DarkTheme, DefaultTheme, NavigationContainer } from "@react-navigation/native";
 // import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeScreen from "../screens/HomeScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import { AppNavigatorParams } from "../utils/types";
-import {
-  AuthenticationProvider,
-  useAuthenticationContext,
-} from "../context/AuthContext";
+import { AuthenticationProvider, useAuthenticationContext } from "../context/AuthContext";
+import { useColorScheme } from "react-native";
 
 // const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator<AppNavigatorParams>();
@@ -18,9 +16,10 @@ const AppNavigator = () => {
   useEffect(() => {
     getLoggedInUser();
   }, []);
+  const apptheme = useColorScheme();
   return (
-    <NavigationContainer>
-      <Tab.Navigator initialRouteName="Home">
+    <NavigationContainer theme={apptheme === "dark" ? DarkTheme : DefaultTheme}>
+      <Tab.Navigator initialRouteName="Home" screenOptions={{ headerShown: false }}>
         <Tab.Screen name="Home" component={HomeScreen} />
         <Tab.Screen name="Profile" component={ProfileScreen} />
       </Tab.Navigator>
@@ -28,4 +27,12 @@ const AppNavigator = () => {
   );
 };
 
-export default AppNavigator;
+const WrappedNavigator = () => {
+  return (
+    <AuthenticationProvider>
+      <AppNavigator />
+    </AuthenticationProvider>
+  );
+};
+
+export default WrappedNavigator;

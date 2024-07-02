@@ -1,14 +1,8 @@
 import React from "react";
-// import ListTodos from "../components/ListTodos";
-import { Text, View } from "react-native";
+import ListTasks from "../components/ListTasks";
 
 const HomeScreen = () => {
-  //return <ListTodos />;
-  return (
-    <View>
-      <Text>Home Screen...</Text>
-    </View>
-  );
+  return <ListTasks />;
 };
 
 export default HomeScreen;

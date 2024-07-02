@@ -1,6 +1,8 @@
-import { TextInput, View, StyleSheet } from "react-native";
-import { Colors } from "../../constants/colors";
+import { TextInput, View, StyleSheet, useColorScheme } from "react-native";
+import { Colors } from "../../themes/colors";
+import scheme from "../../themes/colors";
 import { FC } from "react";
+import CustomText from "./CustomText";
 
 type CustomInputProps = {
   label: string;
@@ -9,17 +11,16 @@ type CustomInputProps = {
   value: string;
 };
 
-const CustomInput: FC<CustomInputProps> = ({
-  label,
-  value,
-  onChangeText,
-  secureTextEntry,
-}) => {
+const CustomInput: FC<CustomInputProps> = ({ label, value, onChangeText, secureTextEntry }) => {
+  const theme = useColorScheme();
   return (
     <View style={styles.container}>
+      <CustomText style={{ fontWeight: "bold", marginBottom: 10, marginLeft: 2.5 }} type="caption">
+        {label}
+      </CustomText>
       <TextInput
         placeholder={label}
-        style={styles.input}
+        style={[styles.input, styles[theme ? theme : "light"]]}
         value={value}
         onChangeText={onChangeText}
         secureTextEntry={secureTextEntry}
@@ -30,19 +31,24 @@ const CustomInput: FC<CustomInputProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    width: "90%",
-    height: 45,
-    justifyContent: "center",
-    margin: 10,
-    padding: 10,
-    backgroundColor: Colors.light,
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: Colors.primary,
+    marginBottom: 20,
+    width: "100%",
   },
   input: {
-    color: "gray",
-    fontSize: 17,
+    width: "100%",
+    height: 50,
+    justifyContent: "center",
+    paddingLeft: 10,
+    borderRadius: 8,
+    borderWidth: 1,
+  },
+  dark: {
+    backgroundColor: scheme.dark.text + "06",
+    borderColor: scheme.dark.text + "60",
+  },
+  light: {
+    backgroundColor: scheme.light.text + "06",
+    borderColor: scheme.light.text + "60",
   },
 });
 

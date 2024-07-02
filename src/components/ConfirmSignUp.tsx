@@ -23,12 +23,8 @@ const ConfirmSignUp = () => {
     <Fragment>
       <CustomText type="title">Confirm Sign Up</CustomText>
       <CustomInput value={email} label="Email" onChangeText={setEmail} />
-      <CustomInput
-        value={confirmationCode}
-        label="Code"
-        onChangeText={setconfirmationCode}
-      />
-      <CustomButton title="Confirm" onPress={handleSignUpConfirmationPress} />
+      <CustomInput value={confirmationCode} label="Code" onChangeText={setconfirmationCode} />
+      <CustomButton type="primary" title="Confirm" onPress={handleSignUpConfirmationPress} />
       <Button title="Resend code" />
     </Fragment>
   );

@@ -1,10 +1,4 @@
-import {
-  ReactElement,
-  ReactNode,
-  createContext,
-  useContext,
-  useState,
-} from "react";
+import { ReactElement, ReactNode, createContext, useContext, useState } from "react";
 import { Alert } from "react-native";
 import {
   signUp,
@@ -25,36 +19,25 @@ type authenticationContextType = {
   handleSignIn: ({ username, password }: SignInInput) => void;
   handleSignOut: () => void;
   handleSignUp: ({ username, password }: SignUpParameters) => void;
-  handleSignUpConfirmation: ({
-    username,
-    confirmationCode,
-  }: ConfirmSignUpInput) => void;
+  handleSignUpConfirmation: ({ username, confirmationCode }: ConfirmSignUpInput) => void;
   setAuthState: React.Dispatch<React.SetStateAction<AuthStates>>;
   setAuthUser: React.Dispatch<any>;
-  getLoggedInUser: () => void;
+  getLoggedInUser: () => Promise<AuthUser>;
 };
 
-const AuthenticationContext = createContext<
-  authenticationContextType | undefined
->(undefined);
+const AuthenticationContext = createContext<authenticationContextType | undefined>(undefined);
 
 function useAuthenticationContext() {
   const context = useContext(AuthenticationContext);
   if (context === undefined) {
-    throw new Error(
-      "useAuthenticationContext must be used within a AuthenticationProvider",
-    );
+    throw new Error("useAuthenticationContext must be used within a AuthenticationProvider");
   }
   return context;
 }
 
-function AuthenticationProvider({
-  children,
-}: {
-  children: ReactNode;
-}): ReactElement {
+function AuthenticationProvider({ children }: { children: ReactNode }): ReactElement {
   const [authUser, setAuthUser] = useState<AuthUser | null | undefined>();
-  const [authState, setAuthState] = useState<AuthStates>("signIn");
+  const [authState, setAuthState] = useState<AuthStates>("default");
   const [isAuthLoading, setisAuthLoading] = useState<boolean>(false);
   async function handleSignUp({ username, password }: SignUpParameters) {
     setisAuthLoading(true);
@@ -81,6 +64,7 @@ function AuthenticationProvider({
   const getLoggedInUser = async () => {
     const currentUser = await getCurrentUser();
     setAuthUser(currentUser);
+    return currentUser;
   };
 
   async function handleSignIn({ username, password }: SignInInput) {
@@ -103,10 +87,7 @@ function AuthenticationProvider({
     }
   }
 
-  async function handleSignUpConfirmation({
-    username,
-    confirmationCode,
-  }: ConfirmSignUpInput) {
+  async function handleSignUpConfirmation({ username, confirmationCode }: ConfirmSignUpInput) {
     setisAuthLoading(true);
     try {
       const { isSignUpComplete, nextStep } = await confirmSignUp({
