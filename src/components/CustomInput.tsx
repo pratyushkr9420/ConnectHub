@@ -45,10 +45,12 @@ const styles = StyleSheet.create({
   dark: {
     backgroundColor: scheme.dark.text + "06",
     borderColor: scheme.dark.text + "60",
+    color: scheme.dark.text,
   },
   light: {
     backgroundColor: scheme.light.text + "06",
     borderColor: scheme.light.text + "60",
+    color: scheme.light.text,
   },
 });
 

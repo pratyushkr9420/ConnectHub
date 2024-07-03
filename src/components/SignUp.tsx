@@ -27,7 +27,7 @@ const SignUp = () => {
       <CustomInput value={firstName} label="First Name" onChangeText={setFirstName} />
       <CustomInput value={lastName} label="Last Name" onChangeText={setLastName} />
       <CustomInput value={email} label="Email" onChangeText={setEmail} />
-      <CustomInput value={password} label="Password" onChangeText={setPassword} />
+      <CustomInput value={password} label="Password" onChangeText={setPassword} secureTextEntry />
       <CustomButton type="primary" title="Sign Up" onPress={handleSignUpPress} />
       <CustomButton type="secondary" title="Go Back" onPress={() => setAuthState("default")} />
     </Fragment>

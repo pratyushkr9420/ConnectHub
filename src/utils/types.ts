@@ -1,3 +1,5 @@
+import { NavigatorScreenParams } from "@react-navigation/native";
+
 export type SignUpParameters = {
   username: string;
   password: string;
@@ -12,8 +14,14 @@ export type AuthStates =
   | "forgotPassword"
   | "confirmForgotPassword";
 
-export type AppNavigatorParams = {
+export type HomeStackPrams = {
   Home: undefined;
+  OnBoarding: undefined;
+};
+
+export type AppNavigatorParams = {
+  HomeStack: NavigatorScreenParams<HomeStackPrams>;
+  Chats: undefined;
   Profile: undefined;
 };
 

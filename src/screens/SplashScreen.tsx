@@ -2,10 +2,7 @@ import React, { FC, useEffect } from "react";
 import { View } from "react-native";
 import CustomText from "../components/CustomText";
 import { AuthUser, getCurrentUser } from "aws-amplify/auth";
-import {
-  AuthenticationProvider,
-  useAuthenticationContext,
-} from "../context/AuthContext";
+import { AuthenticationProvider, useAuthenticationContext } from "../context/AuthContext";
 
 type WrappedSplashScreenProps = {
   setisLoadingAuthUser: React.Dispatch<React.SetStateAction<boolean>>;
@@ -17,15 +14,12 @@ type SplashScreenProps = {
   setUser: React.Dispatch<React.SetStateAction<AuthUser | null | undefined>>;
 };
 
-const SplashScreen: FC<SplashScreenProps> = ({
-  setisLoadingAuthUser,
-  setUser,
-}) => {
+const SplashScreen: FC<SplashScreenProps> = ({ setisLoadingAuthUser, setUser }) => {
   const { getLoggedInUser, authUser } = useAuthenticationContext();
   useEffect(() => {
     try {
       setisLoadingAuthUser(false);
-      getCurrentUser();
+      getLoggedInUser();
       setUser(authUser);
     } catch (e) {
       console.log("Error logged in", e);
@@ -41,16 +35,10 @@ const SplashScreen: FC<SplashScreenProps> = ({
   );
 };
 
-const WrappedSplashScreen: FC<WrappedSplashScreenProps> = ({
-  setisLoadingAuthUser,
-  setUser,
-}) => {
+const WrappedSplashScreen: FC<WrappedSplashScreenProps> = ({ setisLoadingAuthUser, setUser }) => {
   return (
     <AuthenticationProvider>
-      <SplashScreen
-        setisLoadingAuthUser={setisLoadingAuthUser}
-        setUser={setUser}
-      />
+      <SplashScreen setisLoadingAuthUser={setisLoadingAuthUser} setUser={setUser} />
     </AuthenticationProvider>
   );
 };
