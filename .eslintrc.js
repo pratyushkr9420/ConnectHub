@@ -5,4 +5,12 @@ module.exports = {
   rules: {
     "prettier/prettier": "error",
   },
+  settings: {
+    "import/resolver": {
+      alias: {
+        map: [["@env", path.resolve(__dirname, "./.env")]],
+        extensions: [".js", ".jsx", ".json"],
+      },
+    },
+  },
 };

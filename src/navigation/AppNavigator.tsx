@@ -72,12 +72,4 @@ const AppNavigator = () => {
   );
 };
 
-const WrappedNavigator = () => {
-  return (
-    <AuthenticationProvider>
-      <AppNavigator />
-    </AuthenticationProvider>
-  );
-};
-
-export default WrappedNavigator;
+export default AppNavigator;

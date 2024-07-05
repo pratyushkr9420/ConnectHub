@@ -13,20 +13,38 @@ import {
   type ResetPasswordOutput,
   ConfirmResetPasswordInput,
   confirmResetPassword,
+  fetchUserAttributes,
+  FetchUserAttributesOutput,
 } from "aws-amplify/auth";
-import { AuthStates, SignUpParameters } from "../utils/types";
+import { AuthStates, CustomAuthUser, SignUpParameters, UserFromDb } from "../utils/types";
+import { generateClient } from "aws-amplify/api";
+import { createUser } from "../graphql/mutations";
+import { getUser } from "../graphql/queries";
+
+const client = generateClient();
 
 type authenticationContextType = {
-  authUser: AuthUser | null | undefined;
+  authUser: CustomAuthUser | null | undefined;
+  userFromDb: UserFromDb | null | undefined;
   authState: AuthStates;
   isAuthLoading: boolean;
   handleSignIn: ({ username, password }: SignInInput) => void;
   handleSignOut: () => void;
-  handleSignUp: ({ username, password }: SignUpParameters) => void;
-  handleSignUpConfirmation: ({ username, confirmationCode }: ConfirmSignUpInput) => void;
+  handleSignUp: ({ username, password, firstName, lastName }: SignUpParameters) => void;
+  handleSignUpConfirmation: ({
+    username,
+    password,
+    confirmationCode,
+  }: {
+    username: string;
+    password: string;
+    confirmationCode: string;
+  }) => void;
   setAuthState: React.Dispatch<React.SetStateAction<AuthStates>>;
-  setAuthUser: React.Dispatch<any>;
-  getLoggedInUser: () => Promise<AuthUser>;
+  setAuthUser: React.Dispatch<React.SetStateAction<CustomAuthUser | null | undefined>>;
+  setUserFromDb: React.Dispatch<React.SetStateAction<UserFromDb | null | undefined>>;
+  getLoggedInUser: () => Promise<CustomAuthUser>;
+  getLoggedInUserFromDb: () => Promise<void>;
   handleResetPassword: (username: string) => Promise<ResetPasswordOutput | undefined>;
   handleResetPasswordNextSteps: (output: ResetPasswordOutput) => void;
   handleConfirmResetPassword: ({
@@ -47,10 +65,16 @@ function useAuthenticationContext() {
 }
 
 function AuthenticationProvider({ children }: { children: ReactNode }): ReactElement {
-  const [authUser, setAuthUser] = useState<AuthUser | null | undefined>();
+  const [authUser, setAuthUser] = useState<CustomAuthUser | null | undefined>();
+  const [userFromDb, setUserFromDb] = useState<UserFromDb | null | undefined>();
   const [authState, setAuthState] = useState<AuthStates>("default");
   const [isAuthLoading, setisAuthLoading] = useState<boolean>(false);
-  async function handleSignUp({ username, password }: SignUpParameters) {
+  async function handleSignUp({
+    username,
+    password,
+    firstName = "",
+    lastName = "",
+  }: SignUpParameters) {
     setisAuthLoading(true);
     try {
       const { isSignUpComplete, userId, nextStep } = await signUp({
@@ -59,6 +83,8 @@ function AuthenticationProvider({ children }: { children: ReactNode }): ReactEle
         options: {
           userAttributes: {
             email: username,
+            given_name: firstName,
+            family_name: lastName,
           },
           // optional
           autoSignIn: true, // or SignInOptions e.g { authFlowType: "USER_SRP_AUTH" }
@@ -72,12 +98,56 @@ function AuthenticationProvider({ children }: { children: ReactNode }): ReactEle
     }
   }
 
-  const getLoggedInUser = async () => {
-    const currentUser = await getCurrentUser();
-    setAuthUser(currentUser);
-    return currentUser;
+  const saveUserToDb = async (user: CustomAuthUser) => {
+    const userToAdd: UserFromDb = {
+      id: user.userId,
+      firstName: user.attributes.given_name,
+      lastName: user.attributes.family_name,
+      profilePicture: null,
+      email: user.attributes.email,
+    };
+    try {
+      const newUserInDb = await client.graphql({
+        query: createUser,
+        variables: {
+          input: userToAdd,
+        },
+      });
+      setUserFromDb(userToAdd);
+      Alert.alert("User saved to database");
+    } catch (e) {
+      console.log("Error while saving logged in user to database:", e);
+    }
   };
 
+  const getLoggedInUser = async (): Promise<CustomAuthUser> => {
+    const currentUser = await getCurrentUser();
+    const attributes = await fetchUserAttributes();
+    const newAuthUserToSave = { ...currentUser, attributes };
+    setAuthUser(newAuthUserToSave);
+    return newAuthUserToSave;
+  };
+
+  const getLoggedInUserFromDb = async () => {
+    try {
+      if (authUser) {
+        const response = await client.graphql({
+          query: getUser,
+          variables: { id: authUser.userId },
+        });
+        const currentLoggedInUserFromDb: UserFromDb = {
+          id: response.data.getUser!.id,
+          firstName: response.data.getUser!.firstName,
+          lastName: response.data.getUser!.lastName,
+          profilePicture: response.data.getUser!.profilePicture,
+          email: response.data.getUser!.email,
+        };
+        setUserFromDb(currentLoggedInUserFromDb);
+      }
+    } catch (e) {
+      console.log("Error while fetching logged in user from database:", e);
+    }
+  };
   async function handleSignIn({ username, password }: SignInInput) {
     setisAuthLoading(true);
     try {
@@ -86,11 +156,11 @@ function AuthenticationProvider({ children }: { children: ReactNode }): ReactEle
         password,
         options: { authFlowType: "USER_PASSWORD_AUTH" },
       });
+      await getLoggedInUser();
+      await getLoggedInUserFromDb();
       Alert.alert("User signed in");
       setAuthState("signedIn");
       setisAuthLoading(false);
-      const user = await getCurrentUser();
-      setAuthUser(user);
     } catch (error: any) {
       Alert.alert("error signing in", error.message);
       console.log(error);
@@ -98,15 +168,32 @@ function AuthenticationProvider({ children }: { children: ReactNode }): ReactEle
     }
   }
 
-  async function handleSignUpConfirmation({ username, confirmationCode }: ConfirmSignUpInput) {
+  async function handleSignUpConfirmation({
+    username,
+    password,
+    confirmationCode,
+  }: {
+    username: string;
+    password: string;
+    confirmationCode: string;
+  }) {
     setisAuthLoading(true);
     try {
       const { isSignUpComplete, nextStep } = await confirmSignUp({
         username,
         confirmationCode,
       });
-      Alert.alert("User credentials confirmed, you can sign in now");
-      setAuthState("signIn");
+      // Alert.alert("User credentials confirmed, you can sign in now");
+      // setAuthState("signIn");
+      const { isSignedIn } = await signIn({
+        username,
+        password,
+        options: { authFlowType: "USER_PASSWORD_AUTH" },
+      });
+      const authorizedUser = await getLoggedInUser();
+      await saveUserToDb(authorizedUser);
+      Alert.alert("User signed in");
+      setAuthState("signedIn");
       setisAuthLoading(false);
     } catch (error: any) {
       Alert.alert("error confirming sign up", error.message);
@@ -117,6 +204,7 @@ function AuthenticationProvider({ children }: { children: ReactNode }): ReactEle
     try {
       await signOut();
       setAuthUser(undefined);
+      setUserFromDb(undefined);
       setAuthState("signIn");
     } catch (error: any) {
       Alert.alert("error signing out: ", error.message);
@@ -170,6 +258,7 @@ function AuthenticationProvider({ children }: { children: ReactNode }): ReactEle
     <AuthenticationContext.Provider
       value={{
         authUser,
+        userFromDb,
         authState,
         isAuthLoading,
         handleSignIn,
@@ -177,8 +266,10 @@ function AuthenticationProvider({ children }: { children: ReactNode }): ReactEle
         handleSignOut,
         handleSignUpConfirmation,
         setAuthState,
+        setUserFromDb,
         setAuthUser,
         getLoggedInUser,
+        getLoggedInUserFromDb,
         handleResetPassword,
         handleResetPasswordNextSteps,
         handleConfirmResetPassword,

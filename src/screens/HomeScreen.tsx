@@ -6,13 +6,14 @@ import CustomText from "../components/CustomText";
 import { HomeStackPrams } from "../utils/types";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Button } from "react-native";
+import { Button, StatusBar, useColorScheme } from "react-native";
 
 type HomeScreenProps = {
   navigation: NativeStackNavigationProp<HomeStackPrams, "Home">;
 };
 
 const HomeScreen: FC<HomeScreenProps> = ({ navigation }) => {
+  const theme = useColorScheme();
   const checkFirstLaunch = async () => {
     try {
       const value = await AsyncStorage.getItem("@isFirstLaunch");
@@ -36,6 +37,7 @@ const HomeScreen: FC<HomeScreenProps> = ({ navigation }) => {
             await AsyncStorage.removeItem("@isFirstLaunch");
           }}
         />
+        <StatusBar barStyle={theme === "dark" ? "light-content" : "dark-content"} />
       </ThemedView>
     </SafeAreaView>
   );

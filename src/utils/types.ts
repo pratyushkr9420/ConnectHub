@@ -1,8 +1,11 @@
 import { NavigatorScreenParams } from "@react-navigation/native";
+import { AuthUser, FetchUserAttributesOutput } from "aws-amplify/auth";
 
 export type SignUpParameters = {
   username: string;
   password: string;
+  firstName?: string;
+  lastName?: string;
 };
 
 export type AuthStates =
@@ -25,8 +28,14 @@ export type AppNavigatorParams = {
   Profile: undefined;
 };
 
-export type AuthUser = {
-  username: string;
-  userId: string;
-  signInDetails: any;
+export type CustomAuthUser = {
+  attributes: FetchUserAttributesOutput;
+} & AuthUser;
+
+export type UserFromDb = {
+  id: string | null;
+  firstName?: string | null | undefined;
+  lastName?: string | null | undefined;
+  profilePicture?: string | null | undefined;
+  email?: string | null | undefined;
 };

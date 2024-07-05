@@ -19,6 +19,8 @@ const SignUp = () => {
     handleSignUp({
       username: email,
       password,
+      firstName,
+      lastName,
     });
   };
   return (

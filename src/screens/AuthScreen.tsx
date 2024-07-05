@@ -61,15 +61,7 @@ const AuthScreen = () => {
   );
 };
 
-const WrappedAuthScreen = () => {
-  return (
-    <AuthenticationProvider>
-      <AuthScreen />
-    </AuthenticationProvider>
-  );
-};
-
-export default WrappedAuthScreen;
+export default AuthScreen;
 
 const styles = StyleSheet.create({
   container: {

@@ -3,15 +3,11 @@ import { View } from "react-native";
 import CustomText from "../components/CustomText";
 import { AuthUser, getCurrentUser } from "aws-amplify/auth";
 import { AuthenticationProvider, useAuthenticationContext } from "../context/AuthContext";
-
-type WrappedSplashScreenProps = {
-  setisLoadingAuthUser: React.Dispatch<React.SetStateAction<boolean>>;
-  setUser: React.Dispatch<React.SetStateAction<AuthUser | null | undefined>>;
-};
+import { CustomAuthUser } from "../utils/types";
 
 type SplashScreenProps = {
   setisLoadingAuthUser: React.Dispatch<React.SetStateAction<boolean>>;
-  setUser: React.Dispatch<React.SetStateAction<AuthUser | null | undefined>>;
+  setUser: React.Dispatch<React.SetStateAction<CustomAuthUser | null | undefined>>;
 };
 
 const SplashScreen: FC<SplashScreenProps> = ({ setisLoadingAuthUser, setUser }) => {
@@ -35,12 +31,4 @@ const SplashScreen: FC<SplashScreenProps> = ({ setisLoadingAuthUser, setUser }) 
   );
 };
 
-const WrappedSplashScreen: FC<WrappedSplashScreenProps> = ({ setisLoadingAuthUser, setUser }) => {
-  return (
-    <AuthenticationProvider>
-      <SplashScreen setisLoadingAuthUser={setisLoadingAuthUser} setUser={setUser} />
-    </AuthenticationProvider>
-  );
-};
-
-export default WrappedSplashScreen;
+export default SplashScreen;

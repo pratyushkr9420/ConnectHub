@@ -7,6 +7,7 @@ import { useAuthenticationContext } from "../context/AuthContext";
 
 const ConfirmSignUp = () => {
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [confirmationCode, setconfirmationCode] = useState("");
   const { handleSignUpConfirmation } = useAuthenticationContext();
   const handleSignUpConfirmationPress = () => {
@@ -16,6 +17,7 @@ const ConfirmSignUp = () => {
     }
     handleSignUpConfirmation({
       username: email,
+      password,
       confirmationCode,
     });
   };
@@ -23,6 +25,7 @@ const ConfirmSignUp = () => {
     <Fragment>
       <CustomText type="title">Confirm Sign Up</CustomText>
       <CustomInput value={email} label="Email" onChangeText={setEmail} />
+      <CustomInput label="Password" value={password} secureTextEntry onChangeText={setPassword} />
       <CustomInput value={confirmationCode} label="Code" onChangeText={setconfirmationCode} />
       <CustomButton type="primary" title="Confirm" onPress={handleSignUpConfirmationPress} />
       <Button title="Resend code" />
