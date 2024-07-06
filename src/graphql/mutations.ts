@@ -20,6 +20,8 @@ export const createUser = /* GraphQL */ `mutation CreateUser(
     email
     status
     notificationToken
+    latitude
+    longitude
     chatRooms {
       nextToken
       __typename
@@ -45,6 +47,8 @@ export const updateUser = /* GraphQL */ `mutation UpdateUser(
     email
     status
     notificationToken
+    latitude
+    longitude
     chatRooms {
       nextToken
       __typename
@@ -70,6 +74,8 @@ export const deleteUser = /* GraphQL */ `mutation DeleteUser(
     email
     status
     notificationToken
+    latitude
+    longitude
     chatRooms {
       nextToken
       __typename
@@ -203,6 +209,8 @@ export const createPost = /* GraphQL */ `mutation CreatePost(
       email
       status
       notificationToken
+      latitude
+      longitude
       createdAt
       updatedAt
       __typename
@@ -235,6 +243,8 @@ export const updatePost = /* GraphQL */ `mutation UpdatePost(
       email
       status
       notificationToken
+      latitude
+      longitude
       createdAt
       updatedAt
       __typename
@@ -267,6 +277,8 @@ export const deletePost = /* GraphQL */ `mutation DeletePost(
       email
       status
       notificationToken
+      latitude
+      longitude
       createdAt
       updatedAt
       __typename
@@ -299,6 +311,8 @@ export const createMessage = /* GraphQL */ `mutation CreateMessage(
       email
       status
       notificationToken
+      latitude
+      longitude
       createdAt
       updatedAt
       __typename
@@ -330,6 +344,8 @@ export const updateMessage = /* GraphQL */ `mutation UpdateMessage(
       email
       status
       notificationToken
+      latitude
+      longitude
       createdAt
       updatedAt
       __typename
@@ -361,6 +377,8 @@ export const deleteMessage = /* GraphQL */ `mutation DeleteMessage(
       email
       status
       notificationToken
+      latitude
+      longitude
       createdAt
       updatedAt
       __typename
@@ -393,6 +411,8 @@ export const createUserChatRooms = /* GraphQL */ `mutation CreateUserChatRooms(
       email
       status
       notificationToken
+      latitude
+      longitude
       createdAt
       updatedAt
       __typename
@@ -430,6 +450,8 @@ export const updateUserChatRooms = /* GraphQL */ `mutation UpdateUserChatRooms(
       email
       status
       notificationToken
+      latitude
+      longitude
       createdAt
       updatedAt
       __typename
@@ -467,6 +489,8 @@ export const deleteUserChatRooms = /* GraphQL */ `mutation DeleteUserChatRooms(
       email
       status
       notificationToken
+      latitude
+      longitude
       createdAt
       updatedAt
       __typename

@@ -38,4 +38,8 @@ export type UserFromDb = {
   lastName?: string | null | undefined;
   profilePicture?: string | null | undefined;
   email?: string | null | undefined;
+  status?: string | null,
+  latitude?: string | null,
+  longitude?: string | null,
+  notificationToken?: string | null,
 };

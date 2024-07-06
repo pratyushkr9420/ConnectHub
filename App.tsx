@@ -8,20 +8,31 @@ import SplashScreen from "./src/screens/SplashScreen";
 import AppNavigator from "./src/navigation/AppNavigator";
 import AuthScreen from "./src/screens/AuthScreen";
 import { CustomAuthUser } from "./src/utils/types";
+import * as Notifications from 'expo-notifications';
 Amplify.configure(amplifyconfig);
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: true,
+    shouldSetBadge: false,
+  }),
+});
+
 
 const App = () => {
   const [isLoadingAuthUser, setisLoadingAuthUser] = useState(true);
-  const [user, setUser] = useState<CustomAuthUser | null | undefined>();
-  const { getLoggedInUser, getLoggedInUserFromDb } = useAuthenticationContext();
+  const { getLoggedInUser, getLoggedInUserFromDb, authUser, setAuthUser, setUserFromDb } = useAuthenticationContext();
 
   const listener = async ({ payload }: { payload: any }) => {
     switch (payload.event) {
       case "signedIn":
-        setUser(await getLoggedInUser());
+        await getLoggedInUser();
+        await getLoggedInUserFromDb();
         break;
       case "signedOut":
-        setUser(undefined);
+        setAuthUser(undefined);
+        setUserFromDb(undefined);
         break;
     }
   };
@@ -33,14 +44,14 @@ const App = () => {
 
   useEffect(() => {
     (async () => {
-      const user = await getLoggedInUser();
-      setUser(user);
+      await getLoggedInUser();
+      await getLoggedInUserFromDb();
     })();
   }, []);
 
   if (isLoadingAuthUser)
-    return <SplashScreen setUser={setUser} setisLoadingAuthUser={setisLoadingAuthUser} />;
-  return user ? <AppNavigator /> : <AuthScreen />;
+    return <SplashScreen setisLoadingAuthUser={setisLoadingAuthUser} />;
+  return authUser ? <AppNavigator /> : <AuthScreen />;
 };
 
 const WrappedApp = () => {

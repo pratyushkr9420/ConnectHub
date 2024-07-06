@@ -7,15 +7,29 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { HomeStackPrams } from "../utils/types";
 import { features } from "../utils/features";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useAuthenticationContext } from "../context/AuthContext";
+import { registerForPushNotificationsAsync } from "../utils/permissions";
+import { updateUserNotificationTokenInDb } from "../utils/functions";
 
 type OnBoardingScreenProps = {
   navigation: NativeStackNavigationProp<HomeStackPrams, "OnBoarding">;
 };
 
 const OnBoardingScreen: FC<OnBoardingScreenProps> = ({ navigation }) => {
+  const { getLoggedInUserFromDb, userFromDb } = useAuthenticationContext();
+  useEffect(() => {
+    getLoggedInUserFromDb();
+  },[])
   const handleContinue = async () => {
     await AsyncStorage.setItem("@isFirstLaunch", "true");
-    // Add logic for permissions like push notifications for the app
+    // Add logic for permission like location for the app
+    const newToken = await registerForPushNotificationsAsync();
+    if (newToken !== null) {
+      if (userFromDb) {
+        await updateUserNotificationTokenInDb(userFromDb, newToken);
+      }
+      await getLoggedInUserFromDb();
+    }
     navigation.navigate("Home");
   };
   return (

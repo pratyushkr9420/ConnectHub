@@ -8,6 +8,7 @@ import { UPLOAD_PRESET, CLOUD_NAME } from "@env";
 import { generateClient } from "aws-amplify/api";
 import { updateUser } from "../graphql/mutations";
 import { UpdateUserInput } from "../API";
+import { updateUserProfileInDb } from "../utils/functions";
 
 const client = generateClient();
 
@@ -44,26 +45,10 @@ const Profile = () => {
         body: data
       })
       const fetchResponse = await response.json()
-      await updateUserProfileInDb(fetchResponse.url);
+      userFromDb &&  await updateUserProfileInDb(userFromDb, fetchResponse.url);
       await getLoggedInUserFromDb();
     } catch (e) {
       console.log('Error while uploading image', e);
-    }
-  }
-  const updateUserProfileInDb = async (updatedProfile: any) => {
-    if (userFromDb) {
-        const userDetails : UpdateUserInput= {
-          id: userFromDb.id as string,
-          profilePicture: updatedProfile,
-        };
-        try {
-          await client.graphql({
-            query: updateUser,
-            variables: { input: userDetails }
-          })
-        } catch (e) {
-          console.log('Error updating profile in db', e);
-        }
     }
   }
   const ProfileLogo: FC<ProfileLogoProps> = ({ firstName }) => {

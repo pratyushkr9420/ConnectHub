@@ -17,6 +17,8 @@ export const onCreateUser = /* GraphQL */ `subscription OnCreateUser($filter: Mo
     email
     status
     notificationToken
+    latitude
+    longitude
     chatRooms {
       nextToken
       __typename
@@ -39,6 +41,8 @@ export const onUpdateUser = /* GraphQL */ `subscription OnUpdateUser($filter: Mo
     email
     status
     notificationToken
+    latitude
+    longitude
     chatRooms {
       nextToken
       __typename
@@ -61,6 +65,8 @@ export const onDeleteUser = /* GraphQL */ `subscription OnDeleteUser($filter: Mo
     email
     status
     notificationToken
+    latitude
+    longitude
     chatRooms {
       nextToken
       __typename
@@ -182,6 +188,8 @@ export const onCreatePost = /* GraphQL */ `subscription OnCreatePost($filter: Mo
       email
       status
       notificationToken
+      latitude
+      longitude
       createdAt
       updatedAt
       __typename
@@ -211,6 +219,8 @@ export const onUpdatePost = /* GraphQL */ `subscription OnUpdatePost($filter: Mo
       email
       status
       notificationToken
+      latitude
+      longitude
       createdAt
       updatedAt
       __typename
@@ -240,6 +250,8 @@ export const onDeletePost = /* GraphQL */ `subscription OnDeletePost($filter: Mo
       email
       status
       notificationToken
+      latitude
+      longitude
       createdAt
       updatedAt
       __typename
@@ -269,6 +281,8 @@ export const onCreateMessage = /* GraphQL */ `subscription OnCreateMessage($filt
       email
       status
       notificationToken
+      latitude
+      longitude
       createdAt
       updatedAt
       __typename
@@ -297,6 +311,8 @@ export const onUpdateMessage = /* GraphQL */ `subscription OnUpdateMessage($filt
       email
       status
       notificationToken
+      latitude
+      longitude
       createdAt
       updatedAt
       __typename
@@ -325,6 +341,8 @@ export const onDeleteMessage = /* GraphQL */ `subscription OnDeleteMessage($filt
       email
       status
       notificationToken
+      latitude
+      longitude
       createdAt
       updatedAt
       __typename
@@ -356,6 +374,8 @@ export const onCreateUserChatRooms = /* GraphQL */ `subscription OnCreateUserCha
       email
       status
       notificationToken
+      latitude
+      longitude
       createdAt
       updatedAt
       __typename
@@ -392,6 +412,8 @@ export const onUpdateUserChatRooms = /* GraphQL */ `subscription OnUpdateUserCha
       email
       status
       notificationToken
+      latitude
+      longitude
       createdAt
       updatedAt
       __typename
@@ -428,6 +450,8 @@ export const onDeleteUserChatRooms = /* GraphQL */ `subscription OnDeleteUserCha
       email
       status
       notificationToken
+      latitude
+      longitude
       createdAt
       updatedAt
       __typename

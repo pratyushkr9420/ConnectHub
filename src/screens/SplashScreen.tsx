@@ -7,16 +7,14 @@ import { CustomAuthUser } from "../utils/types";
 
 type SplashScreenProps = {
   setisLoadingAuthUser: React.Dispatch<React.SetStateAction<boolean>>;
-  setUser: React.Dispatch<React.SetStateAction<CustomAuthUser | null | undefined>>;
 };
 
-const SplashScreen: FC<SplashScreenProps> = ({ setisLoadingAuthUser, setUser }) => {
-  const { getLoggedInUser, authUser } = useAuthenticationContext();
+const SplashScreen: FC<SplashScreenProps> = ({ setisLoadingAuthUser }) => {
+  const { getLoggedInUser } = useAuthenticationContext();
   useEffect(() => {
     try {
-      setisLoadingAuthUser(false);
       getLoggedInUser();
-      setUser(authUser);
+      setisLoadingAuthUser(false);
     } catch (e) {
       console.log("Error logged in", e);
       setisLoadingAuthUser(false);

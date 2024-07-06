@@ -1,10 +1,14 @@
 import React, { Fragment, useEffect } from "react";
-import CustomText from "../components/CustomText";
 import CustomButton from "../components/CustomButton";
 import { useAuthenticationContext } from "../context/AuthContext";
-import { SafeAreaView, StatusBar, useColorScheme } from "react-native";
-import { ThemedView } from "../../themes/theme";
+import { SafeAreaView, StatusBar, TouchableOpacity, useColorScheme } from "react-native";
+import { ThemedScrollView, ThemedView } from "../../themes/theme";
 import Profile from "../components/Profile";
+import ProfileInfo from "../components/ProfileInfo";
+import ProfilePermissions from "../components/ProfilePermissions";
+import CustomText from "../components/CustomText";
+import scheme from "../../themes/colors";
+import ProfileAuthOptions from "../components/ProfileAuthOptions";
 
 const ProfileScreen = () => {
   const theme = useColorScheme();
@@ -16,11 +20,13 @@ const ProfileScreen = () => {
   }, []);
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <ThemedView style={{ flex: 1 }}>
+      <ThemedScrollView style={{ flex: 1, paddingBottom: 100, marginBottom: 50 }}>
         <Profile />
-        <CustomButton type="primary" title="Sign Out" onPress={handleSignOut} />
+        <ProfileInfo />
+        <ProfilePermissions />
+        <ProfileAuthOptions/>
         <StatusBar barStyle={theme === "dark" ? "light-content" : "dark-content"} />
-      </ThemedView>
+      </ThemedScrollView>
     </SafeAreaView>
   );
 };

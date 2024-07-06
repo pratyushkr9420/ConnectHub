@@ -3,6 +3,7 @@ import { Alert } from "react-native";
 import {
   signUp,
   signIn,
+  deleteUser,
   type SignInInput,
   confirmSignUp,
   type ConfirmSignUpInput,
@@ -20,6 +21,7 @@ import { AuthStates, CustomAuthUser, SignUpParameters, UserFromDb } from "../uti
 import { generateClient } from "aws-amplify/api";
 import { createUser } from "../graphql/mutations";
 import { getUser } from "../graphql/queries";
+import { deleteUserFromDb } from "../utils/functions";
 
 const client = generateClient();
 
@@ -30,6 +32,7 @@ type authenticationContextType = {
   isAuthLoading: boolean;
   handleSignIn: ({ username, password }: SignInInput) => void;
   handleSignOut: () => void;
+  handleUserDelete: () => Promise<void>;
   handleSignUp: ({ username, password, firstName, lastName }: SignUpParameters) => void;
   handleSignUpConfirmation: ({
     username,
@@ -105,6 +108,9 @@ function AuthenticationProvider({ children }: { children: ReactNode }): ReactEle
       lastName: user.attributes.family_name,
       profilePicture: null,
       email: user.attributes.email,
+      latitude: null,
+      longitude: null,
+      notificationToken: null,
     };
     try {
       const newUserInDb = await client.graphql({
@@ -141,6 +147,10 @@ function AuthenticationProvider({ children }: { children: ReactNode }): ReactEle
           lastName: response.data.getUser!.lastName,
           profilePicture: response.data.getUser!.profilePicture,
           email: response.data.getUser!.email,
+          status: response.data.getUser!.status,
+          latitude: response.data.getUser!.latitude,
+          longitude: response.data.getUser!.longitude,
+          notificationToken: response.data.getUser!.notificationToken,
         };
         setUserFromDb(currentLoggedInUserFromDb);
       }
@@ -211,6 +221,22 @@ function AuthenticationProvider({ children }: { children: ReactNode }): ReactEle
     }
   }
 
+  async function handleUserDelete() {
+    try {
+      if (authUser) {
+        await deleteUser();
+      }
+      if (userFromDb) {
+        await deleteUserFromDb(userFromDb)
+      };
+      setAuthUser(undefined);
+      setUserFromDb(undefined);
+      setAuthState("default");
+    } catch (error: any) {
+      Alert.alert("error deleting authenticated user ", error.message);
+    }
+  }
+
   async function handleResetPassword(username: string): Promise<ResetPasswordOutput | undefined> {
     setisAuthLoading(true);
     try {
@@ -264,6 +290,7 @@ function AuthenticationProvider({ children }: { children: ReactNode }): ReactEle
         handleSignIn,
         handleSignUp,
         handleSignOut,
+        handleUserDelete,
         handleSignUpConfirmation,
         setAuthState,
         setUserFromDb,
