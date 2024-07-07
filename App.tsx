@@ -2,12 +2,11 @@ import { Amplify } from "aws-amplify";
 import amplifyconfig from "./src/amplifyconfiguration.json";
 import { useEffect, useState } from "react";
 import { Hub } from "aws-amplify/utils";
-import { AuthUser, getCurrentUser } from "aws-amplify/auth";
 import { AuthenticationProvider, useAuthenticationContext } from "./src/context/AuthContext";
+import { PostsProvider } from "./src/context/PostsContext";
 import SplashScreen from "./src/screens/SplashScreen";
 import AppNavigator from "./src/navigation/AppNavigator";
 import AuthScreen from "./src/screens/AuthScreen";
-import { CustomAuthUser } from "./src/utils/types";
 import * as Notifications from 'expo-notifications';
 Amplify.configure(amplifyconfig);
 
@@ -23,7 +22,6 @@ Notifications.setNotificationHandler({
 const App = () => {
   const [isLoadingAuthUser, setisLoadingAuthUser] = useState(true);
   const { getLoggedInUser, getLoggedInUserFromDb, authUser, setAuthUser, setUserFromDb } = useAuthenticationContext();
-
   const listener = async ({ payload }: { payload: any }) => {
     switch (payload.event) {
       case "signedIn":
@@ -57,9 +55,12 @@ const App = () => {
 const WrappedApp = () => {
   return (
     <AuthenticationProvider>
-      <App />
+      <PostsProvider>
+        <App />
+      </PostsProvider>
     </AuthenticationProvider>
   );
 };
 
 export default WrappedApp;
+

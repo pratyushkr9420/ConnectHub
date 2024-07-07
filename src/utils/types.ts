@@ -19,6 +19,7 @@ export type AuthStates =
 
 export type HomeStackPrams = {
   Home: undefined;
+  CreateNewPost: undefined;
   OnBoarding: undefined;
 };
 
