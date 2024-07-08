@@ -6,30 +6,45 @@ import HomeScreen from "../screens/HomeScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import { AppNavigatorParams, HomeStackPrams } from "../utils/types";
 import { AuthenticationProvider, useAuthenticationContext } from "../context/AuthContext";
-import { useColorScheme } from "react-native";
+import { Button, useColorScheme } from "react-native";
 import OnBoardingScreen from "../screens/OnBoardingScreen";
 import { Ionicons } from "@expo/vector-icons";
 import ChatScreen from "../screens/ChatScreen";
 import CreateNewPostScreen from "../screens/CreateNewPostScreen";
+import { usePostsContext } from "../context/PostsContext";
 
 const HomeStack = createNativeStackNavigator<HomeStackPrams>();
 const Tab = createBottomTabNavigator<AppNavigatorParams>();
 
 const HomeStackNavigator = () => {
+  const { authUser } = useAuthenticationContext();
+  const { publishNewPost } = usePostsContext();
   return (
-    <HomeStack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false }}>
-      <HomeStack.Screen name="Home" component={HomeScreen} />
+    <HomeStack.Navigator initialRouteName="Home">
+      <HomeStack.Screen name="Home" component={HomeScreen} options={{
+        headerShown: false,
+      }}/>
       <HomeStack.Screen
         name="CreateNewPost"
         component={CreateNewPostScreen}
-        options={{
-          presentation: "fullScreenModal",
-        }}
+        options={({ navigation, route }) => ({
+          presentation: "modal",
+          title: "New Post",
+          headerRight:() => <Button disabled={!authUser} title="Publish" onPress={
+            async () => {
+              if (authUser) {
+                await publishNewPost(authUser);
+                navigation.navigate("Home")
+              }
+            }
+          }/>
+        })}
       />
       <HomeStack.Screen
         name="OnBoarding"
         component={OnBoardingScreen}
         options={{
+          headerShown: false,
           presentation: "fullScreenModal",
         }}
       />

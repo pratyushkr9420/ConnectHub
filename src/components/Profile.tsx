@@ -1,16 +1,11 @@
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
 import { ThemedView } from "../../themes/theme";
 import CustomText from "./CustomText";
 import { useAuthenticationContext } from "../context/AuthContext";
-import { Image, View, StyleSheet, TouchableOpacity } from "react-native";
+import { Image, StyleSheet, TouchableOpacity } from "react-native";
 import * as ImagePicker from 'expo-image-picker';
 import { UPLOAD_PRESET, CLOUD_NAME } from "@env";
-import { generateClient } from "aws-amplify/api";
-import { updateUser } from "../graphql/mutations";
-import { UpdateUserInput } from "../API";
-import { updateUserProfileInDb } from "../utils/functions";
-
-const client = generateClient();
+import { updateUserProfileInDb } from "../utils/userfunctions";
 
 type ProfileLogoProps = {
   firstName: string | null | undefined;

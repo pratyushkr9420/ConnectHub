@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from "react";
-import { Button, Alert, TouchableOpacity } from "react-native";
+import { Alert, TouchableOpacity } from "react-native";
 import CustomText from "../components/CustomText";
 import CustomInput from "../components/CustomInput";
 import CustomButton from "../components/CustomButton";

@@ -1,13 +1,11 @@
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
 import { ThemedView } from "../../themes/theme";
 import CustomText from "./CustomText";
-import { Alert, ColorSchemeName, StyleSheet, Text, TextInput, useColorScheme, View, Switch, Platform, TouchableOpacity } from "react-native";
+import { Alert, ColorSchemeName, StyleSheet, useColorScheme, Switch } from "react-native";
 import { useAuthenticationContext } from "../context/AuthContext";
 import { UserFromDb } from "../utils/types";
-import { updateUserNotificationTokenInDb, updateUserLocationInDb } from "../utils/functions";
-import scheme from "../../themes/colors";
+import { updateUserNotificationTokenInDb, updateUserLocationInDb } from "../utils/userfunctions";
 import * as Device from 'expo-device';
-import * as Notifications from 'expo-notifications';
 import { registerForPushNotificationsAsync, requestLocationPermission } from "../utils/permissions";
 
   

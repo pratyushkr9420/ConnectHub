@@ -4,11 +4,15 @@ import { ThemedView } from "../../themes/theme";
 import CustomText from "./CustomText";
 import { Post, User } from "../API";
 import { useAuthenticationContext } from "../context/AuthContext";
-import { useColorScheme, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { useColorScheme, StyleSheet, Image, TouchableOpacity, Alert, Linking, Button } from "react-native";
 import scheme from "../../themes/colors";
 import { generateClient } from "aws-amplify/api";
 import { getUser } from "../graphql/queries";
-import { FontAwesome5 } from '@expo/vector-icons';
+import { FontAwesome5, Ionicons } from '@expo/vector-icons';
+import { usePostsContext } from "../context/PostsContext";
+import * as Haptics from 'expo-haptics';
+import { send, EmailJSResponseStatus } from '@emailjs/react-native';
+import { KEY, SERVICE_ID, TEMPLATE_ID } from "@env";
 
 const client = generateClient();
 
@@ -19,8 +23,10 @@ type PostProps = {
 
 const RenderPost: FC<PostProps> = ({ post }) => {
     const { userFromDb, getLoggedInUserFromDb } = useAuthenticationContext();
+    const { incrementLikesOnPost, decrementLikesOnPost, removePost } = usePostsContext();
     const [author, setAuthor] = useState<User | null | undefined>();
     const theme = useColorScheme();
+    
     const fetchPostAuthor = async () => {
         if (post && post.postAuthorId) {
             const response = await client.graphql({
@@ -29,6 +35,65 @@ const RenderPost: FC<PostProps> = ({ post }) => {
             });
             setAuthor(response.data.getUser as User);
         }
+    }
+
+    const sendReportEmail = async () => {
+        try {
+            await send(
+                SERVICE_ID,
+                TEMPLATE_ID,
+                {
+                  name:`${userFromDb!.firstName} ${userFromDb!.lastName}`,
+                  post_id: post.id,
+                  user_id: userFromDb!.id,
+                  message: `Post with postId: ${post.id} created by the user with userId: ${post.postAuthorId} was reported by user with userId: ${userFromDb!.id}`,
+                },
+                {
+                  publicKey: KEY,
+                },
+              );
+           Alert.alert("Thank you for your report. We will review it as soon as possible.")
+        } catch (err) {
+            if (err instanceof EmailJSResponseStatus) {
+              console.log('EmailJS Request Failed...', err);
+            }
+      
+            console.log('ERROR', err);
+          }
+        // alert("Thank you for your report. We will review it as soon as possible.");
+    }
+
+    const toggleLikePress = async () => {
+        if (post && post.likedBy && userFromDb) {
+            if (post.likedBy.includes(userFromDb.id)) {
+                await decrementLikesOnPost(post, userFromDb);
+                Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+            } else {
+                await incrementLikesOnPost(post, userFromDb)
+                Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+            }
+        } else {
+            Alert.alert("Toggle doesn't work when missing post or missing user in database")
+        }
+    }
+
+    const handleReportIconPress = async () => {
+        Alert.alert(
+            "Do you want to report this post by the user",
+            "Is so press confirm, else you can abort this action by pressing cancel",
+            [
+                {
+                    text: "Cancel",
+                    onPress: () => console.log("Presed cancel on reporting user"),
+                    style:"cancel"
+                },
+                {
+                    text: "Confirm",
+                    onPress: async () => await sendReportEmail(),
+                    style:"destructive"
+                }
+            ]
+        )
     }
     useEffect(() => {
         fetchPostAuthor();
@@ -44,14 +109,24 @@ const RenderPost: FC<PostProps> = ({ post }) => {
                 </ThemedView>
             </ThemedView>
             <ThemedView>
-                <CustomText type="caption" style={{ marginLeft: 5, marginVertical: 10, fontSize: 16 }}>{post.content}</CustomText>
+                <CustomText type="caption" style={{ marginLeft: 5, marginVertical: 20, fontSize: 16 }}>{post.content}</CustomText>
                 <ThemedView style={styles.likesInfoContainer}>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={async () => {
+                        await toggleLikePress();
+                    }}>
                         {post && post.likedBy && userFromDb && <FontAwesome5 name="thumbs-up" size={20} color={ post.likedBy.includes(userFromDb!.id) ? scheme["light"].tabIconSelected : scheme[theme ? theme : "light"].text } />}
                     </TouchableOpacity>
                     {post && post.likedBy && userFromDb && <CustomText type="caption" style={[{ color: post.likedBy.includes(userFromDb!.id) ? scheme["light"].tabIconSelected : scheme[theme ? theme: "light"].text},{fontSize: 16 }]}>{post.numberOfLikes}</CustomText>}
                 </ThemedView>
             </ThemedView>
+            <TouchableOpacity style={styles.reportIcon}>
+                    <Ionicons
+                        name="ellipsis-horizontal"
+                        size={24}
+                        color={scheme[theme? theme:"light"].text + "70"}
+                        onPress={handleReportIconPress}
+                    />
+            </TouchableOpacity>
         </ThemedView>
     );
 }
@@ -64,7 +139,7 @@ const styles = StyleSheet.create({
     profileImageDetailsContainer: {
         flexDirection: "row",
         alignItems: "center",
-        gap: 10,
+        gap: 5,
         marginVertical: 5,
     },
     profileImage: {
@@ -75,6 +150,11 @@ const styles = StyleSheet.create({
     likesInfoContainer: {
         flexDirection: "row",
         gap: 5,
+    },
+    reportIcon: {
+        position: "absolute",
+        right: 18,
+        top: 15,
     }
 });
 

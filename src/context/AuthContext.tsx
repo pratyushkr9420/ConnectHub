@@ -1,4 +1,4 @@
-import { ReactElement, ReactNode, createContext, useContext, useState } from "react";
+import { ReactElement, ReactNode, createContext, useContext, useEffect, useState } from "react";
 import { Alert } from "react-native";
 import {
   signUp,
@@ -6,22 +6,19 @@ import {
   deleteUser,
   type SignInInput,
   confirmSignUp,
-  type ConfirmSignUpInput,
   getCurrentUser,
-  AuthUser,
   signOut,
   resetPassword,
   type ResetPasswordOutput,
   ConfirmResetPasswordInput,
   confirmResetPassword,
   fetchUserAttributes,
-  FetchUserAttributesOutput,
 } from "aws-amplify/auth";
 import { AuthStates, CustomAuthUser, SignUpParameters, UserFromDb } from "../utils/types";
 import { generateClient } from "aws-amplify/api";
 import { createUser } from "../graphql/mutations";
 import { getUser } from "../graphql/queries";
-import { deleteUserFromDb } from "../utils/functions";
+import { deleteUserFromDb } from "../utils/userfunctions";
 
 const client = generateClient();
 
@@ -280,6 +277,10 @@ function AuthenticationProvider({ children }: { children: ReactNode }): ReactEle
       setisAuthLoading(false);
     }
   }
+  
+  useEffect(() => {
+    getLoggedInUser();
+  }, []);
   return (
     <AuthenticationContext.Provider
       value={{

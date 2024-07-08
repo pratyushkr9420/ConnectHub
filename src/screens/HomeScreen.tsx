@@ -1,30 +1,25 @@
 import React, { FC, useEffect, useState } from "react";
-import ListTasks from "../components/ListTasks";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ThemedView } from "../../themes/theme";
-import CustomText from "../components/CustomText";
 import { HomeStackPrams } from "../utils/types";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { FlashList } from "@shopify/flash-list";
-import { Alert, Button, StatusBar, useColorScheme } from "react-native";
-import { generateClient } from "aws-amplify/api";
-import { postsByDate } from "../graphql/queries";
-import { ModelSortDirection, Post } from "../API";
+import { Button, StatusBar, useColorScheme } from "react-native";
 import ListHeader from "../components/ListHeader";
 import RenderPost from "../components/RenderPost";
 import scheme from "../../themes/colors";
 import { usePostsContext } from "../context/PostsContext";
+import { useAuthenticationContext } from "../context/AuthContext";
 
 type HomeScreenProps = {
   navigation: NativeStackNavigationProp<HomeStackPrams, "Home">;
 };
 
-const client = generateClient();
 
 const HomeScreen: FC<HomeScreenProps> = ({ navigation }) => {
   const theme = useColorScheme();
-  const { posts, fetchAdditionalPosts } = usePostsContext();
+  const { posts, fetchPosts, fetchAdditionalPosts, loadingPosts } = usePostsContext();
   const checkFirstLaunch = async () => {
     try {
       const value = await AsyncStorage.getItem("@isFirstLaunch");
@@ -43,9 +38,11 @@ const HomeScreen: FC<HomeScreenProps> = ({ navigation }) => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <ThemedView style={{ flex: 1 }}>
-        {/* <CustomText type="title">Home</CustomText> */}
         <FlashList
           data={posts}
+          refreshing={loadingPosts}
+          showsVerticalScrollIndicator={false}
+          onRefresh={fetchPosts}
           contentContainerStyle={{paddingRight: 10}}
           renderItem={({ item }) => <RenderPost post={item}/>}
           estimatedItemSize={200}

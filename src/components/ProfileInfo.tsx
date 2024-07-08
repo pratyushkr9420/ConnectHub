@@ -1,11 +1,12 @@
 import React, { FC, useState } from "react";
 import { ThemedView } from "../../themes/theme";
 import CustomText from "./CustomText";
-import { Alert, ColorSchemeName, StyleSheet, Text, TextInput, useColorScheme, View } from "react-native";
+import { ColorSchemeName, StyleSheet, Text, TextInput, useColorScheme, View } from "react-native";
 import { useAuthenticationContext } from "../context/AuthContext";
 import { UserFromDb } from "../utils/types";
-import { updateUserFirstNameInDb, updateUserLastNameInDb, updateUserStatusInDb  } from "../utils/functions";
+import { updateUserFirstNameInDb, updateUserLastNameInDb, updateUserStatusInDb  } from "../utils/userfunctions";
 import scheme from "../../themes/colors";
+
 const ProfileInfo = () => {
     const theme = useColorScheme();
     const { userFromDb, getLoggedInUserFromDb } = useAuthenticationContext();

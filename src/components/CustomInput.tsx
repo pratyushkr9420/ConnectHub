@@ -1,5 +1,4 @@
 import { TextInput, View, StyleSheet, useColorScheme } from "react-native";
-import { Colors } from "../../themes/colors";
 import scheme from "../../themes/colors";
 import { FC } from "react";
 import CustomText from "./CustomText";

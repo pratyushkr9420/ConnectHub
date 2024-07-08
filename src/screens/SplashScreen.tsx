@@ -1,9 +1,7 @@
 import React, { FC, useEffect } from "react";
 import { View } from "react-native";
 import CustomText from "../components/CustomText";
-import { AuthUser, getCurrentUser } from "aws-amplify/auth";
-import { AuthenticationProvider, useAuthenticationContext } from "../context/AuthContext";
-import { CustomAuthUser } from "../utils/types";
+import { useAuthenticationContext } from "../context/AuthContext";
 
 type SplashScreenProps = {
   setisLoadingAuthUser: React.Dispatch<React.SetStateAction<boolean>>;

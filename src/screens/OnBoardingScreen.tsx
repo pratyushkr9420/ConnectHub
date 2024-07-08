@@ -9,7 +9,7 @@ import { features } from "../utils/features";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useAuthenticationContext } from "../context/AuthContext";
 import { registerForPushNotificationsAsync } from "../utils/permissions";
-import { updateUserNotificationTokenInDb } from "../utils/functions";
+import { updateUserNotificationTokenInDb } from "../utils/userfunctions";
 
 type OnBoardingScreenProps = {
   navigation: NativeStackNavigationProp<HomeStackPrams, "OnBoarding">;

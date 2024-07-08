@@ -1,6 +1,5 @@
 import React, { FC, ReactNode } from "react";
 import { Text, StyleSheet, useColorScheme, ColorSchemeName, TextProps } from "react-native";
-import { Colors } from "../../themes/colors";
 import scheme from "../../themes/colors";
 
 type CustomTextProps = {

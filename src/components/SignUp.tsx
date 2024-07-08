@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from "react";
-import { Alert, Button } from "react-native";
+import { Alert } from "react-native";
 import CustomText from "./CustomText";
 import CustomInput from "./CustomInput";
 import CustomButton from "./CustomButton";

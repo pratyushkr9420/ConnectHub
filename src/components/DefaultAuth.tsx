@@ -1,8 +1,8 @@
 import React, { Fragment } from "react";
-import CustomInput from "./CustomInput";
 import CustomButton from "./CustomButton";
 import CustomText from "./CustomText";
 import { useAuthenticationContext } from "../context/AuthContext";
+
 
 const DefaultAuth = () => {
   const { setAuthState } = useAuthenticationContext();

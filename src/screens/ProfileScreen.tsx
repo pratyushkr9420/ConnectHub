@@ -1,13 +1,10 @@
-import React, { Fragment, useEffect } from "react";
-import CustomButton from "../components/CustomButton";
+import React, { useEffect } from "react";
 import { useAuthenticationContext } from "../context/AuthContext";
-import { SafeAreaView, StatusBar, TouchableOpacity, useColorScheme } from "react-native";
-import { ThemedScrollView, ThemedView } from "../../themes/theme";
+import { SafeAreaView, StatusBar, useColorScheme } from "react-native";
+import { ThemedScrollView } from "../../themes/theme";
 import Profile from "../components/Profile";
 import ProfileInfo from "../components/ProfileInfo";
 import ProfilePermissions from "../components/ProfilePermissions";
-import CustomText from "../components/CustomText";
-import scheme from "../../themes/colors";
 import ProfileAuthOptions from "../components/ProfileAuthOptions";
 
 const ProfileScreen = () => {
