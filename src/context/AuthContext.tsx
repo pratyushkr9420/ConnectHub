@@ -19,7 +19,7 @@ import { generateClient } from "aws-amplify/api";
 import { createUser } from "../graphql/mutations";
 import { getUser } from "../graphql/queries";
 import { deleteUserFromDb } from "../utils/userfunctions";
-
+import { ModelUserChatRoomsConnection } from "../API";
 const client = generateClient();
 
 type authenticationContextType = {
@@ -44,7 +44,7 @@ type authenticationContextType = {
   setAuthUser: React.Dispatch<React.SetStateAction<CustomAuthUser | null | undefined>>;
   setUserFromDb: React.Dispatch<React.SetStateAction<UserFromDb | null | undefined>>;
   getLoggedInUser: () => Promise<CustomAuthUser>;
-  getLoggedInUserFromDb: () => Promise<void>;
+  getLoggedInUserFromDb: () => Promise<UserFromDb | undefined>;
   handleResetPassword: (username: string) => Promise<ResetPasswordOutput | undefined>;
   handleResetPasswordNextSteps: (output: ResetPasswordOutput) => void;
   handleConfirmResetPassword: ({
@@ -108,6 +108,7 @@ function AuthenticationProvider({ children }: { children: ReactNode }): ReactEle
       latitude: null,
       longitude: null,
       notificationToken: null,
+      chatRooms: [],
     };
     try {
       const newUserInDb = await client.graphql({
@@ -148,8 +149,10 @@ function AuthenticationProvider({ children }: { children: ReactNode }): ReactEle
           latitude: response.data.getUser!.latitude,
           longitude: response.data.getUser!.longitude,
           notificationToken: response.data.getUser!.notificationToken,
+          chatRooms: response.data.getUser!.chatRooms?.items
         };
         setUserFromDb(currentLoggedInUserFromDb);
+        return currentLoggedInUserFromDb;
       }
     } catch (e) {
       console.log("Error while fetching logged in user from database:", e);

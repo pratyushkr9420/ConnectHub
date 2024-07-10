@@ -12,6 +12,7 @@ import { Ionicons } from "@expo/vector-icons";
 import ChatScreen from "../screens/ChatScreen";
 import CreateNewPostScreen from "../screens/CreateNewPostScreen";
 import { usePostsContext } from "../context/PostsContext";
+import { useChatsContext } from "../context/ChatsContext";
 
 const HomeStack = createNativeStackNavigator<HomeStackPrams>();
 const Tab = createBottomTabNavigator<AppNavigatorParams>();
@@ -53,9 +54,10 @@ const HomeStackNavigator = () => {
 };
 
 const AppNavigator = () => {
-  const { getLoggedInUser } = useAuthenticationContext();
+  const { getLoggedInUser, userFromDb, getLoggedInUserFromDb } = useAuthenticationContext();
   useEffect(() => {
     getLoggedInUser();
+    getLoggedInUserFromDb();
   }, []);
   const apptheme = useColorScheme();
   return (

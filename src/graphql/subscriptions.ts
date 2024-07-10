@@ -20,6 +20,98 @@ export const onCreateUser = /* GraphQL */ `subscription OnCreateUser($filter: Mo
     latitude
     longitude
     chatRooms {
+      items {
+        id
+        userId
+        chatRoomId
+        user {
+          id
+          firstName
+          lastName
+          profilePicture
+          email
+          status
+          notificationToken
+          latitude
+          longitude
+          chatRooms {
+            items {
+              id
+              userId
+              chatRoomId
+              createdAt
+              updatedAt
+              __typename
+            }
+            nextToken
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        chatRoom {
+          id
+          isSeenBy
+          messages {
+            items {
+              id
+              chatRoomID
+              content
+              createdAt
+              updatedAt
+              chatRoomMessagesId
+              messageAuthorId
+              __typename
+            }
+            nextToken
+            __typename
+          }
+          lastMessage {
+            id
+            chatRoomID
+            author {
+              id
+              firstName
+              lastName
+              profilePicture
+              email
+              status
+              notificationToken
+              latitude
+              longitude
+              createdAt
+              updatedAt
+              __typename
+            }
+            content
+            createdAt
+            updatedAt
+            chatRoomMessagesId
+            messageAuthorId
+            __typename
+          }
+          participants {
+            items {
+              id
+              userId
+              chatRoomId
+              createdAt
+              updatedAt
+              __typename
+            }
+            nextToken
+            __typename
+          }
+          createdAt
+          updatedAt
+          chatRoomLastMessageId
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
       nextToken
       __typename
     }
@@ -44,6 +136,98 @@ export const onUpdateUser = /* GraphQL */ `subscription OnUpdateUser($filter: Mo
     latitude
     longitude
     chatRooms {
+      items {
+        id
+        userId
+        chatRoomId
+        user {
+          id
+          firstName
+          lastName
+          profilePicture
+          email
+          status
+          notificationToken
+          latitude
+          longitude
+          chatRooms {
+            items {
+              id
+              userId
+              chatRoomId
+              createdAt
+              updatedAt
+              __typename
+            }
+            nextToken
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        chatRoom {
+          id
+          isSeenBy
+          messages {
+            items {
+              id
+              chatRoomID
+              content
+              createdAt
+              updatedAt
+              chatRoomMessagesId
+              messageAuthorId
+              __typename
+            }
+            nextToken
+            __typename
+          }
+          lastMessage {
+            id
+            chatRoomID
+            author {
+              id
+              firstName
+              lastName
+              profilePicture
+              email
+              status
+              notificationToken
+              latitude
+              longitude
+              createdAt
+              updatedAt
+              __typename
+            }
+            content
+            createdAt
+            updatedAt
+            chatRoomMessagesId
+            messageAuthorId
+            __typename
+          }
+          participants {
+            items {
+              id
+              userId
+              chatRoomId
+              createdAt
+              updatedAt
+              __typename
+            }
+            nextToken
+            __typename
+          }
+          createdAt
+          updatedAt
+          chatRoomLastMessageId
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
       nextToken
       __typename
     }
@@ -68,6 +252,98 @@ export const onDeleteUser = /* GraphQL */ `subscription OnDeleteUser($filter: Mo
     latitude
     longitude
     chatRooms {
+      items {
+        id
+        userId
+        chatRoomId
+        user {
+          id
+          firstName
+          lastName
+          profilePicture
+          email
+          status
+          notificationToken
+          latitude
+          longitude
+          chatRooms {
+            items {
+              id
+              userId
+              chatRoomId
+              createdAt
+              updatedAt
+              __typename
+            }
+            nextToken
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        chatRoom {
+          id
+          isSeenBy
+          messages {
+            items {
+              id
+              chatRoomID
+              content
+              createdAt
+              updatedAt
+              chatRoomMessagesId
+              messageAuthorId
+              __typename
+            }
+            nextToken
+            __typename
+          }
+          lastMessage {
+            id
+            chatRoomID
+            author {
+              id
+              firstName
+              lastName
+              profilePicture
+              email
+              status
+              notificationToken
+              latitude
+              longitude
+              createdAt
+              updatedAt
+              __typename
+            }
+            content
+            createdAt
+            updatedAt
+            chatRoomMessagesId
+            messageAuthorId
+            __typename
+          }
+          participants {
+            items {
+              id
+              userId
+              chatRoomId
+              createdAt
+              updatedAt
+              __typename
+            }
+            nextToken
+            __typename
+          }
+          createdAt
+          updatedAt
+          chatRoomLastMessageId
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
       nextToken
       __typename
     }
@@ -85,12 +361,96 @@ export const onCreateChatRoom = /* GraphQL */ `subscription OnCreateChatRoom($fi
     id
     isSeenBy
     messages {
+      items {
+        id
+        chatRoomID
+        author {
+          id
+          firstName
+          lastName
+          profilePicture
+          email
+          status
+          notificationToken
+          latitude
+          longitude
+          chatRooms {
+            items {
+              id
+              userId
+              chatRoomId
+              createdAt
+              updatedAt
+              __typename
+            }
+            nextToken
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        content
+        createdAt
+        updatedAt
+        chatRoomMessagesId
+        messageAuthorId
+        __typename
+      }
       nextToken
       __typename
     }
     lastMessage {
       id
       chatRoomID
+      author {
+        id
+        firstName
+        lastName
+        profilePicture
+        email
+        status
+        notificationToken
+        latitude
+        longitude
+        chatRooms {
+          items {
+            id
+            userId
+            chatRoomId
+            user {
+              id
+              firstName
+              lastName
+              profilePicture
+              email
+              status
+              notificationToken
+              latitude
+              longitude
+              createdAt
+              updatedAt
+              __typename
+            }
+            chatRoom {
+              id
+              isSeenBy
+              createdAt
+              updatedAt
+              chatRoomLastMessageId
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
       content
       createdAt
       updatedAt
@@ -99,6 +459,98 @@ export const onCreateChatRoom = /* GraphQL */ `subscription OnCreateChatRoom($fi
       __typename
     }
     participants {
+      items {
+        id
+        userId
+        chatRoomId
+        user {
+          id
+          firstName
+          lastName
+          profilePicture
+          email
+          status
+          notificationToken
+          latitude
+          longitude
+          chatRooms {
+            items {
+              id
+              userId
+              chatRoomId
+              createdAt
+              updatedAt
+              __typename
+            }
+            nextToken
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        chatRoom {
+          id
+          isSeenBy
+          messages {
+            items {
+              id
+              chatRoomID
+              content
+              createdAt
+              updatedAt
+              chatRoomMessagesId
+              messageAuthorId
+              __typename
+            }
+            nextToken
+            __typename
+          }
+          lastMessage {
+            id
+            chatRoomID
+            author {
+              id
+              firstName
+              lastName
+              profilePicture
+              email
+              status
+              notificationToken
+              latitude
+              longitude
+              createdAt
+              updatedAt
+              __typename
+            }
+            content
+            createdAt
+            updatedAt
+            chatRoomMessagesId
+            messageAuthorId
+            __typename
+          }
+          participants {
+            items {
+              id
+              userId
+              chatRoomId
+              createdAt
+              updatedAt
+              __typename
+            }
+            nextToken
+            __typename
+          }
+          createdAt
+          updatedAt
+          chatRoomLastMessageId
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
       nextToken
       __typename
     }
@@ -117,12 +569,96 @@ export const onUpdateChatRoom = /* GraphQL */ `subscription OnUpdateChatRoom($fi
     id
     isSeenBy
     messages {
+      items {
+        id
+        chatRoomID
+        author {
+          id
+          firstName
+          lastName
+          profilePicture
+          email
+          status
+          notificationToken
+          latitude
+          longitude
+          chatRooms {
+            items {
+              id
+              userId
+              chatRoomId
+              createdAt
+              updatedAt
+              __typename
+            }
+            nextToken
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        content
+        createdAt
+        updatedAt
+        chatRoomMessagesId
+        messageAuthorId
+        __typename
+      }
       nextToken
       __typename
     }
     lastMessage {
       id
       chatRoomID
+      author {
+        id
+        firstName
+        lastName
+        profilePicture
+        email
+        status
+        notificationToken
+        latitude
+        longitude
+        chatRooms {
+          items {
+            id
+            userId
+            chatRoomId
+            user {
+              id
+              firstName
+              lastName
+              profilePicture
+              email
+              status
+              notificationToken
+              latitude
+              longitude
+              createdAt
+              updatedAt
+              __typename
+            }
+            chatRoom {
+              id
+              isSeenBy
+              createdAt
+              updatedAt
+              chatRoomLastMessageId
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
       content
       createdAt
       updatedAt
@@ -131,6 +667,98 @@ export const onUpdateChatRoom = /* GraphQL */ `subscription OnUpdateChatRoom($fi
       __typename
     }
     participants {
+      items {
+        id
+        userId
+        chatRoomId
+        user {
+          id
+          firstName
+          lastName
+          profilePicture
+          email
+          status
+          notificationToken
+          latitude
+          longitude
+          chatRooms {
+            items {
+              id
+              userId
+              chatRoomId
+              createdAt
+              updatedAt
+              __typename
+            }
+            nextToken
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        chatRoom {
+          id
+          isSeenBy
+          messages {
+            items {
+              id
+              chatRoomID
+              content
+              createdAt
+              updatedAt
+              chatRoomMessagesId
+              messageAuthorId
+              __typename
+            }
+            nextToken
+            __typename
+          }
+          lastMessage {
+            id
+            chatRoomID
+            author {
+              id
+              firstName
+              lastName
+              profilePicture
+              email
+              status
+              notificationToken
+              latitude
+              longitude
+              createdAt
+              updatedAt
+              __typename
+            }
+            content
+            createdAt
+            updatedAt
+            chatRoomMessagesId
+            messageAuthorId
+            __typename
+          }
+          participants {
+            items {
+              id
+              userId
+              chatRoomId
+              createdAt
+              updatedAt
+              __typename
+            }
+            nextToken
+            __typename
+          }
+          createdAt
+          updatedAt
+          chatRoomLastMessageId
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
       nextToken
       __typename
     }
@@ -149,12 +777,96 @@ export const onDeleteChatRoom = /* GraphQL */ `subscription OnDeleteChatRoom($fi
     id
     isSeenBy
     messages {
+      items {
+        id
+        chatRoomID
+        author {
+          id
+          firstName
+          lastName
+          profilePicture
+          email
+          status
+          notificationToken
+          latitude
+          longitude
+          chatRooms {
+            items {
+              id
+              userId
+              chatRoomId
+              createdAt
+              updatedAt
+              __typename
+            }
+            nextToken
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        content
+        createdAt
+        updatedAt
+        chatRoomMessagesId
+        messageAuthorId
+        __typename
+      }
       nextToken
       __typename
     }
     lastMessage {
       id
       chatRoomID
+      author {
+        id
+        firstName
+        lastName
+        profilePicture
+        email
+        status
+        notificationToken
+        latitude
+        longitude
+        chatRooms {
+          items {
+            id
+            userId
+            chatRoomId
+            user {
+              id
+              firstName
+              lastName
+              profilePicture
+              email
+              status
+              notificationToken
+              latitude
+              longitude
+              createdAt
+              updatedAt
+              __typename
+            }
+            chatRoom {
+              id
+              isSeenBy
+              createdAt
+              updatedAt
+              chatRoomLastMessageId
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
       content
       createdAt
       updatedAt
@@ -163,6 +875,98 @@ export const onDeleteChatRoom = /* GraphQL */ `subscription OnDeleteChatRoom($fi
       __typename
     }
     participants {
+      items {
+        id
+        userId
+        chatRoomId
+        user {
+          id
+          firstName
+          lastName
+          profilePicture
+          email
+          status
+          notificationToken
+          latitude
+          longitude
+          chatRooms {
+            items {
+              id
+              userId
+              chatRoomId
+              createdAt
+              updatedAt
+              __typename
+            }
+            nextToken
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        chatRoom {
+          id
+          isSeenBy
+          messages {
+            items {
+              id
+              chatRoomID
+              content
+              createdAt
+              updatedAt
+              chatRoomMessagesId
+              messageAuthorId
+              __typename
+            }
+            nextToken
+            __typename
+          }
+          lastMessage {
+            id
+            chatRoomID
+            author {
+              id
+              firstName
+              lastName
+              profilePicture
+              email
+              status
+              notificationToken
+              latitude
+              longitude
+              createdAt
+              updatedAt
+              __typename
+            }
+            content
+            createdAt
+            updatedAt
+            chatRoomMessagesId
+            messageAuthorId
+            __typename
+          }
+          participants {
+            items {
+              id
+              userId
+              chatRoomId
+              createdAt
+              updatedAt
+              __typename
+            }
+            nextToken
+            __typename
+          }
+          createdAt
+          updatedAt
+          chatRoomLastMessageId
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
       nextToken
       __typename
     }
@@ -190,6 +994,62 @@ export const onCreatePost = /* GraphQL */ `subscription OnCreatePost($filter: Mo
       notificationToken
       latitude
       longitude
+      chatRooms {
+        items {
+          id
+          userId
+          chatRoomId
+          user {
+            id
+            firstName
+            lastName
+            profilePicture
+            email
+            status
+            notificationToken
+            latitude
+            longitude
+            chatRooms {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          chatRoom {
+            id
+            isSeenBy
+            messages {
+              nextToken
+              __typename
+            }
+            lastMessage {
+              id
+              chatRoomID
+              content
+              createdAt
+              updatedAt
+              chatRoomMessagesId
+              messageAuthorId
+              __typename
+            }
+            participants {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            chatRoomLastMessageId
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -221,6 +1081,62 @@ export const onUpdatePost = /* GraphQL */ `subscription OnUpdatePost($filter: Mo
       notificationToken
       latitude
       longitude
+      chatRooms {
+        items {
+          id
+          userId
+          chatRoomId
+          user {
+            id
+            firstName
+            lastName
+            profilePicture
+            email
+            status
+            notificationToken
+            latitude
+            longitude
+            chatRooms {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          chatRoom {
+            id
+            isSeenBy
+            messages {
+              nextToken
+              __typename
+            }
+            lastMessage {
+              id
+              chatRoomID
+              content
+              createdAt
+              updatedAt
+              chatRoomMessagesId
+              messageAuthorId
+              __typename
+            }
+            participants {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            chatRoomLastMessageId
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -252,6 +1168,62 @@ export const onDeletePost = /* GraphQL */ `subscription OnDeletePost($filter: Mo
       notificationToken
       latitude
       longitude
+      chatRooms {
+        items {
+          id
+          userId
+          chatRoomId
+          user {
+            id
+            firstName
+            lastName
+            profilePicture
+            email
+            status
+            notificationToken
+            latitude
+            longitude
+            chatRooms {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          chatRoom {
+            id
+            isSeenBy
+            messages {
+              nextToken
+              __typename
+            }
+            lastMessage {
+              id
+              chatRoomID
+              content
+              createdAt
+              updatedAt
+              chatRoomMessagesId
+              messageAuthorId
+              __typename
+            }
+            participants {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            chatRoomLastMessageId
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -283,6 +1255,62 @@ export const onCreateMessage = /* GraphQL */ `subscription OnCreateMessage($filt
       notificationToken
       latitude
       longitude
+      chatRooms {
+        items {
+          id
+          userId
+          chatRoomId
+          user {
+            id
+            firstName
+            lastName
+            profilePicture
+            email
+            status
+            notificationToken
+            latitude
+            longitude
+            chatRooms {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          chatRoom {
+            id
+            isSeenBy
+            messages {
+              nextToken
+              __typename
+            }
+            lastMessage {
+              id
+              chatRoomID
+              content
+              createdAt
+              updatedAt
+              chatRoomMessagesId
+              messageAuthorId
+              __typename
+            }
+            participants {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            chatRoomLastMessageId
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -313,6 +1341,62 @@ export const onUpdateMessage = /* GraphQL */ `subscription OnUpdateMessage($filt
       notificationToken
       latitude
       longitude
+      chatRooms {
+        items {
+          id
+          userId
+          chatRoomId
+          user {
+            id
+            firstName
+            lastName
+            profilePicture
+            email
+            status
+            notificationToken
+            latitude
+            longitude
+            chatRooms {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          chatRoom {
+            id
+            isSeenBy
+            messages {
+              nextToken
+              __typename
+            }
+            lastMessage {
+              id
+              chatRoomID
+              content
+              createdAt
+              updatedAt
+              chatRoomMessagesId
+              messageAuthorId
+              __typename
+            }
+            participants {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            chatRoomLastMessageId
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -343,6 +1427,62 @@ export const onDeleteMessage = /* GraphQL */ `subscription OnDeleteMessage($filt
       notificationToken
       latitude
       longitude
+      chatRooms {
+        items {
+          id
+          userId
+          chatRoomId
+          user {
+            id
+            firstName
+            lastName
+            profilePicture
+            email
+            status
+            notificationToken
+            latitude
+            longitude
+            chatRooms {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          chatRoom {
+            id
+            isSeenBy
+            messages {
+              nextToken
+              __typename
+            }
+            lastMessage {
+              id
+              chatRoomID
+              content
+              createdAt
+              updatedAt
+              chatRoomMessagesId
+              messageAuthorId
+              __typename
+            }
+            participants {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            chatRoomLastMessageId
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -376,6 +1516,62 @@ export const onCreateUserChatRooms = /* GraphQL */ `subscription OnCreateUserCha
       notificationToken
       latitude
       longitude
+      chatRooms {
+        items {
+          id
+          userId
+          chatRoomId
+          user {
+            id
+            firstName
+            lastName
+            profilePicture
+            email
+            status
+            notificationToken
+            latitude
+            longitude
+            chatRooms {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          chatRoom {
+            id
+            isSeenBy
+            messages {
+              nextToken
+              __typename
+            }
+            lastMessage {
+              id
+              chatRoomID
+              content
+              createdAt
+              updatedAt
+              chatRoomMessagesId
+              messageAuthorId
+              __typename
+            }
+            participants {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            chatRoomLastMessageId
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -383,6 +1579,130 @@ export const onCreateUserChatRooms = /* GraphQL */ `subscription OnCreateUserCha
     chatRoom {
       id
       isSeenBy
+      messages {
+        items {
+          id
+          chatRoomID
+          author {
+            id
+            firstName
+            lastName
+            profilePicture
+            email
+            status
+            notificationToken
+            latitude
+            longitude
+            chatRooms {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          content
+          createdAt
+          updatedAt
+          chatRoomMessagesId
+          messageAuthorId
+          __typename
+        }
+        nextToken
+        __typename
+      }
+      lastMessage {
+        id
+        chatRoomID
+        author {
+          id
+          firstName
+          lastName
+          profilePicture
+          email
+          status
+          notificationToken
+          latitude
+          longitude
+          chatRooms {
+            items {
+              id
+              userId
+              chatRoomId
+              createdAt
+              updatedAt
+              __typename
+            }
+            nextToken
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        content
+        createdAt
+        updatedAt
+        chatRoomMessagesId
+        messageAuthorId
+        __typename
+      }
+      participants {
+        items {
+          id
+          userId
+          chatRoomId
+          user {
+            id
+            firstName
+            lastName
+            profilePicture
+            email
+            status
+            notificationToken
+            latitude
+            longitude
+            chatRooms {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          chatRoom {
+            id
+            isSeenBy
+            messages {
+              nextToken
+              __typename
+            }
+            lastMessage {
+              id
+              chatRoomID
+              content
+              createdAt
+              updatedAt
+              chatRoomMessagesId
+              messageAuthorId
+              __typename
+            }
+            participants {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            chatRoomLastMessageId
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       chatRoomLastMessageId
@@ -414,6 +1734,62 @@ export const onUpdateUserChatRooms = /* GraphQL */ `subscription OnUpdateUserCha
       notificationToken
       latitude
       longitude
+      chatRooms {
+        items {
+          id
+          userId
+          chatRoomId
+          user {
+            id
+            firstName
+            lastName
+            profilePicture
+            email
+            status
+            notificationToken
+            latitude
+            longitude
+            chatRooms {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          chatRoom {
+            id
+            isSeenBy
+            messages {
+              nextToken
+              __typename
+            }
+            lastMessage {
+              id
+              chatRoomID
+              content
+              createdAt
+              updatedAt
+              chatRoomMessagesId
+              messageAuthorId
+              __typename
+            }
+            participants {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            chatRoomLastMessageId
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -421,6 +1797,130 @@ export const onUpdateUserChatRooms = /* GraphQL */ `subscription OnUpdateUserCha
     chatRoom {
       id
       isSeenBy
+      messages {
+        items {
+          id
+          chatRoomID
+          author {
+            id
+            firstName
+            lastName
+            profilePicture
+            email
+            status
+            notificationToken
+            latitude
+            longitude
+            chatRooms {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          content
+          createdAt
+          updatedAt
+          chatRoomMessagesId
+          messageAuthorId
+          __typename
+        }
+        nextToken
+        __typename
+      }
+      lastMessage {
+        id
+        chatRoomID
+        author {
+          id
+          firstName
+          lastName
+          profilePicture
+          email
+          status
+          notificationToken
+          latitude
+          longitude
+          chatRooms {
+            items {
+              id
+              userId
+              chatRoomId
+              createdAt
+              updatedAt
+              __typename
+            }
+            nextToken
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        content
+        createdAt
+        updatedAt
+        chatRoomMessagesId
+        messageAuthorId
+        __typename
+      }
+      participants {
+        items {
+          id
+          userId
+          chatRoomId
+          user {
+            id
+            firstName
+            lastName
+            profilePicture
+            email
+            status
+            notificationToken
+            latitude
+            longitude
+            chatRooms {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          chatRoom {
+            id
+            isSeenBy
+            messages {
+              nextToken
+              __typename
+            }
+            lastMessage {
+              id
+              chatRoomID
+              content
+              createdAt
+              updatedAt
+              chatRoomMessagesId
+              messageAuthorId
+              __typename
+            }
+            participants {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            chatRoomLastMessageId
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       chatRoomLastMessageId
@@ -452,6 +1952,62 @@ export const onDeleteUserChatRooms = /* GraphQL */ `subscription OnDeleteUserCha
       notificationToken
       latitude
       longitude
+      chatRooms {
+        items {
+          id
+          userId
+          chatRoomId
+          user {
+            id
+            firstName
+            lastName
+            profilePicture
+            email
+            status
+            notificationToken
+            latitude
+            longitude
+            chatRooms {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          chatRoom {
+            id
+            isSeenBy
+            messages {
+              nextToken
+              __typename
+            }
+            lastMessage {
+              id
+              chatRoomID
+              content
+              createdAt
+              updatedAt
+              chatRoomMessagesId
+              messageAuthorId
+              __typename
+            }
+            participants {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            chatRoomLastMessageId
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -459,6 +2015,130 @@ export const onDeleteUserChatRooms = /* GraphQL */ `subscription OnDeleteUserCha
     chatRoom {
       id
       isSeenBy
+      messages {
+        items {
+          id
+          chatRoomID
+          author {
+            id
+            firstName
+            lastName
+            profilePicture
+            email
+            status
+            notificationToken
+            latitude
+            longitude
+            chatRooms {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          content
+          createdAt
+          updatedAt
+          chatRoomMessagesId
+          messageAuthorId
+          __typename
+        }
+        nextToken
+        __typename
+      }
+      lastMessage {
+        id
+        chatRoomID
+        author {
+          id
+          firstName
+          lastName
+          profilePicture
+          email
+          status
+          notificationToken
+          latitude
+          longitude
+          chatRooms {
+            items {
+              id
+              userId
+              chatRoomId
+              createdAt
+              updatedAt
+              __typename
+            }
+            nextToken
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        content
+        createdAt
+        updatedAt
+        chatRoomMessagesId
+        messageAuthorId
+        __typename
+      }
+      participants {
+        items {
+          id
+          userId
+          chatRoomId
+          user {
+            id
+            firstName
+            lastName
+            profilePicture
+            email
+            status
+            notificationToken
+            latitude
+            longitude
+            chatRooms {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          chatRoom {
+            id
+            isSeenBy
+            messages {
+              nextToken
+              __typename
+            }
+            lastMessage {
+              id
+              chatRoomID
+              content
+              createdAt
+              updatedAt
+              chatRoomMessagesId
+              messageAuthorId
+              __typename
+            }
+            participants {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            chatRoomLastMessageId
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       chatRoomLastMessageId

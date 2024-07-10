@@ -132,7 +132,7 @@ const RenderPost: FC<PostProps> = ({ post }) => {
 }
 const styles = StyleSheet.create({
     postContainer: {
-        paddingVertical: 20,
+        paddingVertical: 10,
         borderBottomWidth: 1,
         marginVertical: 10,
     },
@@ -140,12 +140,12 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         gap: 5,
-        marginVertical: 5,
+        marginVertical: 2.5,
     },
     profileImage: {
-        width: 90,
-        height: 90,
-        borderRadius: 45,
+        width: 60,
+        height: 60,
+        borderRadius: 30,
     },
     likesInfoContainer: {
         flexDirection: "row",

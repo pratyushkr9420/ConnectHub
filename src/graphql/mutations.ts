@@ -23,6 +23,98 @@ export const createUser = /* GraphQL */ `mutation CreateUser(
     latitude
     longitude
     chatRooms {
+      items {
+        id
+        userId
+        chatRoomId
+        user {
+          id
+          firstName
+          lastName
+          profilePicture
+          email
+          status
+          notificationToken
+          latitude
+          longitude
+          chatRooms {
+            items {
+              id
+              userId
+              chatRoomId
+              createdAt
+              updatedAt
+              __typename
+            }
+            nextToken
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        chatRoom {
+          id
+          isSeenBy
+          messages {
+            items {
+              id
+              chatRoomID
+              content
+              createdAt
+              updatedAt
+              chatRoomMessagesId
+              messageAuthorId
+              __typename
+            }
+            nextToken
+            __typename
+          }
+          lastMessage {
+            id
+            chatRoomID
+            author {
+              id
+              firstName
+              lastName
+              profilePicture
+              email
+              status
+              notificationToken
+              latitude
+              longitude
+              createdAt
+              updatedAt
+              __typename
+            }
+            content
+            createdAt
+            updatedAt
+            chatRoomMessagesId
+            messageAuthorId
+            __typename
+          }
+          participants {
+            items {
+              id
+              userId
+              chatRoomId
+              createdAt
+              updatedAt
+              __typename
+            }
+            nextToken
+            __typename
+          }
+          createdAt
+          updatedAt
+          chatRoomLastMessageId
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
       nextToken
       __typename
     }
@@ -50,6 +142,98 @@ export const updateUser = /* GraphQL */ `mutation UpdateUser(
     latitude
     longitude
     chatRooms {
+      items {
+        id
+        userId
+        chatRoomId
+        user {
+          id
+          firstName
+          lastName
+          profilePicture
+          email
+          status
+          notificationToken
+          latitude
+          longitude
+          chatRooms {
+            items {
+              id
+              userId
+              chatRoomId
+              createdAt
+              updatedAt
+              __typename
+            }
+            nextToken
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        chatRoom {
+          id
+          isSeenBy
+          messages {
+            items {
+              id
+              chatRoomID
+              content
+              createdAt
+              updatedAt
+              chatRoomMessagesId
+              messageAuthorId
+              __typename
+            }
+            nextToken
+            __typename
+          }
+          lastMessage {
+            id
+            chatRoomID
+            author {
+              id
+              firstName
+              lastName
+              profilePicture
+              email
+              status
+              notificationToken
+              latitude
+              longitude
+              createdAt
+              updatedAt
+              __typename
+            }
+            content
+            createdAt
+            updatedAt
+            chatRoomMessagesId
+            messageAuthorId
+            __typename
+          }
+          participants {
+            items {
+              id
+              userId
+              chatRoomId
+              createdAt
+              updatedAt
+              __typename
+            }
+            nextToken
+            __typename
+          }
+          createdAt
+          updatedAt
+          chatRoomLastMessageId
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
       nextToken
       __typename
     }
@@ -77,6 +261,98 @@ export const deleteUser = /* GraphQL */ `mutation DeleteUser(
     latitude
     longitude
     chatRooms {
+      items {
+        id
+        userId
+        chatRoomId
+        user {
+          id
+          firstName
+          lastName
+          profilePicture
+          email
+          status
+          notificationToken
+          latitude
+          longitude
+          chatRooms {
+            items {
+              id
+              userId
+              chatRoomId
+              createdAt
+              updatedAt
+              __typename
+            }
+            nextToken
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        chatRoom {
+          id
+          isSeenBy
+          messages {
+            items {
+              id
+              chatRoomID
+              content
+              createdAt
+              updatedAt
+              chatRoomMessagesId
+              messageAuthorId
+              __typename
+            }
+            nextToken
+            __typename
+          }
+          lastMessage {
+            id
+            chatRoomID
+            author {
+              id
+              firstName
+              lastName
+              profilePicture
+              email
+              status
+              notificationToken
+              latitude
+              longitude
+              createdAt
+              updatedAt
+              __typename
+            }
+            content
+            createdAt
+            updatedAt
+            chatRoomMessagesId
+            messageAuthorId
+            __typename
+          }
+          participants {
+            items {
+              id
+              userId
+              chatRoomId
+              createdAt
+              updatedAt
+              __typename
+            }
+            nextToken
+            __typename
+          }
+          createdAt
+          updatedAt
+          chatRoomLastMessageId
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
       nextToken
       __typename
     }
@@ -97,12 +373,96 @@ export const createChatRoom = /* GraphQL */ `mutation CreateChatRoom(
     id
     isSeenBy
     messages {
+      items {
+        id
+        chatRoomID
+        author {
+          id
+          firstName
+          lastName
+          profilePicture
+          email
+          status
+          notificationToken
+          latitude
+          longitude
+          chatRooms {
+            items {
+              id
+              userId
+              chatRoomId
+              createdAt
+              updatedAt
+              __typename
+            }
+            nextToken
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        content
+        createdAt
+        updatedAt
+        chatRoomMessagesId
+        messageAuthorId
+        __typename
+      }
       nextToken
       __typename
     }
     lastMessage {
       id
       chatRoomID
+      author {
+        id
+        firstName
+        lastName
+        profilePicture
+        email
+        status
+        notificationToken
+        latitude
+        longitude
+        chatRooms {
+          items {
+            id
+            userId
+            chatRoomId
+            user {
+              id
+              firstName
+              lastName
+              profilePicture
+              email
+              status
+              notificationToken
+              latitude
+              longitude
+              createdAt
+              updatedAt
+              __typename
+            }
+            chatRoom {
+              id
+              isSeenBy
+              createdAt
+              updatedAt
+              chatRoomLastMessageId
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
       content
       createdAt
       updatedAt
@@ -111,6 +471,98 @@ export const createChatRoom = /* GraphQL */ `mutation CreateChatRoom(
       __typename
     }
     participants {
+      items {
+        id
+        userId
+        chatRoomId
+        user {
+          id
+          firstName
+          lastName
+          profilePicture
+          email
+          status
+          notificationToken
+          latitude
+          longitude
+          chatRooms {
+            items {
+              id
+              userId
+              chatRoomId
+              createdAt
+              updatedAt
+              __typename
+            }
+            nextToken
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        chatRoom {
+          id
+          isSeenBy
+          messages {
+            items {
+              id
+              chatRoomID
+              content
+              createdAt
+              updatedAt
+              chatRoomMessagesId
+              messageAuthorId
+              __typename
+            }
+            nextToken
+            __typename
+          }
+          lastMessage {
+            id
+            chatRoomID
+            author {
+              id
+              firstName
+              lastName
+              profilePicture
+              email
+              status
+              notificationToken
+              latitude
+              longitude
+              createdAt
+              updatedAt
+              __typename
+            }
+            content
+            createdAt
+            updatedAt
+            chatRoomMessagesId
+            messageAuthorId
+            __typename
+          }
+          participants {
+            items {
+              id
+              userId
+              chatRoomId
+              createdAt
+              updatedAt
+              __typename
+            }
+            nextToken
+            __typename
+          }
+          createdAt
+          updatedAt
+          chatRoomLastMessageId
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
       nextToken
       __typename
     }
@@ -132,12 +584,96 @@ export const updateChatRoom = /* GraphQL */ `mutation UpdateChatRoom(
     id
     isSeenBy
     messages {
+      items {
+        id
+        chatRoomID
+        author {
+          id
+          firstName
+          lastName
+          profilePicture
+          email
+          status
+          notificationToken
+          latitude
+          longitude
+          chatRooms {
+            items {
+              id
+              userId
+              chatRoomId
+              createdAt
+              updatedAt
+              __typename
+            }
+            nextToken
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        content
+        createdAt
+        updatedAt
+        chatRoomMessagesId
+        messageAuthorId
+        __typename
+      }
       nextToken
       __typename
     }
     lastMessage {
       id
       chatRoomID
+      author {
+        id
+        firstName
+        lastName
+        profilePicture
+        email
+        status
+        notificationToken
+        latitude
+        longitude
+        chatRooms {
+          items {
+            id
+            userId
+            chatRoomId
+            user {
+              id
+              firstName
+              lastName
+              profilePicture
+              email
+              status
+              notificationToken
+              latitude
+              longitude
+              createdAt
+              updatedAt
+              __typename
+            }
+            chatRoom {
+              id
+              isSeenBy
+              createdAt
+              updatedAt
+              chatRoomLastMessageId
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
       content
       createdAt
       updatedAt
@@ -146,6 +682,98 @@ export const updateChatRoom = /* GraphQL */ `mutation UpdateChatRoom(
       __typename
     }
     participants {
+      items {
+        id
+        userId
+        chatRoomId
+        user {
+          id
+          firstName
+          lastName
+          profilePicture
+          email
+          status
+          notificationToken
+          latitude
+          longitude
+          chatRooms {
+            items {
+              id
+              userId
+              chatRoomId
+              createdAt
+              updatedAt
+              __typename
+            }
+            nextToken
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        chatRoom {
+          id
+          isSeenBy
+          messages {
+            items {
+              id
+              chatRoomID
+              content
+              createdAt
+              updatedAt
+              chatRoomMessagesId
+              messageAuthorId
+              __typename
+            }
+            nextToken
+            __typename
+          }
+          lastMessage {
+            id
+            chatRoomID
+            author {
+              id
+              firstName
+              lastName
+              profilePicture
+              email
+              status
+              notificationToken
+              latitude
+              longitude
+              createdAt
+              updatedAt
+              __typename
+            }
+            content
+            createdAt
+            updatedAt
+            chatRoomMessagesId
+            messageAuthorId
+            __typename
+          }
+          participants {
+            items {
+              id
+              userId
+              chatRoomId
+              createdAt
+              updatedAt
+              __typename
+            }
+            nextToken
+            __typename
+          }
+          createdAt
+          updatedAt
+          chatRoomLastMessageId
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
       nextToken
       __typename
     }
@@ -167,12 +795,96 @@ export const deleteChatRoom = /* GraphQL */ `mutation DeleteChatRoom(
     id
     isSeenBy
     messages {
+      items {
+        id
+        chatRoomID
+        author {
+          id
+          firstName
+          lastName
+          profilePicture
+          email
+          status
+          notificationToken
+          latitude
+          longitude
+          chatRooms {
+            items {
+              id
+              userId
+              chatRoomId
+              createdAt
+              updatedAt
+              __typename
+            }
+            nextToken
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        content
+        createdAt
+        updatedAt
+        chatRoomMessagesId
+        messageAuthorId
+        __typename
+      }
       nextToken
       __typename
     }
     lastMessage {
       id
       chatRoomID
+      author {
+        id
+        firstName
+        lastName
+        profilePicture
+        email
+        status
+        notificationToken
+        latitude
+        longitude
+        chatRooms {
+          items {
+            id
+            userId
+            chatRoomId
+            user {
+              id
+              firstName
+              lastName
+              profilePicture
+              email
+              status
+              notificationToken
+              latitude
+              longitude
+              createdAt
+              updatedAt
+              __typename
+            }
+            chatRoom {
+              id
+              isSeenBy
+              createdAt
+              updatedAt
+              chatRoomLastMessageId
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
       content
       createdAt
       updatedAt
@@ -181,6 +893,98 @@ export const deleteChatRoom = /* GraphQL */ `mutation DeleteChatRoom(
       __typename
     }
     participants {
+      items {
+        id
+        userId
+        chatRoomId
+        user {
+          id
+          firstName
+          lastName
+          profilePicture
+          email
+          status
+          notificationToken
+          latitude
+          longitude
+          chatRooms {
+            items {
+              id
+              userId
+              chatRoomId
+              createdAt
+              updatedAt
+              __typename
+            }
+            nextToken
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        chatRoom {
+          id
+          isSeenBy
+          messages {
+            items {
+              id
+              chatRoomID
+              content
+              createdAt
+              updatedAt
+              chatRoomMessagesId
+              messageAuthorId
+              __typename
+            }
+            nextToken
+            __typename
+          }
+          lastMessage {
+            id
+            chatRoomID
+            author {
+              id
+              firstName
+              lastName
+              profilePicture
+              email
+              status
+              notificationToken
+              latitude
+              longitude
+              createdAt
+              updatedAt
+              __typename
+            }
+            content
+            createdAt
+            updatedAt
+            chatRoomMessagesId
+            messageAuthorId
+            __typename
+          }
+          participants {
+            items {
+              id
+              userId
+              chatRoomId
+              createdAt
+              updatedAt
+              __typename
+            }
+            nextToken
+            __typename
+          }
+          createdAt
+          updatedAt
+          chatRoomLastMessageId
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
       nextToken
       __typename
     }
@@ -211,6 +1015,62 @@ export const createPost = /* GraphQL */ `mutation CreatePost(
       notificationToken
       latitude
       longitude
+      chatRooms {
+        items {
+          id
+          userId
+          chatRoomId
+          user {
+            id
+            firstName
+            lastName
+            profilePicture
+            email
+            status
+            notificationToken
+            latitude
+            longitude
+            chatRooms {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          chatRoom {
+            id
+            isSeenBy
+            messages {
+              nextToken
+              __typename
+            }
+            lastMessage {
+              id
+              chatRoomID
+              content
+              createdAt
+              updatedAt
+              chatRoomMessagesId
+              messageAuthorId
+              __typename
+            }
+            participants {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            chatRoomLastMessageId
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -245,6 +1105,62 @@ export const updatePost = /* GraphQL */ `mutation UpdatePost(
       notificationToken
       latitude
       longitude
+      chatRooms {
+        items {
+          id
+          userId
+          chatRoomId
+          user {
+            id
+            firstName
+            lastName
+            profilePicture
+            email
+            status
+            notificationToken
+            latitude
+            longitude
+            chatRooms {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          chatRoom {
+            id
+            isSeenBy
+            messages {
+              nextToken
+              __typename
+            }
+            lastMessage {
+              id
+              chatRoomID
+              content
+              createdAt
+              updatedAt
+              chatRoomMessagesId
+              messageAuthorId
+              __typename
+            }
+            participants {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            chatRoomLastMessageId
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -279,6 +1195,62 @@ export const deletePost = /* GraphQL */ `mutation DeletePost(
       notificationToken
       latitude
       longitude
+      chatRooms {
+        items {
+          id
+          userId
+          chatRoomId
+          user {
+            id
+            firstName
+            lastName
+            profilePicture
+            email
+            status
+            notificationToken
+            latitude
+            longitude
+            chatRooms {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          chatRoom {
+            id
+            isSeenBy
+            messages {
+              nextToken
+              __typename
+            }
+            lastMessage {
+              id
+              chatRoomID
+              content
+              createdAt
+              updatedAt
+              chatRoomMessagesId
+              messageAuthorId
+              __typename
+            }
+            participants {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            chatRoomLastMessageId
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -313,6 +1285,62 @@ export const createMessage = /* GraphQL */ `mutation CreateMessage(
       notificationToken
       latitude
       longitude
+      chatRooms {
+        items {
+          id
+          userId
+          chatRoomId
+          user {
+            id
+            firstName
+            lastName
+            profilePicture
+            email
+            status
+            notificationToken
+            latitude
+            longitude
+            chatRooms {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          chatRoom {
+            id
+            isSeenBy
+            messages {
+              nextToken
+              __typename
+            }
+            lastMessage {
+              id
+              chatRoomID
+              content
+              createdAt
+              updatedAt
+              chatRoomMessagesId
+              messageAuthorId
+              __typename
+            }
+            participants {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            chatRoomLastMessageId
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -346,6 +1374,62 @@ export const updateMessage = /* GraphQL */ `mutation UpdateMessage(
       notificationToken
       latitude
       longitude
+      chatRooms {
+        items {
+          id
+          userId
+          chatRoomId
+          user {
+            id
+            firstName
+            lastName
+            profilePicture
+            email
+            status
+            notificationToken
+            latitude
+            longitude
+            chatRooms {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          chatRoom {
+            id
+            isSeenBy
+            messages {
+              nextToken
+              __typename
+            }
+            lastMessage {
+              id
+              chatRoomID
+              content
+              createdAt
+              updatedAt
+              chatRoomMessagesId
+              messageAuthorId
+              __typename
+            }
+            participants {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            chatRoomLastMessageId
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -379,6 +1463,62 @@ export const deleteMessage = /* GraphQL */ `mutation DeleteMessage(
       notificationToken
       latitude
       longitude
+      chatRooms {
+        items {
+          id
+          userId
+          chatRoomId
+          user {
+            id
+            firstName
+            lastName
+            profilePicture
+            email
+            status
+            notificationToken
+            latitude
+            longitude
+            chatRooms {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          chatRoom {
+            id
+            isSeenBy
+            messages {
+              nextToken
+              __typename
+            }
+            lastMessage {
+              id
+              chatRoomID
+              content
+              createdAt
+              updatedAt
+              chatRoomMessagesId
+              messageAuthorId
+              __typename
+            }
+            participants {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            chatRoomLastMessageId
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -413,6 +1553,62 @@ export const createUserChatRooms = /* GraphQL */ `mutation CreateUserChatRooms(
       notificationToken
       latitude
       longitude
+      chatRooms {
+        items {
+          id
+          userId
+          chatRoomId
+          user {
+            id
+            firstName
+            lastName
+            profilePicture
+            email
+            status
+            notificationToken
+            latitude
+            longitude
+            chatRooms {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          chatRoom {
+            id
+            isSeenBy
+            messages {
+              nextToken
+              __typename
+            }
+            lastMessage {
+              id
+              chatRoomID
+              content
+              createdAt
+              updatedAt
+              chatRoomMessagesId
+              messageAuthorId
+              __typename
+            }
+            participants {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            chatRoomLastMessageId
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -420,6 +1616,130 @@ export const createUserChatRooms = /* GraphQL */ `mutation CreateUserChatRooms(
     chatRoom {
       id
       isSeenBy
+      messages {
+        items {
+          id
+          chatRoomID
+          author {
+            id
+            firstName
+            lastName
+            profilePicture
+            email
+            status
+            notificationToken
+            latitude
+            longitude
+            chatRooms {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          content
+          createdAt
+          updatedAt
+          chatRoomMessagesId
+          messageAuthorId
+          __typename
+        }
+        nextToken
+        __typename
+      }
+      lastMessage {
+        id
+        chatRoomID
+        author {
+          id
+          firstName
+          lastName
+          profilePicture
+          email
+          status
+          notificationToken
+          latitude
+          longitude
+          chatRooms {
+            items {
+              id
+              userId
+              chatRoomId
+              createdAt
+              updatedAt
+              __typename
+            }
+            nextToken
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        content
+        createdAt
+        updatedAt
+        chatRoomMessagesId
+        messageAuthorId
+        __typename
+      }
+      participants {
+        items {
+          id
+          userId
+          chatRoomId
+          user {
+            id
+            firstName
+            lastName
+            profilePicture
+            email
+            status
+            notificationToken
+            latitude
+            longitude
+            chatRooms {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          chatRoom {
+            id
+            isSeenBy
+            messages {
+              nextToken
+              __typename
+            }
+            lastMessage {
+              id
+              chatRoomID
+              content
+              createdAt
+              updatedAt
+              chatRoomMessagesId
+              messageAuthorId
+              __typename
+            }
+            participants {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            chatRoomLastMessageId
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       chatRoomLastMessageId
@@ -452,6 +1772,62 @@ export const updateUserChatRooms = /* GraphQL */ `mutation UpdateUserChatRooms(
       notificationToken
       latitude
       longitude
+      chatRooms {
+        items {
+          id
+          userId
+          chatRoomId
+          user {
+            id
+            firstName
+            lastName
+            profilePicture
+            email
+            status
+            notificationToken
+            latitude
+            longitude
+            chatRooms {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          chatRoom {
+            id
+            isSeenBy
+            messages {
+              nextToken
+              __typename
+            }
+            lastMessage {
+              id
+              chatRoomID
+              content
+              createdAt
+              updatedAt
+              chatRoomMessagesId
+              messageAuthorId
+              __typename
+            }
+            participants {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            chatRoomLastMessageId
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -459,6 +1835,130 @@ export const updateUserChatRooms = /* GraphQL */ `mutation UpdateUserChatRooms(
     chatRoom {
       id
       isSeenBy
+      messages {
+        items {
+          id
+          chatRoomID
+          author {
+            id
+            firstName
+            lastName
+            profilePicture
+            email
+            status
+            notificationToken
+            latitude
+            longitude
+            chatRooms {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          content
+          createdAt
+          updatedAt
+          chatRoomMessagesId
+          messageAuthorId
+          __typename
+        }
+        nextToken
+        __typename
+      }
+      lastMessage {
+        id
+        chatRoomID
+        author {
+          id
+          firstName
+          lastName
+          profilePicture
+          email
+          status
+          notificationToken
+          latitude
+          longitude
+          chatRooms {
+            items {
+              id
+              userId
+              chatRoomId
+              createdAt
+              updatedAt
+              __typename
+            }
+            nextToken
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        content
+        createdAt
+        updatedAt
+        chatRoomMessagesId
+        messageAuthorId
+        __typename
+      }
+      participants {
+        items {
+          id
+          userId
+          chatRoomId
+          user {
+            id
+            firstName
+            lastName
+            profilePicture
+            email
+            status
+            notificationToken
+            latitude
+            longitude
+            chatRooms {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          chatRoom {
+            id
+            isSeenBy
+            messages {
+              nextToken
+              __typename
+            }
+            lastMessage {
+              id
+              chatRoomID
+              content
+              createdAt
+              updatedAt
+              chatRoomMessagesId
+              messageAuthorId
+              __typename
+            }
+            participants {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            chatRoomLastMessageId
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       chatRoomLastMessageId
@@ -491,6 +1991,62 @@ export const deleteUserChatRooms = /* GraphQL */ `mutation DeleteUserChatRooms(
       notificationToken
       latitude
       longitude
+      chatRooms {
+        items {
+          id
+          userId
+          chatRoomId
+          user {
+            id
+            firstName
+            lastName
+            profilePicture
+            email
+            status
+            notificationToken
+            latitude
+            longitude
+            chatRooms {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          chatRoom {
+            id
+            isSeenBy
+            messages {
+              nextToken
+              __typename
+            }
+            lastMessage {
+              id
+              chatRoomID
+              content
+              createdAt
+              updatedAt
+              chatRoomMessagesId
+              messageAuthorId
+              __typename
+            }
+            participants {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            chatRoomLastMessageId
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -498,6 +2054,130 @@ export const deleteUserChatRooms = /* GraphQL */ `mutation DeleteUserChatRooms(
     chatRoom {
       id
       isSeenBy
+      messages {
+        items {
+          id
+          chatRoomID
+          author {
+            id
+            firstName
+            lastName
+            profilePicture
+            email
+            status
+            notificationToken
+            latitude
+            longitude
+            chatRooms {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          content
+          createdAt
+          updatedAt
+          chatRoomMessagesId
+          messageAuthorId
+          __typename
+        }
+        nextToken
+        __typename
+      }
+      lastMessage {
+        id
+        chatRoomID
+        author {
+          id
+          firstName
+          lastName
+          profilePicture
+          email
+          status
+          notificationToken
+          latitude
+          longitude
+          chatRooms {
+            items {
+              id
+              userId
+              chatRoomId
+              createdAt
+              updatedAt
+              __typename
+            }
+            nextToken
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        content
+        createdAt
+        updatedAt
+        chatRoomMessagesId
+        messageAuthorId
+        __typename
+      }
+      participants {
+        items {
+          id
+          userId
+          chatRoomId
+          user {
+            id
+            firstName
+            lastName
+            profilePicture
+            email
+            status
+            notificationToken
+            latitude
+            longitude
+            chatRooms {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          chatRoom {
+            id
+            isSeenBy
+            messages {
+              nextToken
+              __typename
+            }
+            lastMessage {
+              id
+              chatRoomID
+              content
+              createdAt
+              updatedAt
+              chatRoomMessagesId
+              messageAuthorId
+              __typename
+            }
+            participants {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            chatRoomLastMessageId
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       chatRoomLastMessageId

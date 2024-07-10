@@ -43,7 +43,7 @@ const HomeScreen: FC<HomeScreenProps> = ({ navigation }) => {
           refreshing={loadingPosts}
           showsVerticalScrollIndicator={false}
           onRefresh={fetchPosts}
-          contentContainerStyle={{paddingRight: 10}}
+          contentContainerStyle={{paddingRight: 5}}
           renderItem={({ item }) => <RenderPost post={item}/>}
           estimatedItemSize={200}
           ListHeaderComponent={() => <ListHeader title="Posts" iconName="add-circle-sharp" onPressHandler={() => navigation.navigate("CreateNewPost")} />}

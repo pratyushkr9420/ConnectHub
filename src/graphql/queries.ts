@@ -20,6 +20,98 @@ export const getUser = /* GraphQL */ `query GetUser($id: ID!) {
     latitude
     longitude
     chatRooms {
+      items {
+        id
+        userId
+        chatRoomId
+        user {
+          id
+          firstName
+          lastName
+          profilePicture
+          email
+          status
+          notificationToken
+          latitude
+          longitude
+          chatRooms {
+            items {
+              id
+              userId
+              chatRoomId
+              createdAt
+              updatedAt
+              __typename
+            }
+            nextToken
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        chatRoom {
+          id
+          isSeenBy
+          messages {
+            items {
+              id
+              chatRoomID
+              content
+              createdAt
+              updatedAt
+              chatRoomMessagesId
+              messageAuthorId
+              __typename
+            }
+            nextToken
+            __typename
+          }
+          lastMessage {
+            id
+            chatRoomID
+            author {
+              id
+              firstName
+              lastName
+              profilePicture
+              email
+              status
+              notificationToken
+              latitude
+              longitude
+              createdAt
+              updatedAt
+              __typename
+            }
+            content
+            createdAt
+            updatedAt
+            chatRoomMessagesId
+            messageAuthorId
+            __typename
+          }
+          participants {
+            items {
+              id
+              userId
+              chatRoomId
+              createdAt
+              updatedAt
+              __typename
+            }
+            nextToken
+            __typename
+          }
+          createdAt
+          updatedAt
+          chatRoomLastMessageId
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
       nextToken
       __typename
     }
@@ -45,6 +137,62 @@ export const listUsers = /* GraphQL */ `query ListUsers(
       notificationToken
       latitude
       longitude
+      chatRooms {
+        items {
+          id
+          userId
+          chatRoomId
+          user {
+            id
+            firstName
+            lastName
+            profilePicture
+            email
+            status
+            notificationToken
+            latitude
+            longitude
+            chatRooms {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          chatRoom {
+            id
+            isSeenBy
+            messages {
+              nextToken
+              __typename
+            }
+            lastMessage {
+              id
+              chatRoomID
+              content
+              createdAt
+              updatedAt
+              chatRoomMessagesId
+              messageAuthorId
+              __typename
+            }
+            participants {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            chatRoomLastMessageId
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -59,12 +207,96 @@ export const getChatRoom = /* GraphQL */ `query GetChatRoom($id: ID!) {
     id
     isSeenBy
     messages {
+      items {
+        id
+        chatRoomID
+        author {
+          id
+          firstName
+          lastName
+          profilePicture
+          email
+          status
+          notificationToken
+          latitude
+          longitude
+          chatRooms {
+            items {
+              id
+              userId
+              chatRoomId
+              createdAt
+              updatedAt
+              __typename
+            }
+            nextToken
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        content
+        createdAt
+        updatedAt
+        chatRoomMessagesId
+        messageAuthorId
+        __typename
+      }
       nextToken
       __typename
     }
     lastMessage {
       id
       chatRoomID
+      author {
+        id
+        firstName
+        lastName
+        profilePicture
+        email
+        status
+        notificationToken
+        latitude
+        longitude
+        chatRooms {
+          items {
+            id
+            userId
+            chatRoomId
+            user {
+              id
+              firstName
+              lastName
+              profilePicture
+              email
+              status
+              notificationToken
+              latitude
+              longitude
+              createdAt
+              updatedAt
+              __typename
+            }
+            chatRoom {
+              id
+              isSeenBy
+              createdAt
+              updatedAt
+              chatRoomLastMessageId
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
       content
       createdAt
       updatedAt
@@ -73,6 +305,98 @@ export const getChatRoom = /* GraphQL */ `query GetChatRoom($id: ID!) {
       __typename
     }
     participants {
+      items {
+        id
+        userId
+        chatRoomId
+        user {
+          id
+          firstName
+          lastName
+          profilePicture
+          email
+          status
+          notificationToken
+          latitude
+          longitude
+          chatRooms {
+            items {
+              id
+              userId
+              chatRoomId
+              createdAt
+              updatedAt
+              __typename
+            }
+            nextToken
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        chatRoom {
+          id
+          isSeenBy
+          messages {
+            items {
+              id
+              chatRoomID
+              content
+              createdAt
+              updatedAt
+              chatRoomMessagesId
+              messageAuthorId
+              __typename
+            }
+            nextToken
+            __typename
+          }
+          lastMessage {
+            id
+            chatRoomID
+            author {
+              id
+              firstName
+              lastName
+              profilePicture
+              email
+              status
+              notificationToken
+              latitude
+              longitude
+              createdAt
+              updatedAt
+              __typename
+            }
+            content
+            createdAt
+            updatedAt
+            chatRoomMessagesId
+            messageAuthorId
+            __typename
+          }
+          participants {
+            items {
+              id
+              userId
+              chatRoomId
+              createdAt
+              updatedAt
+              __typename
+            }
+            nextToken
+            __typename
+          }
+          createdAt
+          updatedAt
+          chatRoomLastMessageId
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
       nextToken
       __typename
     }
@@ -95,6 +419,130 @@ export const listChatRooms = /* GraphQL */ `query ListChatRooms(
     items {
       id
       isSeenBy
+      messages {
+        items {
+          id
+          chatRoomID
+          author {
+            id
+            firstName
+            lastName
+            profilePicture
+            email
+            status
+            notificationToken
+            latitude
+            longitude
+            chatRooms {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          content
+          createdAt
+          updatedAt
+          chatRoomMessagesId
+          messageAuthorId
+          __typename
+        }
+        nextToken
+        __typename
+      }
+      lastMessage {
+        id
+        chatRoomID
+        author {
+          id
+          firstName
+          lastName
+          profilePicture
+          email
+          status
+          notificationToken
+          latitude
+          longitude
+          chatRooms {
+            items {
+              id
+              userId
+              chatRoomId
+              createdAt
+              updatedAt
+              __typename
+            }
+            nextToken
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        content
+        createdAt
+        updatedAt
+        chatRoomMessagesId
+        messageAuthorId
+        __typename
+      }
+      participants {
+        items {
+          id
+          userId
+          chatRoomId
+          user {
+            id
+            firstName
+            lastName
+            profilePicture
+            email
+            status
+            notificationToken
+            latitude
+            longitude
+            chatRooms {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          chatRoom {
+            id
+            isSeenBy
+            messages {
+              nextToken
+              __typename
+            }
+            lastMessage {
+              id
+              chatRoomID
+              content
+              createdAt
+              updatedAt
+              chatRoomMessagesId
+              messageAuthorId
+              __typename
+            }
+            participants {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            chatRoomLastMessageId
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       chatRoomLastMessageId
@@ -122,6 +570,62 @@ export const getPost = /* GraphQL */ `query GetPost($id: ID!) {
       notificationToken
       latitude
       longitude
+      chatRooms {
+        items {
+          id
+          userId
+          chatRoomId
+          user {
+            id
+            firstName
+            lastName
+            profilePicture
+            email
+            status
+            notificationToken
+            latitude
+            longitude
+            chatRooms {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          chatRoom {
+            id
+            isSeenBy
+            messages {
+              nextToken
+              __typename
+            }
+            lastMessage {
+              id
+              chatRoomID
+              content
+              createdAt
+              updatedAt
+              chatRoomMessagesId
+              messageAuthorId
+              __typename
+            }
+            participants {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            chatRoomLastMessageId
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -145,6 +649,54 @@ export const listPosts = /* GraphQL */ `query ListPosts(
     items {
       id
       type
+      author {
+        id
+        firstName
+        lastName
+        profilePicture
+        email
+        status
+        notificationToken
+        latitude
+        longitude
+        chatRooms {
+          items {
+            id
+            userId
+            chatRoomId
+            user {
+              id
+              firstName
+              lastName
+              profilePicture
+              email
+              status
+              notificationToken
+              latitude
+              longitude
+              createdAt
+              updatedAt
+              __typename
+            }
+            chatRoom {
+              id
+              isSeenBy
+              createdAt
+              updatedAt
+              chatRoomLastMessageId
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
       content
       numberOfLikes
       likedBy
@@ -172,6 +724,62 @@ export const getMessage = /* GraphQL */ `query GetMessage($id: ID!) {
       notificationToken
       latitude
       longitude
+      chatRooms {
+        items {
+          id
+          userId
+          chatRoomId
+          user {
+            id
+            firstName
+            lastName
+            profilePicture
+            email
+            status
+            notificationToken
+            latitude
+            longitude
+            chatRooms {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          chatRoom {
+            id
+            isSeenBy
+            messages {
+              nextToken
+              __typename
+            }
+            lastMessage {
+              id
+              chatRoomID
+              content
+              createdAt
+              updatedAt
+              chatRoomMessagesId
+              messageAuthorId
+              __typename
+            }
+            participants {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            chatRoomLastMessageId
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -197,6 +805,54 @@ export const listMessages = /* GraphQL */ `query ListMessages(
     items {
       id
       chatRoomID
+      author {
+        id
+        firstName
+        lastName
+        profilePicture
+        email
+        status
+        notificationToken
+        latitude
+        longitude
+        chatRooms {
+          items {
+            id
+            userId
+            chatRoomId
+            user {
+              id
+              firstName
+              lastName
+              profilePicture
+              email
+              status
+              notificationToken
+              latitude
+              longitude
+              createdAt
+              updatedAt
+              __typename
+            }
+            chatRoom {
+              id
+              isSeenBy
+              createdAt
+              updatedAt
+              chatRoomLastMessageId
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
       content
       createdAt
       updatedAt
@@ -227,6 +883,62 @@ export const getUserChatRooms = /* GraphQL */ `query GetUserChatRooms($id: ID!) 
       notificationToken
       latitude
       longitude
+      chatRooms {
+        items {
+          id
+          userId
+          chatRoomId
+          user {
+            id
+            firstName
+            lastName
+            profilePicture
+            email
+            status
+            notificationToken
+            latitude
+            longitude
+            chatRooms {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          chatRoom {
+            id
+            isSeenBy
+            messages {
+              nextToken
+              __typename
+            }
+            lastMessage {
+              id
+              chatRoomID
+              content
+              createdAt
+              updatedAt
+              chatRoomMessagesId
+              messageAuthorId
+              __typename
+            }
+            participants {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            chatRoomLastMessageId
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -234,6 +946,130 @@ export const getUserChatRooms = /* GraphQL */ `query GetUserChatRooms($id: ID!) 
     chatRoom {
       id
       isSeenBy
+      messages {
+        items {
+          id
+          chatRoomID
+          author {
+            id
+            firstName
+            lastName
+            profilePicture
+            email
+            status
+            notificationToken
+            latitude
+            longitude
+            chatRooms {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          content
+          createdAt
+          updatedAt
+          chatRoomMessagesId
+          messageAuthorId
+          __typename
+        }
+        nextToken
+        __typename
+      }
+      lastMessage {
+        id
+        chatRoomID
+        author {
+          id
+          firstName
+          lastName
+          profilePicture
+          email
+          status
+          notificationToken
+          latitude
+          longitude
+          chatRooms {
+            items {
+              id
+              userId
+              chatRoomId
+              createdAt
+              updatedAt
+              __typename
+            }
+            nextToken
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        content
+        createdAt
+        updatedAt
+        chatRoomMessagesId
+        messageAuthorId
+        __typename
+      }
+      participants {
+        items {
+          id
+          userId
+          chatRoomId
+          user {
+            id
+            firstName
+            lastName
+            profilePicture
+            email
+            status
+            notificationToken
+            latitude
+            longitude
+            chatRooms {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          chatRoom {
+            id
+            isSeenBy
+            messages {
+              nextToken
+              __typename
+            }
+            lastMessage {
+              id
+              chatRoomID
+              content
+              createdAt
+              updatedAt
+              chatRoomMessagesId
+              messageAuthorId
+              __typename
+            }
+            participants {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            chatRoomLastMessageId
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       chatRoomLastMessageId
@@ -258,6 +1094,152 @@ export const listUserChatRooms = /* GraphQL */ `query ListUserChatRooms(
       id
       userId
       chatRoomId
+      user {
+        id
+        firstName
+        lastName
+        profilePicture
+        email
+        status
+        notificationToken
+        latitude
+        longitude
+        chatRooms {
+          items {
+            id
+            userId
+            chatRoomId
+            user {
+              id
+              firstName
+              lastName
+              profilePicture
+              email
+              status
+              notificationToken
+              latitude
+              longitude
+              createdAt
+              updatedAt
+              __typename
+            }
+            chatRoom {
+              id
+              isSeenBy
+              createdAt
+              updatedAt
+              chatRoomLastMessageId
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
+      chatRoom {
+        id
+        isSeenBy
+        messages {
+          items {
+            id
+            chatRoomID
+            author {
+              id
+              firstName
+              lastName
+              profilePicture
+              email
+              status
+              notificationToken
+              latitude
+              longitude
+              createdAt
+              updatedAt
+              __typename
+            }
+            content
+            createdAt
+            updatedAt
+            chatRoomMessagesId
+            messageAuthorId
+            __typename
+          }
+          nextToken
+          __typename
+        }
+        lastMessage {
+          id
+          chatRoomID
+          author {
+            id
+            firstName
+            lastName
+            profilePicture
+            email
+            status
+            notificationToken
+            latitude
+            longitude
+            chatRooms {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          content
+          createdAt
+          updatedAt
+          chatRoomMessagesId
+          messageAuthorId
+          __typename
+        }
+        participants {
+          items {
+            id
+            userId
+            chatRoomId
+            user {
+              id
+              firstName
+              lastName
+              profilePicture
+              email
+              status
+              notificationToken
+              latitude
+              longitude
+              createdAt
+              updatedAt
+              __typename
+            }
+            chatRoom {
+              id
+              isSeenBy
+              createdAt
+              updatedAt
+              chatRoomLastMessageId
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        chatRoomLastMessageId
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -289,6 +1271,54 @@ export const postsByDate = /* GraphQL */ `query PostsByDate(
     items {
       id
       type
+      author {
+        id
+        firstName
+        lastName
+        profilePicture
+        email
+        status
+        notificationToken
+        latitude
+        longitude
+        chatRooms {
+          items {
+            id
+            userId
+            chatRoomId
+            user {
+              id
+              firstName
+              lastName
+              profilePicture
+              email
+              status
+              notificationToken
+              latitude
+              longitude
+              createdAt
+              updatedAt
+              __typename
+            }
+            chatRoom {
+              id
+              isSeenBy
+              createdAt
+              updatedAt
+              chatRoomLastMessageId
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
       content
       numberOfLikes
       likedBy
@@ -324,6 +1354,54 @@ export const messagesByChatRoom = /* GraphQL */ `query MessagesByChatRoom(
     items {
       id
       chatRoomID
+      author {
+        id
+        firstName
+        lastName
+        profilePicture
+        email
+        status
+        notificationToken
+        latitude
+        longitude
+        chatRooms {
+          items {
+            id
+            userId
+            chatRoomId
+            user {
+              id
+              firstName
+              lastName
+              profilePicture
+              email
+              status
+              notificationToken
+              latitude
+              longitude
+              createdAt
+              updatedAt
+              __typename
+            }
+            chatRoom {
+              id
+              isSeenBy
+              createdAt
+              updatedAt
+              chatRoomLastMessageId
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
       content
       createdAt
       updatedAt
@@ -357,6 +1435,152 @@ export const userChatRoomsByUserId = /* GraphQL */ `query UserChatRoomsByUserId(
       id
       userId
       chatRoomId
+      user {
+        id
+        firstName
+        lastName
+        profilePicture
+        email
+        status
+        notificationToken
+        latitude
+        longitude
+        chatRooms {
+          items {
+            id
+            userId
+            chatRoomId
+            user {
+              id
+              firstName
+              lastName
+              profilePicture
+              email
+              status
+              notificationToken
+              latitude
+              longitude
+              createdAt
+              updatedAt
+              __typename
+            }
+            chatRoom {
+              id
+              isSeenBy
+              createdAt
+              updatedAt
+              chatRoomLastMessageId
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
+      chatRoom {
+        id
+        isSeenBy
+        messages {
+          items {
+            id
+            chatRoomID
+            author {
+              id
+              firstName
+              lastName
+              profilePicture
+              email
+              status
+              notificationToken
+              latitude
+              longitude
+              createdAt
+              updatedAt
+              __typename
+            }
+            content
+            createdAt
+            updatedAt
+            chatRoomMessagesId
+            messageAuthorId
+            __typename
+          }
+          nextToken
+          __typename
+        }
+        lastMessage {
+          id
+          chatRoomID
+          author {
+            id
+            firstName
+            lastName
+            profilePicture
+            email
+            status
+            notificationToken
+            latitude
+            longitude
+            chatRooms {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          content
+          createdAt
+          updatedAt
+          chatRoomMessagesId
+          messageAuthorId
+          __typename
+        }
+        participants {
+          items {
+            id
+            userId
+            chatRoomId
+            user {
+              id
+              firstName
+              lastName
+              profilePicture
+              email
+              status
+              notificationToken
+              latitude
+              longitude
+              createdAt
+              updatedAt
+              __typename
+            }
+            chatRoom {
+              id
+              isSeenBy
+              createdAt
+              updatedAt
+              chatRoomLastMessageId
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        chatRoomLastMessageId
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -387,6 +1611,152 @@ export const userChatRoomsByChatRoomId = /* GraphQL */ `query UserChatRoomsByCha
       id
       userId
       chatRoomId
+      user {
+        id
+        firstName
+        lastName
+        profilePicture
+        email
+        status
+        notificationToken
+        latitude
+        longitude
+        chatRooms {
+          items {
+            id
+            userId
+            chatRoomId
+            user {
+              id
+              firstName
+              lastName
+              profilePicture
+              email
+              status
+              notificationToken
+              latitude
+              longitude
+              createdAt
+              updatedAt
+              __typename
+            }
+            chatRoom {
+              id
+              isSeenBy
+              createdAt
+              updatedAt
+              chatRoomLastMessageId
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
+      chatRoom {
+        id
+        isSeenBy
+        messages {
+          items {
+            id
+            chatRoomID
+            author {
+              id
+              firstName
+              lastName
+              profilePicture
+              email
+              status
+              notificationToken
+              latitude
+              longitude
+              createdAt
+              updatedAt
+              __typename
+            }
+            content
+            createdAt
+            updatedAt
+            chatRoomMessagesId
+            messageAuthorId
+            __typename
+          }
+          nextToken
+          __typename
+        }
+        lastMessage {
+          id
+          chatRoomID
+          author {
+            id
+            firstName
+            lastName
+            profilePicture
+            email
+            status
+            notificationToken
+            latitude
+            longitude
+            chatRooms {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          content
+          createdAt
+          updatedAt
+          chatRoomMessagesId
+          messageAuthorId
+          __typename
+        }
+        participants {
+          items {
+            id
+            userId
+            chatRoomId
+            user {
+              id
+              firstName
+              lastName
+              profilePicture
+              email
+              status
+              notificationToken
+              latitude
+              longitude
+              createdAt
+              updatedAt
+              __typename
+            }
+            chatRoom {
+              id
+              isSeenBy
+              createdAt
+              updatedAt
+              chatRoomLastMessageId
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        chatRoomLastMessageId
+        __typename
+      }
       createdAt
       updatedAt
       __typename

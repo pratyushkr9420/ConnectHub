@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Hub } from "aws-amplify/utils";
 import { AuthenticationProvider, useAuthenticationContext } from "./src/context/AuthContext";
 import { PostsProvider } from "./src/context/PostsContext";
+import { ChatsProvider  } from "./src/context/ChatsContext";
 import SplashScreen from "./src/screens/SplashScreen";
 import AppNavigator from "./src/navigation/AppNavigator";
 import AuthScreen from "./src/screens/AuthScreen";
@@ -56,11 +57,12 @@ const WrappedApp = () => {
   return (
     <AuthenticationProvider>
       <PostsProvider>
-        <App />
+        <ChatsProvider>
+          <App />
+        </ChatsProvider>
       </PostsProvider>
     </AuthenticationProvider>
   );
 };
 
 export default WrappedApp;
-
