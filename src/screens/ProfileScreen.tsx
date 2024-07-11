@@ -9,7 +9,7 @@ import ProfileAuthOptions from "../components/ProfileAuthOptions";
 
 const ProfileScreen = () => {
   const theme = useColorScheme();
-  const { getLoggedInUser, userFromDb, getLoggedInUserFromDb } =
+  const { getLoggedInUser, getLoggedInUserFromDb } =
     useAuthenticationContext();
   useEffect(() => {
     getLoggedInUser();

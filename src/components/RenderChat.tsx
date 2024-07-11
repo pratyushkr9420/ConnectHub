@@ -2,13 +2,14 @@ import React, { FC, useEffect, useState } from "react";
 import moment from "moment";
 import { ThemedView } from "../../themes/theme";
 import CustomText from "./CustomText";
-import { useColorScheme, StyleSheet, Image, View  } from "react-native";
+import { useColorScheme, StyleSheet, Image, View, Touchable, TouchableOpacity  } from "react-native";
 import scheme from "../../themes/colors";
 import { generateClient } from "aws-amplify/api";
 import { getUser } from "../graphql/queries";
-import { ChatRoomItem } from "../utils/types";
+import { ChatRoomItem, ChatsStackPrams } from "../utils/types";
 import { useAuthenticationContext } from "../context/AuthContext";
 import { User } from "../API";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 const client = generateClient();
 
@@ -16,9 +17,10 @@ const backUpProfile = "https://images.unsplash.com/photo-1530021232320-687d8e3db
 
 type ChatProps = {
     chat: ChatRoomItem | null;
+    navigation: NativeStackNavigationProp<ChatsStackPrams, "Chats">;
 }
 
-const RenderChat: FC<ChatProps> = ({ chat }) => {
+const RenderChat: FC<ChatProps> = ({ chat, navigation}) => {
     const theme = useColorScheme();
     const { userFromDb } = useAuthenticationContext();
     const [otherParticipant, setOtherParticipant] = useState<User | null | undefined>();
@@ -33,22 +35,23 @@ const RenderChat: FC<ChatProps> = ({ chat }) => {
     }
     useEffect(() => {
         fetchOtherParticpant();
-    },[chat])
-    console.log(otherParticipant);
-
+    }, [chat])
+    
     const markAsRead = chat!.chatRoom.isSeenBy ? chat!.chatRoom.isSeenBy.includes(userFromDb!.id) : false;
     return (
-        <ThemedView style={[styles.postContainer, { borderBottomColor: scheme[theme ? theme : "light"].text + "80" }]}>
-            <View style={[styles.dot,{ backgroundColor: markAsRead ? "transparent" : scheme['light'].tabIconSelected}]}/>
-            <ThemedView style={[styles.chatConatiner]}>
-                {otherParticipant && <Image style={styles.profileImage} source={otherParticipant?.profilePicture ? { uri: otherParticipant?.profilePicture ? otherParticipant.profilePicture : backUpProfile }: require("../../assets/smilingwomen.jpg")} />}
-                <ThemedView>
-                    {otherParticipant && <CustomText type="caption" style={{fontWeight: 600}}>{otherParticipant.firstName} {otherParticipant.lastName}</CustomText>}
-                    {chat && <CustomText type="caption" style={{ fontSize: 16 }}>{chat.chatRoom.lastMessage?.content?.slice(0, 50)}</CustomText>}
-                    <CustomText type="caption" style={{textAlign: "right", fontSize: 10}}>{moment(chat?.chatRoom.lastMessage?.createdAt).fromNow()}</CustomText>
+        <TouchableOpacity onPress={() => navigation.navigate("ChatRoom",{ participant: otherParticipant, chatRoomID: chat?.chatRoomId})}>
+            <ThemedView style={[styles.postContainer, { borderBottomColor: scheme[theme ? theme : "light"].text + "80" }]}>
+                <View style={[styles.dot,{ backgroundColor: markAsRead ? "transparent" : scheme['light'].tabIconSelected}]}/>
+                <ThemedView style={[styles.chatConatiner]}>
+                    {otherParticipant && <Image style={styles.profileImage} source={otherParticipant?.profilePicture ? { uri: otherParticipant?.profilePicture ? otherParticipant.profilePicture : backUpProfile }: require("../../assets/smilingwomen.jpg")} />}
+                    <ThemedView>
+                        {otherParticipant && <CustomText type="caption" style={{fontWeight: 600}}>{otherParticipant.firstName} {otherParticipant.lastName}</CustomText>}
+                        {chat && <CustomText type="caption" style={{ fontSize: 16 }}>{chat.chatRoom.lastMessage?.content?.slice(0, 50)}</CustomText>}
+                        <CustomText type="caption" style={{textAlign: "right", fontSize: 10}}>{moment(chat?.chatRoom.lastMessage?.createdAt).fromNow()}</CustomText>
+                    </ThemedView>
                 </ThemedView>
             </ThemedView>
-        </ThemedView>
+        </TouchableOpacity>
     );
 }
 const styles = StyleSheet.create({

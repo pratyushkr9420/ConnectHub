@@ -4,7 +4,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeScreen from "../screens/HomeScreen";
 import ProfileScreen from "../screens/ProfileScreen";
-import { AppNavigatorParams, HomeStackPrams } from "../utils/types";
+import { AppNavigatorParams, ChatsStackPrams, HomeStackPrams } from "../utils/types";
 import { AuthenticationProvider, useAuthenticationContext } from "../context/AuthContext";
 import { Button, useColorScheme } from "react-native";
 import OnBoardingScreen from "../screens/OnBoardingScreen";
@@ -13,8 +13,11 @@ import ChatScreen from "../screens/ChatScreen";
 import CreateNewPostScreen from "../screens/CreateNewPostScreen";
 import { usePostsContext } from "../context/PostsContext";
 import { useChatsContext } from "../context/ChatsContext";
+import ChatRoomScreen from "../screens/ChatRoomScreen";
+import ChatRoomHeader from "../components/ChatRoomHeader";
 
 const HomeStack = createNativeStackNavigator<HomeStackPrams>();
+const ChatsStack = createNativeStackNavigator<ChatsStackPrams>();
 const Tab = createBottomTabNavigator<AppNavigatorParams>();
 
 const HomeStackNavigator = () => {
@@ -53,6 +56,17 @@ const HomeStackNavigator = () => {
   );
 };
 
+const ChatsStackNavigator = () => {
+  return (
+    <ChatsStack.Navigator initialRouteName="Chats">
+      <ChatsStack.Screen name="Chats" component={ChatScreen} options={{ headerShown: false}}/>
+      <ChatsStack.Screen name="ChatRoom" component={ChatRoomScreen} options={({ navigation, route }) => ({
+        headerTitle: () => <ChatRoomHeader participant={route.params?.participant}/>
+      })} />
+    </ChatsStack.Navigator>
+  ) 
+}
+
 const AppNavigator = () => {
   const { getLoggedInUser, userFromDb, getLoggedInUserFromDb } = useAuthenticationContext();
   useEffect(() => {
@@ -72,8 +86,8 @@ const AppNavigator = () => {
           }}
         />
         <Tab.Screen
-          name="Chats"
-          component={ChatScreen}
+          name="ChatsStack"
+          component={ChatsStackNavigator}
           options={{
             tabBarLabel: "Chats",
             tabBarIcon: ({ color, size }) => (

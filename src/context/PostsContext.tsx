@@ -47,7 +47,7 @@ function PostsProvider({ children }: { children: ReactNode }): ReactElement {
         try {
           const response = await client.graphql({
             query: postsByDate,
-            variables: { type: "Post", sortDirection: ModelSortDirection.DESC, limit: 50 },
+            variables: { type: "Post", sortDirection: ModelSortDirection.DESC, limit: 100 },
           });
           setPosts(response.data.postsByDate.items);
           setIsLoadingPosts(false);
@@ -64,7 +64,7 @@ function PostsProvider({ children }: { children: ReactNode }): ReactElement {
         try {
           const response = await client.graphql({
             query: postsByDate,
-            variables: { type: "Post", sortDirection: ModelSortDirection.DESC, limit: 50, nextToken},
+            variables: { type: "Post", sortDirection: ModelSortDirection.DESC, limit: 100, nextToken},
           });
           setPosts((prev) => [...prev, ...response.data.postsByDate.items]);
           setNextToken(response.data.postsByDate.nextToken);

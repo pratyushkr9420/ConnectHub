@@ -1,6 +1,6 @@
 import { NavigatorScreenParams } from "@react-navigation/native";
 import { AuthUser, FetchUserAttributesOutput } from "aws-amplify/auth";
-import { ModelUserChatRoomsConnection } from "../API";
+import { ModelUserChatRoomsConnection, User } from "../API";
 
 export type SignUpParameters = {
   username: string;
@@ -24,9 +24,14 @@ export type HomeStackPrams = {
   OnBoarding: undefined;
 };
 
+export type ChatsStackPrams = {
+  Chats: undefined;
+  ChatRoom: { participant: User | null | undefined, chatRoomID: string | undefined } | undefined;
+};
+ 
 export type AppNavigatorParams = {
   HomeStack: NavigatorScreenParams<HomeStackPrams>;
-  Chats: undefined;
+  ChatsStack: NavigatorScreenParams<ChatsStackPrams>;
   Profile: undefined;
 };
 
