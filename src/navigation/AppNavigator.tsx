@@ -6,7 +6,7 @@ import HomeScreen from "../screens/HomeScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import { AppNavigatorParams, ChatsStackPrams, HomeStackPrams } from "../utils/types";
 import { AuthenticationProvider, useAuthenticationContext } from "../context/AuthContext";
-import { Button, useColorScheme } from "react-native";
+import { Button, TouchableOpacity, useColorScheme } from "react-native";
 import OnBoardingScreen from "../screens/OnBoardingScreen";
 import { Ionicons } from "@expo/vector-icons";
 import ChatScreen from "../screens/ChatScreen";
@@ -15,6 +15,7 @@ import { usePostsContext } from "../context/PostsContext";
 import { useChatsContext } from "../context/ChatsContext";
 import ChatRoomScreen from "../screens/ChatRoomScreen";
 import ChatRoomHeader from "../components/ChatRoomHeader";
+import ContactProfileScreen from "../screens/ContactProfileScreen";
 
 const HomeStack = createNativeStackNavigator<HomeStackPrams>();
 const ChatsStack = createNativeStackNavigator<ChatsStackPrams>();
@@ -61,8 +62,9 @@ const ChatsStackNavigator = () => {
     <ChatsStack.Navigator initialRouteName="Chats">
       <ChatsStack.Screen name="Chats" component={ChatScreen} options={{ headerShown: false}}/>
       <ChatsStack.Screen name="ChatRoom" component={ChatRoomScreen} options={({ navigation, route }) => ({
-        headerTitle: () => <ChatRoomHeader participant={route.params?.participant}/>
+        headerTitle: () => <ChatRoomHeader navigation={navigation} participant={route.params?.participant}/>
       })} />
+      <ChatsStack.Screen name="ContactProfile" component={ContactProfileScreen} options={{ title: "Contact Info", presentation: "modal"}}/>
     </ChatsStack.Navigator>
   ) 
 }

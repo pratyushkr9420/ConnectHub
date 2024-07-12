@@ -12,16 +12,23 @@ import scheme from "../../themes/colors";
 import { FlashList } from "@shopify/flash-list";
 import ChatNewMessageInput from "../components/ChatNewMessageInput";
 import RenderChatMessage from "../components/RenderChatMessage";
+import { onCreateMessage } from "../graphql/subscriptions";
+import { useAuthenticationContext } from "../context/AuthContext";
+import { useChatsContext } from "../context/ChatsContext";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 type ChatRoomScreenProps = {
-    route: RouteProp<ChatsStackPrams, "ChatRoom">;
+  route: RouteProp<ChatsStackPrams, "ChatRoom">;
+  navigation: NativeStackNavigationProp<ChatsStackPrams, "ChatRoom">;
 }
 
 const client = generateClient();
 
-const ChatRoomScreen: FC<ChatRoomScreenProps> = ({ route }) => {
+const ChatRoomScreen: FC<ChatRoomScreenProps> = ({ route, navigation }) => {
   const theme = useColorScheme();
-  const [messages, setMesages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<Message[]>([]);
+  const { getLoggedInUserFromDb } = useAuthenticationContext();
+  const { setUpChatRooms } = useChatsContext();
   const fetchChatRoomMessages = async () => {
     if (route.params?.chatRoomID) {
       try {
@@ -29,7 +36,7 @@ const ChatRoomScreen: FC<ChatRoomScreenProps> = ({ route }) => {
           query: messagesByChatRoom,
           variables: { chatRoomID: route.params!.chatRoomID as string, sortDirection: ModelSortDirection.DESC, limit: 100 },
         });
-        setMesages(response.data.messagesByChatRoom.items);
+        setMessages(response.data.messagesByChatRoom.items);
       } catch (e) {
         console.log("Error fetching chats for the chatroom");
       }
@@ -38,8 +45,21 @@ const ChatRoomScreen: FC<ChatRoomScreenProps> = ({ route }) => {
   
   useEffect(() => {
     fetchChatRoomMessages();
-  }, [route])
+  }, [route, messages])
   
+  useEffect(() => {
+    client.graphql({
+      query: onCreateMessage
+    }).subscribe({
+      next: async ({ data }) => {
+        console.log(data);
+        await getLoggedInUserFromDb();
+        await setUpChatRooms();
+        await fetchChatRoomMessages();
+      },
+      error: (error) => console.log(error)
+    })
+  },[])
     return (
       <SafeAreaView style={{ flex: 1 }}>
         <KeyboardAvoidingView
@@ -51,11 +71,12 @@ const ChatRoomScreen: FC<ChatRoomScreenProps> = ({ route }) => {
               {messages && <FlashList
                 data={messages}
                 renderItem={({ item }) => <RenderChatMessage message={item}/>}
+                showsVerticalScrollIndicator={false}
                 estimatedItemSize={200}
                 inverted
               />}
           </ThemedView>
-          <ChatNewMessageInput chatRoomID={route.params?.chatRoomID} />
+          <ChatNewMessageInput navigation={navigation} setMessages={setMessages} chatRoomID={route.params?.chatRoomID} participantToken={route.params?.participant?.notificationToken}/>
         </KeyboardAvoidingView>
         </SafeAreaView>
     )

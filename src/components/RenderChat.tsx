@@ -2,7 +2,7 @@ import React, { FC, useEffect, useState } from "react";
 import moment from "moment";
 import { ThemedView } from "../../themes/theme";
 import CustomText from "./CustomText";
-import { useColorScheme, StyleSheet, Image, View, Touchable, TouchableOpacity  } from "react-native";
+import { useColorScheme, StyleSheet, Image, View, Touchable, TouchableOpacity, Alert  } from "react-native";
 import scheme from "../../themes/colors";
 import { generateClient } from "aws-amplify/api";
 import { getUser } from "../graphql/queries";
@@ -39,15 +39,22 @@ const RenderChat: FC<ChatProps> = ({ chat, navigation}) => {
     
     const markAsRead = chat!.chatRoom.isSeenBy ? chat!.chatRoom.isSeenBy.includes(userFromDb!.id) : false;
     return (
-        <TouchableOpacity onPress={() => navigation.navigate("ChatRoom",{ participant: otherParticipant, chatRoomID: chat?.chatRoomId})}>
+        <TouchableOpacity onPress={() => {
+            if (otherParticipant) {
+                navigation.navigate("ChatRoom", { participant: otherParticipant, chatRoomID: chat?.chatRoomId })
+            } else {
+                    Alert.alert("This user has left the conversation")
+                }
+            }
+        }>
             <ThemedView style={[styles.postContainer, { borderBottomColor: scheme[theme ? theme : "light"].text + "80" }]}>
                 <View style={[styles.dot,{ backgroundColor: markAsRead ? "transparent" : scheme['light'].tabIconSelected}]}/>
                 <ThemedView style={[styles.chatConatiner]}>
                     {otherParticipant && <Image style={styles.profileImage} source={otherParticipant?.profilePicture ? { uri: otherParticipant?.profilePicture ? otherParticipant.profilePicture : backUpProfile }: require("../../assets/smilingwomen.jpg")} />}
                     <ThemedView>
                         {otherParticipant && <CustomText type="caption" style={{fontWeight: 600}}>{otherParticipant.firstName} {otherParticipant.lastName}</CustomText>}
-                        {chat && <CustomText type="caption" style={{ fontSize: 16 }}>{chat.chatRoom.lastMessage?.content?.slice(0, 50)}</CustomText>}
-                        <CustomText type="caption" style={{textAlign: "right", fontSize: 10}}>{moment(chat?.chatRoom.lastMessage?.createdAt).fromNow()}</CustomText>
+                        {chat && <CustomText type="caption" style={{ fontSize: 16 }}>{chat.chatRoom.lastMessage?.content?.slice(0, 40)}</CustomText>}
+                        <CustomText type="caption" style={styles.lastMessageText}>{moment(chat?.chatRoom.lastMessage?.createdAt).fromNow()}</CustomText>
                     </ThemedView>
                 </ThemedView>
             </ThemedView>
@@ -80,6 +87,11 @@ const styles = StyleSheet.create({
         position: "absolute",
         right: 18,
         top: 15,
+    },
+    lastMessageText: {
+        textAlign: "right",
+        fontSize: 10,
+        marginRight: 15,
     }
 });
 

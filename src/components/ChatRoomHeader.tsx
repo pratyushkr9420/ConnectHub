@@ -5,15 +5,16 @@ import { TouchableOpacity } from "react-native";
 import { User } from "../API";
 
 type ChatRoomHeaderProps = {
-    participant: User | null | undefined
+    participant: User | null | undefined;
+    navigation: any;
 }
 
 
 const backUpProfile = "https://images.unsplash.com/photo-1530021232320-687d8e3dba54?q=80&w=2787&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
 
-const ChatRoomHeader: FC<ChatRoomHeaderProps> = ({ participant }) => {
+const ChatRoomHeader: FC<ChatRoomHeaderProps> = ({ participant, navigation }) => {
     return (
-        <TouchableOpacity style={styles.headerContainer}>
+        <TouchableOpacity style={styles.headerContainer} onPress={() => navigation.navigate("ContactProfile", { participant })}>
             <Image style={styles.image} source={{ uri: (participant && participant.profilePicture) ? participant.profilePicture : backUpProfile }} />
             {participant && <CustomText type="body">{participant.firstName}</CustomText>}
         </TouchableOpacity>

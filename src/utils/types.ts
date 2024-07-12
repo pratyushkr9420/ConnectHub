@@ -27,6 +27,7 @@ export type HomeStackPrams = {
 export type ChatsStackPrams = {
   Chats: undefined;
   ChatRoom: { participant: User | null | undefined, chatRoomID: string | undefined } | undefined;
+  ContactProfile: { participant: User | null | undefined } | undefined;
 };
  
 export type AppNavigatorParams = {

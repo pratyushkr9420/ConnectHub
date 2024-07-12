@@ -1,7 +1,7 @@
 import React, { createContext, ReactElement, ReactNode, useContext, useState } from "react";
 import { useAuthenticationContext } from "./AuthContext";
 import { generateClient } from "aws-amplify/api";
-import { ChatRoomsFromGetUserQuery } from "../utils/types";
+import { ChatRoomItem, ChatRoomsFromGetUserQuery } from "../utils/types";
 
 type ChatsContextType = {
     chatRooms: ChatRoomsFromGetUserQuery;
@@ -25,10 +25,15 @@ function ChatsProvider({ children }: { children: ReactNode }): ReactElement {
     const [chatRooms, setChatRooms] = useState<ChatRoomsFromGetUserQuery>([]);
     const { getLoggedInUserFromDb, userFromDb } = useAuthenticationContext();
     const setUpChatRooms = async () => {
-        if (userFromDb) {
-            setChatRooms(userFromDb.chatRooms ? userFromDb.chatRooms : []);
+        const currentUserFromDb = await getLoggedInUserFromDb();
+        if (currentUserFromDb) {
+            setChatRooms(currentUserFromDb.chatRooms ? currentUserFromDb.chatRooms : []);
         }
     }
+    const removeChatRoom = async (chatRoomToDelete: ChatRoomItem) => {
+        setChatRooms(chatRooms.filter(chatRoom => chatRoom!.id !== chatRoomToDelete.id));
+    }
+    
     return (
         <ChatsContext.Provider value={{
             chatRooms,
