@@ -53,9 +53,11 @@ const ChatRoomScreen: FC<ChatRoomScreenProps> = ({ route, navigation }) => {
     }).subscribe({
       next: async ({ data }) => {
         console.log(data);
-        await getLoggedInUserFromDb();
-        await setUpChatRooms();
-        await fetchChatRoomMessages();
+        setTimeout(async () => {
+          await getLoggedInUserFromDb();
+          await setUpChatRooms();
+          await fetchChatRoomMessages();
+        }, 2000);
       },
       error: (error) => console.log(error)
     })
@@ -76,7 +78,8 @@ const ChatRoomScreen: FC<ChatRoomScreenProps> = ({ route, navigation }) => {
                 inverted
               />}
           </ThemedView>
-          <ChatNewMessageInput navigation={navigation} setMessages={setMessages} chatRoomID={route.params?.chatRoomID} participantToken={route.params?.participant?.notificationToken}/>
+          <ChatNewMessageInput navigation={navigation} setMessages={setMessages} chatRoomID={route.params?.chatRoomID} participantToken={route.params?.participant?.notificationToken} />
+          {(route.params && !route.params.participant) && <CustomText type="body">The other user has left the chat..</CustomText>}
         </KeyboardAvoidingView>
         </SafeAreaView>
     )

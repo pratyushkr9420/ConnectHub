@@ -10,6 +10,8 @@ import { ChatRoomItem, ChatsStackPrams } from "../utils/types";
 import { useAuthenticationContext } from "../context/AuthContext";
 import { User } from "../API";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { Ionicons } from '@expo/vector-icons';
+import { useChatsContext } from "../context/ChatsContext";
 
 const client = generateClient();
 
@@ -24,6 +26,7 @@ const RenderChat: FC<ChatProps> = ({ chat, navigation}) => {
     const theme = useColorScheme();
     const { userFromDb } = useAuthenticationContext();
     const [otherParticipant, setOtherParticipant] = useState<User | null | undefined>();
+    const { removeChatRoom } = useChatsContext();
     const fetchOtherParticpant = async () => {
         const participantsId = chat?.chatRoom.participants!.items.map((user) => user?.userId);
         const otherParticipantId = userFromDb!.id === participantsId![0] ? participantsId![1] : participantsId![0];
@@ -36,34 +39,58 @@ const RenderChat: FC<ChatProps> = ({ chat, navigation}) => {
     useEffect(() => {
         fetchOtherParticpant();
     }, [chat])
-    
+
+    const handleDeletePress = async () => {
+        if (chat) {
+            Alert.alert("Are you sure you want to leave conversation",
+                "Click on cancel to abort this action, or click confirm to delete this conversation",
+                [
+                    {
+                        text: "Cancel",
+                        onPress: () => console.log("Pressed cancel on deleting conversation"),
+                        style: "cancel"
+                    },
+                    {
+                        text: "Confirm",
+                        onPress: async () => await removeChatRoom(chat),
+                        style: "destructive"
+                    }
+                ]
+            )
+        }
+    }
     const markAsRead = chat!.chatRoom.isSeenBy ? chat!.chatRoom.isSeenBy.includes(userFromDb!.id) : false;
     return (
         <TouchableOpacity onPress={() => {
-            if (otherParticipant) {
                 navigation.navigate("ChatRoom", { participant: otherParticipant, chatRoomID: chat?.chatRoomId })
-            } else {
-                    Alert.alert("This user has left the conversation")
-                }
             }
         }>
-            <ThemedView style={[styles.postContainer, { borderBottomColor: scheme[theme ? theme : "light"].text + "80" }]}>
+            <ThemedView style={[styles.chatContainer, { borderBottomColor: scheme[theme ? theme : "light"].text + "80" }]}>
                 <View style={[styles.dot,{ backgroundColor: markAsRead ? "transparent" : scheme['light'].tabIconSelected}]}/>
                 <ThemedView style={[styles.chatConatiner]}>
                     {otherParticipant && <Image style={styles.profileImage} source={otherParticipant?.profilePicture ? { uri: otherParticipant?.profilePicture ? otherParticipant.profilePicture : backUpProfile }: require("../../assets/smilingwomen.jpg")} />}
                     <ThemedView>
                         {otherParticipant && <CustomText type="caption" style={{fontWeight: 600}}>{otherParticipant.firstName} {otherParticipant.lastName}</CustomText>}
-                        {chat && <CustomText type="caption" style={{ fontSize: 16 }}>{chat.chatRoom.lastMessage?.content?.slice(0, 40)}</CustomText>}
-                        <CustomText type="caption" style={styles.lastMessageText}>{moment(chat?.chatRoom.lastMessage?.createdAt).fromNow()}</CustomText>
+                        {chat && <CustomText type="caption" style={{ fontSize: 16 }}>{chat.chatRoom.lastMessage ? chat.chatRoom.lastMessage?.content?.slice(0, 40) : "Start conversation in this chatroom"}</CustomText>}
                     </ThemedView>
                 </ThemedView>
             </ThemedView>
+            <TouchableOpacity style={styles.deleteIcon}>
+                    <Ionicons
+                        name="ellipsis-horizontal"
+                        size={24}
+                        color={scheme[theme? theme:"light"].text + "70"}
+                        onPress={handleDeletePress}
+                    />
+            </TouchableOpacity>
+            <CustomText type="caption" style={styles.lastMessageText}>{moment(chat?.chatRoom.lastMessage?.createdAt).fromNow()}</CustomText>
         </TouchableOpacity>
     );
 }
 const styles = StyleSheet.create({
-    postContainer: {
-        paddingVertical: 10,
+    chatContainer: {
+        paddingHorizontal: 1,
+        paddingVertical: 15,
         borderBottomWidth: 1,
         marginVertical: 10,
         flexDirection: "row",
@@ -85,14 +112,16 @@ const styles = StyleSheet.create({
     },
     deleteIcon: {
         position: "absolute",
-        right: 18,
+        right: 2,
         top: 15,
     },
     lastMessageText: {
+        position: "absolute",
+        bottom: 15,
+        right: 5,
         textAlign: "right",
         fontSize: 10,
-        marginRight: 15,
-    }
+    },
 });
 
 export default RenderChat;

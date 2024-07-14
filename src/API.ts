@@ -295,6 +295,80 @@ export type DeleteMessageInput = {
   id: string,
 };
 
+export type CreateNotificationInput = {
+  id?: string | null,
+  receiver: string,
+  type?: NotificationType | null,
+  postID?: string | null,
+  chatRoomID?: string | null,
+  isSeen?: boolean | null,
+  createdAt?: string | null,
+  updatedAt?: string | null,
+  notificationSenderId: string,
+};
+
+export enum NotificationType {
+  LIKED_POST = "LIKED_POST",
+  STARTED_CONVERSATION = "STARTED_CONVERSATION",
+}
+
+
+export type ModelNotificationConditionInput = {
+  receiver?: ModelIDInput | null,
+  type?: ModelNotificationTypeInput | null,
+  postID?: ModelIDInput | null,
+  chatRoomID?: ModelIDInput | null,
+  isSeen?: ModelBooleanInput | null,
+  createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
+  and?: Array< ModelNotificationConditionInput | null > | null,
+  or?: Array< ModelNotificationConditionInput | null > | null,
+  not?: ModelNotificationConditionInput | null,
+  notificationSenderId?: ModelIDInput | null,
+};
+
+export type ModelNotificationTypeInput = {
+  eq?: NotificationType | null,
+  ne?: NotificationType | null,
+};
+
+export type ModelBooleanInput = {
+  ne?: boolean | null,
+  eq?: boolean | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
+};
+
+export type Notification = {
+  __typename: "Notification",
+  id: string,
+  receiver: string,
+  sender: User,
+  type?: NotificationType | null,
+  postID?: string | null,
+  chatRoomID?: string | null,
+  isSeen?: boolean | null,
+  createdAt?: string | null,
+  updatedAt?: string | null,
+  notificationSenderId: string,
+};
+
+export type UpdateNotificationInput = {
+  id: string,
+  receiver?: string | null,
+  type?: NotificationType | null,
+  postID?: string | null,
+  chatRoomID?: string | null,
+  isSeen?: boolean | null,
+  createdAt?: string | null,
+  updatedAt?: string | null,
+  notificationSenderId?: string | null,
+};
+
+export type DeleteNotificationInput = {
+  id: string,
+};
+
 export type CreateUserChatRoomsInput = {
   id?: string | null,
   userId: string,
@@ -392,6 +466,27 @@ export type ModelMessageFilterInput = {
   not?: ModelMessageFilterInput | null,
   chatRoomMessagesId?: ModelIDInput | null,
   messageAuthorId?: ModelIDInput | null,
+};
+
+export type ModelNotificationFilterInput = {
+  id?: ModelIDInput | null,
+  receiver?: ModelIDInput | null,
+  type?: ModelNotificationTypeInput | null,
+  postID?: ModelIDInput | null,
+  chatRoomID?: ModelIDInput | null,
+  isSeen?: ModelBooleanInput | null,
+  createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
+  and?: Array< ModelNotificationFilterInput | null > | null,
+  or?: Array< ModelNotificationFilterInput | null > | null,
+  not?: ModelNotificationFilterInput | null,
+  notificationSenderId?: ModelIDInput | null,
+};
+
+export type ModelNotificationConnection = {
+  __typename: "ModelNotificationConnection",
+  items:  Array<Notification | null >,
+  nextToken?: string | null,
 };
 
 export type ModelUserChatRoomsFilterInput = {
@@ -512,6 +607,25 @@ export type ModelSubscriptionMessageFilterInput = {
   and?: Array< ModelSubscriptionMessageFilterInput | null > | null,
   or?: Array< ModelSubscriptionMessageFilterInput | null > | null,
   messageAuthorId?: ModelSubscriptionIDInput | null,
+};
+
+export type ModelSubscriptionNotificationFilterInput = {
+  id?: ModelSubscriptionIDInput | null,
+  receiver?: ModelSubscriptionIDInput | null,
+  type?: ModelSubscriptionStringInput | null,
+  postID?: ModelSubscriptionIDInput | null,
+  chatRoomID?: ModelSubscriptionIDInput | null,
+  isSeen?: ModelSubscriptionBooleanInput | null,
+  createdAt?: ModelSubscriptionStringInput | null,
+  updatedAt?: ModelSubscriptionStringInput | null,
+  and?: Array< ModelSubscriptionNotificationFilterInput | null > | null,
+  or?: Array< ModelSubscriptionNotificationFilterInput | null > | null,
+  notificationSenderId?: ModelSubscriptionIDInput | null,
+};
+
+export type ModelSubscriptionBooleanInput = {
+  ne?: boolean | null,
+  eq?: boolean | null,
 };
 
 export type ModelSubscriptionUserChatRoomsFilterInput = {
@@ -2036,6 +2150,276 @@ export type DeleteMessageMutation = {
     updatedAt?: string | null,
     chatRoomMessagesId?: string | null,
     messageAuthorId?: string | null,
+  } | null,
+};
+
+export type CreateNotificationMutationVariables = {
+  input: CreateNotificationInput,
+  condition?: ModelNotificationConditionInput | null,
+};
+
+export type CreateNotificationMutation = {
+  createNotification?:  {
+    __typename: "Notification",
+    id: string,
+    receiver: string,
+    sender:  {
+      __typename: "User",
+      id: string,
+      firstName?: string | null,
+      lastName?: string | null,
+      profilePicture?: string | null,
+      email?: string | null,
+      status?: string | null,
+      notificationToken?: string | null,
+      latitude?: string | null,
+      longitude?: string | null,
+      chatRooms?:  {
+        __typename: "ModelUserChatRoomsConnection",
+        items:  Array< {
+          __typename: "UserChatRooms",
+          id: string,
+          userId: string,
+          chatRoomId: string,
+          user:  {
+            __typename: "User",
+            id: string,
+            firstName?: string | null,
+            lastName?: string | null,
+            profilePicture?: string | null,
+            email?: string | null,
+            status?: string | null,
+            notificationToken?: string | null,
+            latitude?: string | null,
+            longitude?: string | null,
+            chatRooms?:  {
+              __typename: "ModelUserChatRoomsConnection",
+              nextToken?: string | null,
+            } | null,
+            createdAt: string,
+            updatedAt: string,
+          },
+          chatRoom:  {
+            __typename: "ChatRoom",
+            id: string,
+            isSeenBy?: Array< string | null > | null,
+            messages?:  {
+              __typename: "ModelMessageConnection",
+              nextToken?: string | null,
+            } | null,
+            lastMessage?:  {
+              __typename: "Message",
+              id: string,
+              chatRoomID: string,
+              content?: string | null,
+              createdAt?: string | null,
+              updatedAt?: string | null,
+              chatRoomMessagesId?: string | null,
+              messageAuthorId?: string | null,
+            } | null,
+            participants?:  {
+              __typename: "ModelUserChatRoomsConnection",
+              nextToken?: string | null,
+            } | null,
+            createdAt?: string | null,
+            updatedAt?: string | null,
+            chatRoomLastMessageId?: string | null,
+          },
+          createdAt: string,
+          updatedAt: string,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    type?: NotificationType | null,
+    postID?: string | null,
+    chatRoomID?: string | null,
+    isSeen?: boolean | null,
+    createdAt?: string | null,
+    updatedAt?: string | null,
+    notificationSenderId: string,
+  } | null,
+};
+
+export type UpdateNotificationMutationVariables = {
+  input: UpdateNotificationInput,
+  condition?: ModelNotificationConditionInput | null,
+};
+
+export type UpdateNotificationMutation = {
+  updateNotification?:  {
+    __typename: "Notification",
+    id: string,
+    receiver: string,
+    sender:  {
+      __typename: "User",
+      id: string,
+      firstName?: string | null,
+      lastName?: string | null,
+      profilePicture?: string | null,
+      email?: string | null,
+      status?: string | null,
+      notificationToken?: string | null,
+      latitude?: string | null,
+      longitude?: string | null,
+      chatRooms?:  {
+        __typename: "ModelUserChatRoomsConnection",
+        items:  Array< {
+          __typename: "UserChatRooms",
+          id: string,
+          userId: string,
+          chatRoomId: string,
+          user:  {
+            __typename: "User",
+            id: string,
+            firstName?: string | null,
+            lastName?: string | null,
+            profilePicture?: string | null,
+            email?: string | null,
+            status?: string | null,
+            notificationToken?: string | null,
+            latitude?: string | null,
+            longitude?: string | null,
+            chatRooms?:  {
+              __typename: "ModelUserChatRoomsConnection",
+              nextToken?: string | null,
+            } | null,
+            createdAt: string,
+            updatedAt: string,
+          },
+          chatRoom:  {
+            __typename: "ChatRoom",
+            id: string,
+            isSeenBy?: Array< string | null > | null,
+            messages?:  {
+              __typename: "ModelMessageConnection",
+              nextToken?: string | null,
+            } | null,
+            lastMessage?:  {
+              __typename: "Message",
+              id: string,
+              chatRoomID: string,
+              content?: string | null,
+              createdAt?: string | null,
+              updatedAt?: string | null,
+              chatRoomMessagesId?: string | null,
+              messageAuthorId?: string | null,
+            } | null,
+            participants?:  {
+              __typename: "ModelUserChatRoomsConnection",
+              nextToken?: string | null,
+            } | null,
+            createdAt?: string | null,
+            updatedAt?: string | null,
+            chatRoomLastMessageId?: string | null,
+          },
+          createdAt: string,
+          updatedAt: string,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    type?: NotificationType | null,
+    postID?: string | null,
+    chatRoomID?: string | null,
+    isSeen?: boolean | null,
+    createdAt?: string | null,
+    updatedAt?: string | null,
+    notificationSenderId: string,
+  } | null,
+};
+
+export type DeleteNotificationMutationVariables = {
+  input: DeleteNotificationInput,
+  condition?: ModelNotificationConditionInput | null,
+};
+
+export type DeleteNotificationMutation = {
+  deleteNotification?:  {
+    __typename: "Notification",
+    id: string,
+    receiver: string,
+    sender:  {
+      __typename: "User",
+      id: string,
+      firstName?: string | null,
+      lastName?: string | null,
+      profilePicture?: string | null,
+      email?: string | null,
+      status?: string | null,
+      notificationToken?: string | null,
+      latitude?: string | null,
+      longitude?: string | null,
+      chatRooms?:  {
+        __typename: "ModelUserChatRoomsConnection",
+        items:  Array< {
+          __typename: "UserChatRooms",
+          id: string,
+          userId: string,
+          chatRoomId: string,
+          user:  {
+            __typename: "User",
+            id: string,
+            firstName?: string | null,
+            lastName?: string | null,
+            profilePicture?: string | null,
+            email?: string | null,
+            status?: string | null,
+            notificationToken?: string | null,
+            latitude?: string | null,
+            longitude?: string | null,
+            chatRooms?:  {
+              __typename: "ModelUserChatRoomsConnection",
+              nextToken?: string | null,
+            } | null,
+            createdAt: string,
+            updatedAt: string,
+          },
+          chatRoom:  {
+            __typename: "ChatRoom",
+            id: string,
+            isSeenBy?: Array< string | null > | null,
+            messages?:  {
+              __typename: "ModelMessageConnection",
+              nextToken?: string | null,
+            } | null,
+            lastMessage?:  {
+              __typename: "Message",
+              id: string,
+              chatRoomID: string,
+              content?: string | null,
+              createdAt?: string | null,
+              updatedAt?: string | null,
+              chatRoomMessagesId?: string | null,
+              messageAuthorId?: string | null,
+            } | null,
+            participants?:  {
+              __typename: "ModelUserChatRoomsConnection",
+              nextToken?: string | null,
+            } | null,
+            createdAt?: string | null,
+            updatedAt?: string | null,
+            chatRoomLastMessageId?: string | null,
+          },
+          createdAt: string,
+          updatedAt: string,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    type?: NotificationType | null,
+    postID?: string | null,
+    chatRoomID?: string | null,
+    isSeen?: boolean | null,
+    createdAt?: string | null,
+    updatedAt?: string | null,
+    notificationSenderId: string,
   } | null,
 };
 
@@ -3565,6 +3949,168 @@ export type ListMessagesQuery = {
   } | null,
 };
 
+export type GetNotificationQueryVariables = {
+  id: string,
+};
+
+export type GetNotificationQuery = {
+  getNotification?:  {
+    __typename: "Notification",
+    id: string,
+    receiver: string,
+    sender:  {
+      __typename: "User",
+      id: string,
+      firstName?: string | null,
+      lastName?: string | null,
+      profilePicture?: string | null,
+      email?: string | null,
+      status?: string | null,
+      notificationToken?: string | null,
+      latitude?: string | null,
+      longitude?: string | null,
+      chatRooms?:  {
+        __typename: "ModelUserChatRoomsConnection",
+        items:  Array< {
+          __typename: "UserChatRooms",
+          id: string,
+          userId: string,
+          chatRoomId: string,
+          user:  {
+            __typename: "User",
+            id: string,
+            firstName?: string | null,
+            lastName?: string | null,
+            profilePicture?: string | null,
+            email?: string | null,
+            status?: string | null,
+            notificationToken?: string | null,
+            latitude?: string | null,
+            longitude?: string | null,
+            chatRooms?:  {
+              __typename: "ModelUserChatRoomsConnection",
+              nextToken?: string | null,
+            } | null,
+            createdAt: string,
+            updatedAt: string,
+          },
+          chatRoom:  {
+            __typename: "ChatRoom",
+            id: string,
+            isSeenBy?: Array< string | null > | null,
+            messages?:  {
+              __typename: "ModelMessageConnection",
+              nextToken?: string | null,
+            } | null,
+            lastMessage?:  {
+              __typename: "Message",
+              id: string,
+              chatRoomID: string,
+              content?: string | null,
+              createdAt?: string | null,
+              updatedAt?: string | null,
+              chatRoomMessagesId?: string | null,
+              messageAuthorId?: string | null,
+            } | null,
+            participants?:  {
+              __typename: "ModelUserChatRoomsConnection",
+              nextToken?: string | null,
+            } | null,
+            createdAt?: string | null,
+            updatedAt?: string | null,
+            chatRoomLastMessageId?: string | null,
+          },
+          createdAt: string,
+          updatedAt: string,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    type?: NotificationType | null,
+    postID?: string | null,
+    chatRoomID?: string | null,
+    isSeen?: boolean | null,
+    createdAt?: string | null,
+    updatedAt?: string | null,
+    notificationSenderId: string,
+  } | null,
+};
+
+export type ListNotificationsQueryVariables = {
+  filter?: ModelNotificationFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListNotificationsQuery = {
+  listNotifications?:  {
+    __typename: "ModelNotificationConnection",
+    items:  Array< {
+      __typename: "Notification",
+      id: string,
+      receiver: string,
+      sender:  {
+        __typename: "User",
+        id: string,
+        firstName?: string | null,
+        lastName?: string | null,
+        profilePicture?: string | null,
+        email?: string | null,
+        status?: string | null,
+        notificationToken?: string | null,
+        latitude?: string | null,
+        longitude?: string | null,
+        chatRooms?:  {
+          __typename: "ModelUserChatRoomsConnection",
+          items:  Array< {
+            __typename: "UserChatRooms",
+            id: string,
+            userId: string,
+            chatRoomId: string,
+            user:  {
+              __typename: "User",
+              id: string,
+              firstName?: string | null,
+              lastName?: string | null,
+              profilePicture?: string | null,
+              email?: string | null,
+              status?: string | null,
+              notificationToken?: string | null,
+              latitude?: string | null,
+              longitude?: string | null,
+              createdAt: string,
+              updatedAt: string,
+            },
+            chatRoom:  {
+              __typename: "ChatRoom",
+              id: string,
+              isSeenBy?: Array< string | null > | null,
+              createdAt?: string | null,
+              updatedAt?: string | null,
+              chatRoomLastMessageId?: string | null,
+            },
+            createdAt: string,
+            updatedAt: string,
+          } | null >,
+          nextToken?: string | null,
+        } | null,
+        createdAt: string,
+        updatedAt: string,
+      },
+      type?: NotificationType | null,
+      postID?: string | null,
+      chatRoomID?: string | null,
+      isSeen?: boolean | null,
+      createdAt?: string | null,
+      updatedAt?: string | null,
+      notificationSenderId: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
 export type GetUserChatRoomsQueryVariables = {
   id: string,
 };
@@ -4093,6 +4639,82 @@ export type MessagesByChatRoomQuery = {
       updatedAt?: string | null,
       chatRoomMessagesId?: string | null,
       messageAuthorId?: string | null,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type NotificationsByUserIDQueryVariables = {
+  receiver: string,
+  createdAt?: ModelStringKeyConditionInput | null,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelNotificationFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type NotificationsByUserIDQuery = {
+  notificationsByUserID?:  {
+    __typename: "ModelNotificationConnection",
+    items:  Array< {
+      __typename: "Notification",
+      id: string,
+      receiver: string,
+      sender:  {
+        __typename: "User",
+        id: string,
+        firstName?: string | null,
+        lastName?: string | null,
+        profilePicture?: string | null,
+        email?: string | null,
+        status?: string | null,
+        notificationToken?: string | null,
+        latitude?: string | null,
+        longitude?: string | null,
+        chatRooms?:  {
+          __typename: "ModelUserChatRoomsConnection",
+          items:  Array< {
+            __typename: "UserChatRooms",
+            id: string,
+            userId: string,
+            chatRoomId: string,
+            user:  {
+              __typename: "User",
+              id: string,
+              firstName?: string | null,
+              lastName?: string | null,
+              profilePicture?: string | null,
+              email?: string | null,
+              status?: string | null,
+              notificationToken?: string | null,
+              latitude?: string | null,
+              longitude?: string | null,
+              createdAt: string,
+              updatedAt: string,
+            },
+            chatRoom:  {
+              __typename: "ChatRoom",
+              id: string,
+              isSeenBy?: Array< string | null > | null,
+              createdAt?: string | null,
+              updatedAt?: string | null,
+              chatRoomLastMessageId?: string | null,
+            },
+            createdAt: string,
+            updatedAt: string,
+          } | null >,
+          nextToken?: string | null,
+        } | null,
+        createdAt: string,
+        updatedAt: string,
+      },
+      type?: NotificationType | null,
+      postID?: string | null,
+      chatRoomID?: string | null,
+      isSeen?: boolean | null,
+      createdAt?: string | null,
+      updatedAt?: string | null,
+      notificationSenderId: string,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -5936,6 +6558,273 @@ export type OnDeleteMessageSubscription = {
     updatedAt?: string | null,
     chatRoomMessagesId?: string | null,
     messageAuthorId?: string | null,
+  } | null,
+};
+
+export type OnCreateNotificationSubscriptionVariables = {
+  filter?: ModelSubscriptionNotificationFilterInput | null,
+};
+
+export type OnCreateNotificationSubscription = {
+  onCreateNotification?:  {
+    __typename: "Notification",
+    id: string,
+    receiver: string,
+    sender:  {
+      __typename: "User",
+      id: string,
+      firstName?: string | null,
+      lastName?: string | null,
+      profilePicture?: string | null,
+      email?: string | null,
+      status?: string | null,
+      notificationToken?: string | null,
+      latitude?: string | null,
+      longitude?: string | null,
+      chatRooms?:  {
+        __typename: "ModelUserChatRoomsConnection",
+        items:  Array< {
+          __typename: "UserChatRooms",
+          id: string,
+          userId: string,
+          chatRoomId: string,
+          user:  {
+            __typename: "User",
+            id: string,
+            firstName?: string | null,
+            lastName?: string | null,
+            profilePicture?: string | null,
+            email?: string | null,
+            status?: string | null,
+            notificationToken?: string | null,
+            latitude?: string | null,
+            longitude?: string | null,
+            chatRooms?:  {
+              __typename: "ModelUserChatRoomsConnection",
+              nextToken?: string | null,
+            } | null,
+            createdAt: string,
+            updatedAt: string,
+          },
+          chatRoom:  {
+            __typename: "ChatRoom",
+            id: string,
+            isSeenBy?: Array< string | null > | null,
+            messages?:  {
+              __typename: "ModelMessageConnection",
+              nextToken?: string | null,
+            } | null,
+            lastMessage?:  {
+              __typename: "Message",
+              id: string,
+              chatRoomID: string,
+              content?: string | null,
+              createdAt?: string | null,
+              updatedAt?: string | null,
+              chatRoomMessagesId?: string | null,
+              messageAuthorId?: string | null,
+            } | null,
+            participants?:  {
+              __typename: "ModelUserChatRoomsConnection",
+              nextToken?: string | null,
+            } | null,
+            createdAt?: string | null,
+            updatedAt?: string | null,
+            chatRoomLastMessageId?: string | null,
+          },
+          createdAt: string,
+          updatedAt: string,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    type?: NotificationType | null,
+    postID?: string | null,
+    chatRoomID?: string | null,
+    isSeen?: boolean | null,
+    createdAt?: string | null,
+    updatedAt?: string | null,
+    notificationSenderId: string,
+  } | null,
+};
+
+export type OnUpdateNotificationSubscriptionVariables = {
+  filter?: ModelSubscriptionNotificationFilterInput | null,
+};
+
+export type OnUpdateNotificationSubscription = {
+  onUpdateNotification?:  {
+    __typename: "Notification",
+    id: string,
+    receiver: string,
+    sender:  {
+      __typename: "User",
+      id: string,
+      firstName?: string | null,
+      lastName?: string | null,
+      profilePicture?: string | null,
+      email?: string | null,
+      status?: string | null,
+      notificationToken?: string | null,
+      latitude?: string | null,
+      longitude?: string | null,
+      chatRooms?:  {
+        __typename: "ModelUserChatRoomsConnection",
+        items:  Array< {
+          __typename: "UserChatRooms",
+          id: string,
+          userId: string,
+          chatRoomId: string,
+          user:  {
+            __typename: "User",
+            id: string,
+            firstName?: string | null,
+            lastName?: string | null,
+            profilePicture?: string | null,
+            email?: string | null,
+            status?: string | null,
+            notificationToken?: string | null,
+            latitude?: string | null,
+            longitude?: string | null,
+            chatRooms?:  {
+              __typename: "ModelUserChatRoomsConnection",
+              nextToken?: string | null,
+            } | null,
+            createdAt: string,
+            updatedAt: string,
+          },
+          chatRoom:  {
+            __typename: "ChatRoom",
+            id: string,
+            isSeenBy?: Array< string | null > | null,
+            messages?:  {
+              __typename: "ModelMessageConnection",
+              nextToken?: string | null,
+            } | null,
+            lastMessage?:  {
+              __typename: "Message",
+              id: string,
+              chatRoomID: string,
+              content?: string | null,
+              createdAt?: string | null,
+              updatedAt?: string | null,
+              chatRoomMessagesId?: string | null,
+              messageAuthorId?: string | null,
+            } | null,
+            participants?:  {
+              __typename: "ModelUserChatRoomsConnection",
+              nextToken?: string | null,
+            } | null,
+            createdAt?: string | null,
+            updatedAt?: string | null,
+            chatRoomLastMessageId?: string | null,
+          },
+          createdAt: string,
+          updatedAt: string,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    type?: NotificationType | null,
+    postID?: string | null,
+    chatRoomID?: string | null,
+    isSeen?: boolean | null,
+    createdAt?: string | null,
+    updatedAt?: string | null,
+    notificationSenderId: string,
+  } | null,
+};
+
+export type OnDeleteNotificationSubscriptionVariables = {
+  filter?: ModelSubscriptionNotificationFilterInput | null,
+};
+
+export type OnDeleteNotificationSubscription = {
+  onDeleteNotification?:  {
+    __typename: "Notification",
+    id: string,
+    receiver: string,
+    sender:  {
+      __typename: "User",
+      id: string,
+      firstName?: string | null,
+      lastName?: string | null,
+      profilePicture?: string | null,
+      email?: string | null,
+      status?: string | null,
+      notificationToken?: string | null,
+      latitude?: string | null,
+      longitude?: string | null,
+      chatRooms?:  {
+        __typename: "ModelUserChatRoomsConnection",
+        items:  Array< {
+          __typename: "UserChatRooms",
+          id: string,
+          userId: string,
+          chatRoomId: string,
+          user:  {
+            __typename: "User",
+            id: string,
+            firstName?: string | null,
+            lastName?: string | null,
+            profilePicture?: string | null,
+            email?: string | null,
+            status?: string | null,
+            notificationToken?: string | null,
+            latitude?: string | null,
+            longitude?: string | null,
+            chatRooms?:  {
+              __typename: "ModelUserChatRoomsConnection",
+              nextToken?: string | null,
+            } | null,
+            createdAt: string,
+            updatedAt: string,
+          },
+          chatRoom:  {
+            __typename: "ChatRoom",
+            id: string,
+            isSeenBy?: Array< string | null > | null,
+            messages?:  {
+              __typename: "ModelMessageConnection",
+              nextToken?: string | null,
+            } | null,
+            lastMessage?:  {
+              __typename: "Message",
+              id: string,
+              chatRoomID: string,
+              content?: string | null,
+              createdAt?: string | null,
+              updatedAt?: string | null,
+              chatRoomMessagesId?: string | null,
+              messageAuthorId?: string | null,
+            } | null,
+            participants?:  {
+              __typename: "ModelUserChatRoomsConnection",
+              nextToken?: string | null,
+            } | null,
+            createdAt?: string | null,
+            updatedAt?: string | null,
+            chatRoomLastMessageId?: string | null,
+          },
+          createdAt: string,
+          updatedAt: string,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    type?: NotificationType | null,
+    postID?: string | null,
+    chatRoomID?: string | null,
+    isSeen?: boolean | null,
+    createdAt?: string | null,
+    updatedAt?: string | null,
+    notificationSenderId: string,
   } | null,
 };
 

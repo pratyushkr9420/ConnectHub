@@ -1535,6 +1535,279 @@ export const deleteMessage = /* GraphQL */ `mutation DeleteMessage(
   APITypes.DeleteMessageMutationVariables,
   APITypes.DeleteMessageMutation
 >;
+export const createNotification = /* GraphQL */ `mutation CreateNotification(
+  $input: CreateNotificationInput!
+  $condition: ModelNotificationConditionInput
+) {
+  createNotification(input: $input, condition: $condition) {
+    id
+    receiver
+    sender {
+      id
+      firstName
+      lastName
+      profilePicture
+      email
+      status
+      notificationToken
+      latitude
+      longitude
+      chatRooms {
+        items {
+          id
+          userId
+          chatRoomId
+          user {
+            id
+            firstName
+            lastName
+            profilePicture
+            email
+            status
+            notificationToken
+            latitude
+            longitude
+            chatRooms {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          chatRoom {
+            id
+            isSeenBy
+            messages {
+              nextToken
+              __typename
+            }
+            lastMessage {
+              id
+              chatRoomID
+              content
+              createdAt
+              updatedAt
+              chatRoomMessagesId
+              messageAuthorId
+              __typename
+            }
+            participants {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            chatRoomLastMessageId
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        nextToken
+        __typename
+      }
+      createdAt
+      updatedAt
+      __typename
+    }
+    type
+    postID
+    chatRoomID
+    isSeen
+    createdAt
+    updatedAt
+    notificationSenderId
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.CreateNotificationMutationVariables,
+  APITypes.CreateNotificationMutation
+>;
+export const updateNotification = /* GraphQL */ `mutation UpdateNotification(
+  $input: UpdateNotificationInput!
+  $condition: ModelNotificationConditionInput
+) {
+  updateNotification(input: $input, condition: $condition) {
+    id
+    receiver
+    sender {
+      id
+      firstName
+      lastName
+      profilePicture
+      email
+      status
+      notificationToken
+      latitude
+      longitude
+      chatRooms {
+        items {
+          id
+          userId
+          chatRoomId
+          user {
+            id
+            firstName
+            lastName
+            profilePicture
+            email
+            status
+            notificationToken
+            latitude
+            longitude
+            chatRooms {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          chatRoom {
+            id
+            isSeenBy
+            messages {
+              nextToken
+              __typename
+            }
+            lastMessage {
+              id
+              chatRoomID
+              content
+              createdAt
+              updatedAt
+              chatRoomMessagesId
+              messageAuthorId
+              __typename
+            }
+            participants {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            chatRoomLastMessageId
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        nextToken
+        __typename
+      }
+      createdAt
+      updatedAt
+      __typename
+    }
+    type
+    postID
+    chatRoomID
+    isSeen
+    createdAt
+    updatedAt
+    notificationSenderId
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.UpdateNotificationMutationVariables,
+  APITypes.UpdateNotificationMutation
+>;
+export const deleteNotification = /* GraphQL */ `mutation DeleteNotification(
+  $input: DeleteNotificationInput!
+  $condition: ModelNotificationConditionInput
+) {
+  deleteNotification(input: $input, condition: $condition) {
+    id
+    receiver
+    sender {
+      id
+      firstName
+      lastName
+      profilePicture
+      email
+      status
+      notificationToken
+      latitude
+      longitude
+      chatRooms {
+        items {
+          id
+          userId
+          chatRoomId
+          user {
+            id
+            firstName
+            lastName
+            profilePicture
+            email
+            status
+            notificationToken
+            latitude
+            longitude
+            chatRooms {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          chatRoom {
+            id
+            isSeenBy
+            messages {
+              nextToken
+              __typename
+            }
+            lastMessage {
+              id
+              chatRoomID
+              content
+              createdAt
+              updatedAt
+              chatRoomMessagesId
+              messageAuthorId
+              __typename
+            }
+            participants {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            chatRoomLastMessageId
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        nextToken
+        __typename
+      }
+      createdAt
+      updatedAt
+      __typename
+    }
+    type
+    postID
+    chatRoomID
+    isSeen
+    createdAt
+    updatedAt
+    notificationSenderId
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.DeleteNotificationMutationVariables,
+  APITypes.DeleteNotificationMutation
+>;
 export const createUserChatRooms = /* GraphQL */ `mutation CreateUserChatRooms(
   $input: CreateUserChatRoomsInput!
   $condition: ModelUserChatRoomsConditionInput

@@ -1,7 +1,8 @@
 import { generateClient } from "aws-amplify/api";
-import { DeleteUserInput, UpdateUserInput } from "../API";
-import { UserFromDb } from "./types";
-import { deleteUser, updateUser } from "../graphql/mutations";
+import { DeleteUserInput, UpdateUserInput, User } from "../API";
+import { CustomAuthUser, UserFromDb } from "./types";
+import { createUserChatRooms, deleteUser, updateUser } from "../graphql/mutations";
+import { getUser, listUsers } from "../graphql/queries";
 
 const client = generateClient();
 
@@ -16,6 +17,30 @@ export const convertLocationTypeToUse = (location: { latitude: string, longitude
   return {
     latitude: Number(location.latitude),
     longitude: Number(location.longitude),
+  }
+}
+
+export const getUserFromDb = async (authUser: CustomAuthUser)=> {
+  const response = await client.graphql({
+    query: getUser,
+    variables: { id: authUser.userId },
+  });
+  return response.data.getUser ? response.data.getUser as User : null;
+}
+
+export const getUserFromDbByEmail = async (userEmail: string) => {
+  const response = await client.graphql({
+    query: listUsers,
+    variables: {
+      filter: {
+        email: {
+          eq: userEmail
+        }
+      }
+    }
+  })
+  if (response.data.listUsers.items.length !== 0) {
+    return response.data.listUsers.items[0] as User;
   }
 }
 
@@ -136,5 +161,21 @@ export const deleteUserFromDb = async (userFromDb: UserFromDb ) => {
     } catch (e) {
       console.log('Error deleting user from db', e);
     }
+  }
+}
+
+export const addUserToChatRoom = async (userId: string, chatRoomId: string) => {
+  try {
+    const response = await client.graphql({
+      query: createUserChatRooms,
+      variables: {
+        input: {
+          chatRoomId,
+          userId
+        }
+      }
+    })
+  } catch (e) {
+    console.log("Error creating adding this user to the chatroom", e)
   }
 }

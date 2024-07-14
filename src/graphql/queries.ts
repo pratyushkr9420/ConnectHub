@@ -868,6 +868,168 @@ export const listMessages = /* GraphQL */ `query ListMessages(
   APITypes.ListMessagesQueryVariables,
   APITypes.ListMessagesQuery
 >;
+export const getNotification = /* GraphQL */ `query GetNotification($id: ID!) {
+  getNotification(id: $id) {
+    id
+    receiver
+    sender {
+      id
+      firstName
+      lastName
+      profilePicture
+      email
+      status
+      notificationToken
+      latitude
+      longitude
+      chatRooms {
+        items {
+          id
+          userId
+          chatRoomId
+          user {
+            id
+            firstName
+            lastName
+            profilePicture
+            email
+            status
+            notificationToken
+            latitude
+            longitude
+            chatRooms {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          chatRoom {
+            id
+            isSeenBy
+            messages {
+              nextToken
+              __typename
+            }
+            lastMessage {
+              id
+              chatRoomID
+              content
+              createdAt
+              updatedAt
+              chatRoomMessagesId
+              messageAuthorId
+              __typename
+            }
+            participants {
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            chatRoomLastMessageId
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        nextToken
+        __typename
+      }
+      createdAt
+      updatedAt
+      __typename
+    }
+    type
+    postID
+    chatRoomID
+    isSeen
+    createdAt
+    updatedAt
+    notificationSenderId
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.GetNotificationQueryVariables,
+  APITypes.GetNotificationQuery
+>;
+export const listNotifications = /* GraphQL */ `query ListNotifications(
+  $filter: ModelNotificationFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listNotifications(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      receiver
+      sender {
+        id
+        firstName
+        lastName
+        profilePicture
+        email
+        status
+        notificationToken
+        latitude
+        longitude
+        chatRooms {
+          items {
+            id
+            userId
+            chatRoomId
+            user {
+              id
+              firstName
+              lastName
+              profilePicture
+              email
+              status
+              notificationToken
+              latitude
+              longitude
+              createdAt
+              updatedAt
+              __typename
+            }
+            chatRoom {
+              id
+              isSeenBy
+              createdAt
+              updatedAt
+              chatRoomLastMessageId
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
+      type
+      postID
+      chatRoomID
+      isSeen
+      createdAt
+      updatedAt
+      notificationSenderId
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.ListNotificationsQueryVariables,
+  APITypes.ListNotificationsQuery
+>;
 export const getUserChatRooms = /* GraphQL */ `query GetUserChatRooms($id: ID!) {
   getUserChatRooms(id: $id) {
     id
@@ -1416,6 +1578,90 @@ export const messagesByChatRoom = /* GraphQL */ `query MessagesByChatRoom(
 ` as GeneratedQuery<
   APITypes.MessagesByChatRoomQueryVariables,
   APITypes.MessagesByChatRoomQuery
+>;
+export const notificationsByUserID = /* GraphQL */ `query NotificationsByUserID(
+  $receiver: ID!
+  $createdAt: ModelStringKeyConditionInput
+  $sortDirection: ModelSortDirection
+  $filter: ModelNotificationFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  notificationsByUserID(
+    receiver: $receiver
+    createdAt: $createdAt
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      receiver
+      sender {
+        id
+        firstName
+        lastName
+        profilePicture
+        email
+        status
+        notificationToken
+        latitude
+        longitude
+        chatRooms {
+          items {
+            id
+            userId
+            chatRoomId
+            user {
+              id
+              firstName
+              lastName
+              profilePicture
+              email
+              status
+              notificationToken
+              latitude
+              longitude
+              createdAt
+              updatedAt
+              __typename
+            }
+            chatRoom {
+              id
+              isSeenBy
+              createdAt
+              updatedAt
+              chatRoomLastMessageId
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
+      type
+      postID
+      chatRoomID
+      isSeen
+      createdAt
+      updatedAt
+      notificationSenderId
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.NotificationsByUserIDQueryVariables,
+  APITypes.NotificationsByUserIDQuery
 >;
 export const userChatRoomsByUserId = /* GraphQL */ `query UserChatRoomsByUserId(
   $userId: ID!

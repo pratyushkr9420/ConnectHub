@@ -9,6 +9,7 @@ import SplashScreen from "./src/screens/SplashScreen";
 import AppNavigator from "./src/navigation/AppNavigator";
 import AuthScreen from "./src/screens/AuthScreen";
 import * as Notifications from 'expo-notifications';
+import { NotificationsProvider } from "./src/context/NotificationsContext";
 Amplify.configure(amplifyconfig);
 
 Notifications.setNotificationHandler({
@@ -58,7 +59,9 @@ const WrappedApp = () => {
     <AuthenticationProvider>
       <PostsProvider>
         <ChatsProvider>
-          <App />
+          <NotificationsProvider>
+            <App />
+          </NotificationsProvider>
         </ChatsProvider>
       </PostsProvider>
     </AuthenticationProvider>

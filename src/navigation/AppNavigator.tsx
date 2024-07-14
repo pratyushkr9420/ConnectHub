@@ -4,7 +4,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeScreen from "../screens/HomeScreen";
 import ProfileScreen from "../screens/ProfileScreen";
-import { AppNavigatorParams, ChatsStackPrams, HomeStackPrams } from "../utils/types";
+import { AppNavigatorParams, ChatsStackPrams, HomeStackPrams, NotificationStackParams } from "../utils/types";
 import { AuthenticationProvider, useAuthenticationContext } from "../context/AuthContext";
 import { Button, TouchableOpacity, useColorScheme } from "react-native";
 import OnBoardingScreen from "../screens/OnBoardingScreen";
@@ -16,9 +16,14 @@ import { useChatsContext } from "../context/ChatsContext";
 import ChatRoomScreen from "../screens/ChatRoomScreen";
 import ChatRoomHeader from "../components/ChatRoomHeader";
 import ContactProfileScreen from "../screens/ContactProfileScreen";
+import CreateNewChatRoomScreen from "../screens/CreateNewChatRoomScreen";
+import NotificationsScreen from "../screens/NotificationsScreen";
+import ShowPostScreen from "../screens/ShowPostScreen";
+import { useNotificationsContext } from "../context/NotificationsContext";
 
 const HomeStack = createNativeStackNavigator<HomeStackPrams>();
 const ChatsStack = createNativeStackNavigator<ChatsStackPrams>();
+const NotificationsStack = createNativeStackNavigator<NotificationStackParams>();
 const Tab = createBottomTabNavigator<AppNavigatorParams>();
 
 const HomeStackNavigator = () => {
@@ -53,6 +58,11 @@ const HomeStackNavigator = () => {
           presentation: "fullScreenModal",
         }}
       />
+      <HomeStack.Screen name="ShowPost" component={ShowPostScreen} />
+      <HomeStack.Screen name="ChatRoom" component={ChatRoomScreen} options={({ navigation, route }) => ({
+        headerTitle: () => <ChatRoomHeader navigation={navigation} participant={route.params?.participant}/>
+      })} />
+      <HomeStack.Screen name="ContactProfile" component={ContactProfileScreen} options={{ title: "Contact Info", presentation: "modal" }} />
     </HomeStack.Navigator>
   );
 };
@@ -64,13 +74,29 @@ const ChatsStackNavigator = () => {
       <ChatsStack.Screen name="ChatRoom" component={ChatRoomScreen} options={({ navigation, route }) => ({
         headerTitle: () => <ChatRoomHeader navigation={navigation} participant={route.params?.participant}/>
       })} />
-      <ChatsStack.Screen name="ContactProfile" component={ContactProfileScreen} options={{ title: "Contact Info", presentation: "modal"}}/>
+      <ChatsStack.Screen name="ContactProfile" component={ContactProfileScreen} options={{ title: "Contact Info", presentation: "modal" }} />
+      <ChatsStack.Screen name="CreateChat" component={CreateNewChatRoomScreen} options={{ title: "Create Chat", presentation: "modal"}}/>
     </ChatsStack.Navigator>
   ) 
 }
 
+const NotificationStackNavigator = () => {
+  return (
+    <NotificationsStack.Navigator initialRouteName="Notifications">
+      <NotificationsStack.Screen name="Notifications" component={NotificationsScreen} options={{headerShown : false}}/>
+      <NotificationsStack.Screen name="ChatRoom" component={ChatRoomScreen} options={({ navigation, route }) => ({
+        headerTitle: () => <ChatRoomHeader navigation={navigation} participant={route.params?.participant}/>
+      })} />
+      <NotificationsStack.Screen name="ShowPost" component={ShowPostScreen} />
+      <NotificationsStack.Screen name="ContactProfile" component={ContactProfileScreen} options={{ title: "Contact Info", presentation: "modal" }} />
+    </NotificationsStack.Navigator>
+  )
+}
+
 const AppNavigator = () => {
   const { getLoggedInUser, userFromDb, getLoggedInUserFromDb } = useAuthenticationContext();
+  const { notifications } = useNotificationsContext();
+  const unReadNotificationsCount = notifications.map(notification => notification.isSeen === false).length;
   useEffect(() => {
     getLoggedInUser();
     getLoggedInUserFromDb();
@@ -94,6 +120,17 @@ const AppNavigator = () => {
             tabBarLabel: "Chats",
             tabBarIcon: ({ color, size }) => (
               <Ionicons name="chatbubbles" size={size} color={color} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="NotificationsStack"
+          component={NotificationStackNavigator}
+          options={{
+            tabBarLabel: "Notifcations",
+            tabBarBadge: unReadNotificationsCount,
+            tabBarIcon: ({ color, size }) => (
+              <Ionicons name="notifications" size={size} color={color} />
             ),
           }}
         />

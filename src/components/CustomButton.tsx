@@ -13,7 +13,7 @@ type CustomButtonProps = {
   type: "primary" | "secondary";
 } & TouchableOpacityProps;
 
-const CustomButton: FC<CustomButtonProps> = ({ title, onPress, type = "primary", style }) => {
+const CustomButton: FC<CustomButtonProps> = ({ title, onPress, type = "primary", style, disabled }) => {
   const theme = useColorScheme();
   const getButtonStyle = (theme: any, type: any) => {
     if (theme === "light" && type === "primary") {
@@ -39,7 +39,7 @@ const CustomButton: FC<CustomButtonProps> = ({ title, onPress, type = "primary",
     }
   };
   return (
-    <TouchableOpacity style={[styles.button, getButtonStyle(theme, type), style]} onPress={onPress}>
+    <TouchableOpacity disabled={disabled} style={[styles.button, getButtonStyle(theme, type), style]} onPress={onPress}>
       <Text style={[styles.buttonText, { color: getTextStyle(theme, type) }]}>{title}</Text>
     </TouchableOpacity>
   );

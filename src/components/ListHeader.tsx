@@ -6,15 +6,15 @@ import { Ionicons } from '@expo/vector-icons';
 import scheme from "../../themes/colors";
 
 type ListHeaderProps = {
-    title: string;
-    iconName: any;
-    onPressHandler: () => void;
+    title?: string;
+    iconName?: any;
+    onPressHandler?: () => void;
 }
 
 const ListHeader : FC <ListHeaderProps>= ({ title, iconName, onPressHandler }) => {
     return (
         <ThemedView style={styles.container}>
-            <CustomText type="title" style={{marginLeft: 10}}>{title}</CustomText>
+            <CustomText type="title" style={{marginLeft: 5}}>{title}</CustomText>
             <TouchableOpacity onPress={onPressHandler}>
                 <Ionicons name={iconName} size={32} color={scheme.light.tabIconSelected} />
             </TouchableOpacity>

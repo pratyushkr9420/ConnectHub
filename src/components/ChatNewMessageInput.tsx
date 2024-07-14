@@ -9,9 +9,10 @@ import { generateClient } from "aws-amplify/api";
 import { Message } from "../API";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { ChatsStackPrams } from "../utils/types";
+import { sendPushNotification } from "../utils/notificationsFunctions";
 
 type ChatNewMessageInputProps = {
-    chatRoomID: string | undefined;
+    chatRoomID: string | null | undefined;
     participantToken?: string | null | undefined;
     setMessages: React.Dispatch<React.SetStateAction<Message[]>>;
     navigation: NativeStackNavigationProp<ChatsStackPrams, "ChatRoom">
@@ -24,27 +25,27 @@ const ChatNewMessageInput: FC <ChatNewMessageInputProps>= ({ chatRoomID, partici
     const theme = useColorScheme();
     const { userFromDb } = useAuthenticationContext();
 
-    async function sendPushNotification(pushNotificationToken: string) {
-        if (userFromDb) {
-            const message = {
-                to: pushNotificationToken,
-                sound: "default",
-                title: `${userFromDb.firstName ? userFromDb.firstName : ""} ${userFromDb.lastName ? userFromDb.lastName : ""}`,
-                body: newMessageContent,
-                data: { someData: 'goes here' },
-              };
+    // async function sendPushNotification(pushNotificationToken: string) {
+    //     if (userFromDb) {
+    //         const message = {
+    //             to: pushNotificationToken,
+    //             sound: "default",
+    //             title: `${userFromDb.firstName ? userFromDb.firstName : ""} ${userFromDb.lastName ? userFromDb.lastName : ""}`,
+    //             body: newMessageContent,
+    //             data: { someData: 'goes here' },
+    //           };
             
-              await fetch('https://exp.host/--/api/v2/push/send', {
-                method: 'POST',
-                headers: {
-                  Accept: 'application/json',
-                  'Accept-encoding': 'gzip, deflate',
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(message),
-              });
-        }
-    }
+    //           await fetch('https://exp.host/--/api/v2/push/send', {
+    //             method: 'POST',
+    //             headers: {
+    //               Accept: 'application/json',
+    //               'Accept-encoding': 'gzip, deflate',
+    //               'Content-Type': 'application/json',
+    //             },
+    //             body: JSON.stringify(message),
+    //           });
+    //     }
+    // }
 
     const handleCreateNewMessage = async () => {
         if (userFromDb && chatRoomID) {
@@ -70,8 +71,8 @@ const ChatNewMessageInput: FC <ChatNewMessageInputProps>= ({ chatRoomID, partici
                         }
                     }
                 })
-                if (participantToken) {
-                    await sendPushNotification(participantToken);
+                if (participantToken && userFromDb) {
+                    await sendPushNotification(participantToken, userFromDb, newMessageContent);
                 }
                 console.log("Message successfully send and chatroom updated")
                 setMessages(prev => [newMessageResponse.data.createMessage as Message,...prev])

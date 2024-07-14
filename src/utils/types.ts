@@ -22,17 +22,29 @@ export type HomeStackPrams = {
   Home: undefined;
   CreateNewPost: undefined;
   OnBoarding: undefined;
+  ChatRoom: { participant: User | null | undefined, chatRoomID: string | null | undefined } | undefined;
+  ShowPost: { postID: string | null | undefined } | undefined;
+  ContactProfile: { participant: User | null | undefined } | undefined;
 };
 
 export type ChatsStackPrams = {
   Chats: undefined;
-  ChatRoom: { participant: User | null | undefined, chatRoomID: string | undefined } | undefined;
+  ChatRoom: { participant: User | null | undefined, chatRoomID: string | null | undefined } | undefined;
   ContactProfile: { participant: User | null | undefined } | undefined;
+  CreateChat: undefined;
 };
+
+export type NotificationStackParams = {
+  Notifications: undefined;
+  ChatRoom: { participant: User | null | undefined, chatRoomID: string | null | undefined } | undefined;
+  ShowPost: { postID: string | null | undefined } | undefined;
+  ContactProfile: { participant: User | null | undefined } | undefined;
+}
  
 export type AppNavigatorParams = {
   HomeStack: NavigatorScreenParams<HomeStackPrams>;
   ChatsStack: NavigatorScreenParams<ChatsStackPrams>;
+  NotificationsStack: NavigatorScreenParams<NotificationStackParams>;
   Profile: undefined;
 };
 

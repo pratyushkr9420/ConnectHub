@@ -2,7 +2,7 @@ import React, { FC, useEffect, useState } from "react";
 import moment from "moment";
 import { ThemedView } from "../../themes/theme";
 import CustomText from "./CustomText";
-import { Post, User } from "../API";
+import { NotificationType, Post, User } from "../API";
 import { useAuthenticationContext } from "../context/AuthContext";
 import { useColorScheme, StyleSheet, Image, TouchableOpacity, Alert, Linking, Button } from "react-native";
 import scheme from "../../themes/colors";
@@ -12,6 +12,8 @@ import { FontAwesome5, Ionicons } from '@expo/vector-icons';
 import { usePostsContext } from "../context/PostsContext";
 import * as Haptics from 'expo-haptics';
 import { send, EmailJSResponseStatus } from '@emailjs/react-native';
+import { createNotificationInDb } from "../utils/notificationsFunctions";
+import { sendPushNotification } from "../utils/notificationsFunctions";
 import { KEY, SERVICE_ID, TEMPLATE_ID } from "@env";
 
 const client = generateClient();
@@ -64,12 +66,22 @@ const RenderPost: FC<PostProps> = ({ post }) => {
     }
 
     const toggleLikePress = async () => {
-        if (post && post.likedBy && userFromDb) {
+        if (post && post.likedBy && userFromDb && author) {
             if (post.likedBy.includes(userFromDb.id)) {
                 await decrementLikesOnPost(post, userFromDb);
                 Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
             } else {
                 await incrementLikesOnPost(post, userFromDb)
+                if (author.id === userFromDb.id) {
+                    const notificationData = {
+                        userID: userFromDb.id,
+                        authorID: author.id,
+                        type: NotificationType.LIKED_POST,
+                        postID: post.id
+                    };
+                    await sendPushNotification(author.notificationToken as string, userFromDb, `${userFromDb.firstName} liked your post 👍🏼`, notificationData)
+                    await createNotificationInDb(userFromDb.id as string, author.id,NotificationType.LIKED_POST, post.id,'');
+                }
                 Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
             }
         } else {
@@ -132,6 +144,7 @@ const RenderPost: FC<PostProps> = ({ post }) => {
 }
 const styles = StyleSheet.create({
     postContainer: {
+        paddingHorizontal: 1,
         paddingVertical: 10,
         borderBottomWidth: 1,
         marginVertical: 10,
