@@ -1,7 +1,7 @@
 import { generateClient } from "aws-amplify/api";
 import { UserFromDb } from "./types";
 import { CreateNotificationMutation, Notification, NotificationType } from "../API";
-import { createNotification, deleteNotification } from "../graphql/mutations";
+import { createNotification, deleteNotification, updateNotification } from "../graphql/mutations";
 
 const client = generateClient();
 
@@ -63,6 +63,24 @@ export const deleteNotificationInDb = async (notificationToDelete: Notification)
     })
     console.log("Notification deleted successfully from the database");
   } catch (e) {
-    console.log('Error deleting user from db', e);
+    console.log('Error deleting notification from db', e);
+  }
+}
+
+export const updateNotificationIsSeenPropertyInDb = async (notificationToUpdate: Notification) => {
+  try {
+    await client.graphql({
+      query: updateNotification,
+      variables: {
+        input: {
+          id: notificationToUpdate.id,
+          isSeen: true,
+          notificationSenderId:notificationToUpdate.sender.id,
+        }
+      }
+    });
+    console.log("Notification successfully updated for its is seen property in the database");
+  } catch (e) {
+    console.log("Error updating notification's is seen by property in db", e);
   }
 }

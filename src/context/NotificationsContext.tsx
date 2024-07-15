@@ -4,7 +4,7 @@ import { generateClient } from "aws-amplify/api";
 import { notificationsByUserID } from "../graphql/queries";
 import { UserFromDb } from "../utils/types";
 import { Alert } from "react-native";
-import { deleteNotificationInDb } from "../utils/notificationsFunctions";
+import { deleteNotificationInDb, updateNotificationIsSeenPropertyInDb } from "../utils/notificationsFunctions";
 
 type NotificationsContextType = {
     notifications: Notification[];
@@ -12,6 +12,7 @@ type NotificationsContextType = {
     fetchNotificationsByUser: (currentLoggedInUser: UserFromDb | null | undefined) => Promise<void>;
     fetchAdditionalNotificationsByUser: (currentLoggedInUser: UserFromDb | null | undefined) => Promise<void>;
     deleteNotification: (notificationToDelete: Notification) => Promise<void>;
+    markNotificationAsSeen: (notificationToUpdate: Notification) => Promise<void>;
 }
 
 const client = generateClient();
@@ -83,6 +84,16 @@ function NotificationsProvider({ children }: { children: ReactNode }): ReactElem
         await deleteNotificationInDb(notificationToDelete);
         setNotifications(notifications.filter(notification => notification.id !== notificationToDelete.id));
     }
+    const markNotificationAsSeen = async (notificationToUpdate: Notification) => {
+        const newNotificaitons = notifications.map((notification) => {
+            if (notification.id === notificationToUpdate.id) {
+                notification.isSeen = true;
+            }
+            return notification;
+        })
+        setNotifications(newNotificaitons);
+        await updateNotificationIsSeenPropertyInDb(notificationToUpdate);
+    }
     return (
         <NotificationsContext.Provider
             value={{
@@ -91,6 +102,7 @@ function NotificationsProvider({ children }: { children: ReactNode }): ReactElem
                 fetchNotificationsByUser,
                 fetchAdditionalNotificationsByUser,
                 deleteNotification,
+                markNotificationAsSeen,
             }}
         >
             {children}

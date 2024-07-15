@@ -96,7 +96,7 @@ const NotificationStackNavigator = () => {
 const AppNavigator = () => {
   const { getLoggedInUser, userFromDb, getLoggedInUserFromDb } = useAuthenticationContext();
   const { notifications } = useNotificationsContext();
-  const unReadNotificationsCount = notifications.map(notification => notification.isSeen === false).length;
+  const unReadNotificationsCount = notifications.filter(notification => notification.isSeen === false).length;
   useEffect(() => {
     getLoggedInUser();
     getLoggedInUserFromDb();
@@ -128,7 +128,7 @@ const AppNavigator = () => {
           component={NotificationStackNavigator}
           options={{
             tabBarLabel: "Notifcations",
-            tabBarBadge: unReadNotificationsCount,
+            tabBarBadge: unReadNotificationsCount > 0 ? unReadNotificationsCount : undefined,
             tabBarIcon: ({ color, size }) => (
               <Ionicons name="notifications" size={size} color={color} />
             ),

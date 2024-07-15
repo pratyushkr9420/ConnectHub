@@ -7,7 +7,7 @@ import { ChatsStackPrams } from "../utils/types";
 import { generateClient } from "aws-amplify/api";
 import { messagesByChatRoom } from "../graphql/queries";
 import { Message, ModelSortDirection } from "../API";
-import { KeyboardAvoidingView, Platform, useColorScheme } from "react-native";
+import { Alert, Button, KeyboardAvoidingView, Platform, useColorScheme } from "react-native";
 import scheme from "../../themes/colors";
 import { FlashList } from "@shopify/flash-list";
 import ChatNewMessageInput from "../components/ChatNewMessageInput";
@@ -27,21 +27,47 @@ const client = generateClient();
 const ChatRoomScreen: FC<ChatRoomScreenProps> = ({ route, navigation }) => {
   const theme = useColorScheme();
   const [messages, setMessages] = useState<Message[]>([]);
+  const [loadingMessages, setIsLoadingMessages] = useState<boolean>(false);
+  const [nextMesagesToken, setNextMessagesToken] = useState<string | null | undefined>(null);
   const { getLoggedInUserFromDb } = useAuthenticationContext();
   const { setUpChatRooms } = useChatsContext();
   const fetchChatRoomMessages = async () => {
     if (route.params?.chatRoomID) {
+      setIsLoadingMessages(true);
       try {
         const response = await client.graphql({
           query: messagesByChatRoom,
-          variables: { chatRoomID: route.params!.chatRoomID as string, sortDirection: ModelSortDirection.DESC, limit: 100 },
+          variables: { chatRoomID: route.params!.chatRoomID as string, sortDirection: ModelSortDirection.DESC, limit: 150 },
         });
         setMessages(response.data.messagesByChatRoom.items);
+        setIsLoadingMessages(false);
+        setNextMessagesToken(response.data.messagesByChatRoom.nextToken);
       } catch (e) {
         console.log("Error fetching chats for the chatroom");
+        setIsLoadingMessages(false);
       }
     }
   };
+
+  const fetchAdditionalChatRoomMessages = async () => {
+    if (nextMesagesToken) {
+      setIsLoadingMessages(true);
+      try {
+        const response = await client.graphql({
+          query: messagesByChatRoom,
+          variables: { chatRoomID: route.params!.chatRoomID as string, sortDirection: ModelSortDirection.DESC, limit: 150 },
+        });
+        setMessages((prev) => [...prev, ...response.data.messagesByChatRoom.items]);
+        setNextMessagesToken(response.data.messagesByChatRoom.nextToken);
+        setIsLoadingMessages(false);
+      } catch (e) {
+        console.log("Error fetching additional posts");
+        setIsLoadingMessages(false);
+      }
+    } else {
+      Alert.alert("No more chats to load");
+    }
+  }
   
   useEffect(() => {
     fetchChatRoomMessages();
@@ -76,6 +102,9 @@ const ChatRoomScreen: FC<ChatRoomScreenProps> = ({ route, navigation }) => {
                 showsVerticalScrollIndicator={false}
                 estimatedItemSize={200}
                 inverted
+                refreshing={loadingMessages}
+                onRefresh={fetchChatRoomMessages}
+                ListHeaderComponent={() => <Button title="See more chats" onPress={fetchAdditionalChatRoomMessages} color={scheme[theme ? theme: "light"].text}/>}
               />}
           </ThemedView>
           <ChatNewMessageInput navigation={navigation} setMessages={setMessages} chatRoomID={route.params?.chatRoomID} participantToken={route.params?.participant?.notificationToken} />

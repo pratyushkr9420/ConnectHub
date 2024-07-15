@@ -28,9 +28,9 @@ const NotificationsScreen : FC <NotificationsScreenProps>= ({ navigation }) => {
          <ThemedView style={{ flex: 1, paddingHorizontal: 0}}>
             <FlashList
                 data={notifications}
-                refreshing={isLoadingNotifications}
+                //refreshing={isLoadingNotifications}
                 showsVerticalScrollIndicator={false}
-                onRefresh={() => fetchNotificationsByUser(userFromDb)}
+                //onRefresh={() => fetchNotificationsByUser(userFromDb)}
                 contentContainerStyle={{paddingHorizontal: 5}}
                 renderItem={({ item }) => <RenderNotification notification={item} navigation={navigation}/>}
                 estimatedItemSize={200}

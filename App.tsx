@@ -9,7 +9,7 @@ import SplashScreen from "./src/screens/SplashScreen";
 import AppNavigator from "./src/navigation/AppNavigator";
 import AuthScreen from "./src/screens/AuthScreen";
 import * as Notifications from 'expo-notifications';
-import { NotificationsProvider } from "./src/context/NotificationsContext";
+import { NotificationsProvider, useNotificationsContext } from "./src/context/NotificationsContext";
 Amplify.configure(amplifyconfig);
 
 Notifications.setNotificationHandler({
@@ -24,6 +24,7 @@ Notifications.setNotificationHandler({
 const App = () => {
   const [isLoadingAuthUser, setisLoadingAuthUser] = useState(true);
   const { getLoggedInUser, getLoggedInUserFromDb, authUser, setAuthUser, setUserFromDb } = useAuthenticationContext();
+  const { fetchNotificationsByUser } = useNotificationsContext();
   const listener = async ({ payload }: { payload: any }) => {
     switch (payload.event) {
       case "signedIn":
@@ -45,9 +46,12 @@ const App = () => {
   useEffect(() => {
     (async () => {
       await getLoggedInUser();
-      await getLoggedInUserFromDb();
+      const currentUserFromDb = await getLoggedInUserFromDb();
+      if (currentUserFromDb) {
+        await fetchNotificationsByUser(currentUserFromDb);
+      }
     })();
-  }, []);
+  }, [authUser]);
 
   if (isLoadingAuthUser)
     return <SplashScreen setisLoadingAuthUser={setisLoadingAuthUser} />;

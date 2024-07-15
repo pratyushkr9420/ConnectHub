@@ -20,7 +20,7 @@ const backUpProfile = "https://images.unsplash.com/photo-1530021232320-687d8e3db
 
 const RenderNotification: FC<RenderNotificationProps> = ({ navigation, notification }) => {
     const theme = useColorScheme();
-    const { deleteNotification } = useNotificationsContext();
+    const { deleteNotification, markNotificationAsSeen } = useNotificationsContext();
     const notificationBody = notification.type === NotificationType.LIKED_POST ? "Liked your post" : "Started a conversation with you"
     const handleDeleteNotificationPress = async () => {
         if (notification) {
@@ -42,7 +42,10 @@ const RenderNotification: FC<RenderNotificationProps> = ({ navigation, notificat
         }
     }
     return (
-        <TouchableOpacity onPress={() => {
+        <TouchableOpacity onPress={async () => {
+            if (!notification.isSeen) {
+                await markNotificationAsSeen(notification);
+            }
             if (notification.type === NotificationType.LIKED_POST) {
                 navigation.navigate("ShowPost", { postID: notification.postID });
             } else if (notification.type === NotificationType.STARTED_CONVERSATION) {
